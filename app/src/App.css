@@ -1,0 +1,385 @@
+#leftScrollBar::-webkit-scrollbar-thumb{
+    background:  #40414e;
+    border-radius: 0;
+    border: 0px solid white;
+}
+#leftScrollBar::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+    background: inherit;
+}
+#leftScrollBar>div{
+    direction: ltr;
+}
+#scrollBar::-webkit-scrollbar{
+    width: 5px;
+    background: none;
+}
+#scrollBar::-webkit-scrollbar-track{
+    /* background: #686b71; */
+    border-radius: 100vw;
+    margin-block: .5em;
+}
+#scrollBar::-webkit-scrollbar-thumb{
+    background:  #40414e;
+    border-radius: 100vw;
+    border: 0px solid white;
+}
+.form-control:focus {
+    /* border-color: #a9dfd8 !important; */
+    box-shadow: 0 0 0 0.0em rgba(169,223,216, 0.1) !important;
+  }
+/* #scrollBar:-webkit-scrollbar-thumb:hover{
+    background:hsl(120 100% 20% / 1);
+} */
+::-webkit-scrollbar{
+    width: 8px;
+    height: 8px;
+    background: black;
+}
+::-webkit-scrollbar-track{
+    /* background: hsl(120 75% 50% / 1); */
+    border-radius: 100vw;
+    margin-block: .5em;
+}
+::-webkit-scrollbar-thumb{
+    background:  #40414e;;
+    border-radius: 100vw;
+}
+.App{
+    background:black;
+    color: white;
+    user-select: none; /* supported by Chrome and Opera */
+    -webkit-user-select: none; /* Safari */
+    -khtml-user-select: none; /* Konqueror HTML */
+    -moz-user-select: none; /* Firefox */
+    -ms-user-select: none; /* Internet Explorer/Edge */  
+}
+.MVP{
+    position: relative;
+    bottom:14em;
+    font-size: 1rem;
+}
+
+.tabs{
+    position: fixed;
+    top:0;
+    min-Height:100vh;
+    min-Width:4rem; 
+    padding-Right:1.6em;
+    padding-left: 1.6em;
+    background:black;
+    z-index: 999999;
+}
+.thumb{
+    width: 100%;
+}
+.StandingCell:hover{
+    color: white;
+}
+/* .selectedView{
+    border-bottom-style: solid;
+    border-bottom-color:#a9dfd8;
+    z-index: 1;
+    position: relative;
+    bottom: 20px;
+    border-radius: 5px;
+} */
+/* .selectView{
+    border-bottom-style: solid;
+    border-bottom-color:black;
+    z-index: 1;
+    position: relative;
+    bottom: 20px;
+    border-radius: 5px;
+} */
+#displayMenu{
+    background:linear-gradient(360deg, rgba(116,178,221,1) 0%, rgba(114,202,224,1) 20%, rgba(51,193,189,1) 50%, rgba(80,204,147,1) 100%);
+    width: 4px;
+    height: 45px;
+    border-radius: 0px 8px 8px 0px;
+    position: absolute;
+    left:0
+}
+#LA{
+    position: relative
+}
+#LA:hover{
+    border-radius: 50%;
+    background-color: #111111;    
+}
+select:focus{
+    outline: none;
+}
+.cellLink, .cellLink:hover, .cellLink:active{
+    color: inherit;
+    text-decoration: none;
+}
+.cellLink{
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+.pointer{
+    cursor:pointer
+}
+/* .hoverO:hover{
+    background: #111111;
+} */
+.hover:hover{
+    color: #a9dfd8;
+}
+.fontHover:hover{
+    font-weight: normal;
+}
+.team:hover{
+    background: #1b2025;
+    border-radius: 1px;
+}
+.btnOn{
+    background: #a9dfd8; 
+    color:#2a2c3e
+}
+.btnOff{
+    background:#111111;
+    color:whitesmoke;
+}
+#trophy{
+    background-repeat: no-repeat;
+    width:100%;
+    height:100%;
+    background-size: 75%;
+    /* background-position:; */
+}
+#tradeBtn{
+    background:#a9dfd8;
+    width:195px;
+    border-radius:25px;
+    padding-top:.5rem;
+    padding-bottom:.5rem;
+    padding-left:14px;
+    padding-right:14px;
+    border:0px solid black;
+    color:#292a34;
+    font-weight:bold
+}
+.backgroundShot{
+    background-color:#111111;
+    top:40px;
+    height: 86px;
+    border-radius: 25%;
+    position: relative;
+    z-index: -1;
+    border: 0px outset white;
+}
+.headShot{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:177px;
+    height: 125px;
+    width: 125.11px;
+    border-radius: 25px;
+}
+.smallHeadShotQB{
+    background-color:#dbdbde;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:90px;
+    height: 56px;
+    width: 56.11px;
+    border-radius: 50%;
+    border: 0px solid #f8296d;
+}
+
+.smallHeadShotRB{
+    background-color:#dbdbde;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:90px;
+    height: 56px;
+    width: 56.11px;
+    border-radius: 50%;
+    border: 0px solid #36ceb8;
+
+}
+
+.smallHeadShotWR{
+    background-color:#dbdbde;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:90px;
+    height: 56px;
+    width: 56.11px;
+    border-radius: 50%;
+    border: 0px solid #58a7ff;
+}
+
+.smallHeadShotTE{
+    background-color:#dbdbde;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:90px;
+    height: 56px;
+    width: 56.11px;
+    border-radius: 50%;
+    border: 0px solid #faae58;
+}
+
+.smallHeadShotK{
+    background-color:#dbdbde;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:90px;
+    height: 56px;
+    width: 56.11px;
+    border-radius: 50%;
+    border: 0px solid #bd66ff;
+}
+.smallHeadShot{
+    background-color:#dbdbde;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size:90px;
+    height: 56px;
+    width: 56.11px;
+    border-radius: 50%;
+    border: 0px solid black;
+}
+.displayOwnerLogo{
+    position: relative;
+    z-index: 1;
+    top: 50px;
+    left:0px;
+    text-align: right; 
+}
+
+.displayOwnerLogoSM{
+    position: relative;
+    z-index: 1;
+    top: 28px;
+    left: 13px;
+    text-align: right; 
+}
+
+.displayOwnerLogoMD{
+    position: relative;
+    z-index: 0;
+    text-align: right; 
+    border-top-left-radius: 80px 80px;
+    border-bottom-left-radius: 80px 80px;
+}
+
+.qbHUD{
+    background-color:#111111;
+    color: #f8296d;
+    border-radius: 25px;
+    border: none;
+    padding:5px;
+    min-width: 30px;
+    font-size: 11px;    
+    font-weight: bold;
+    text-align: center;
+}
+
+.rbHUD{
+    background-color:#111111;
+    color: #36ceb8;
+    border-radius: 25px;
+    border: 1px solid #111111;
+    padding:5px;
+    min-width: 30px;
+    font-size: 11px;   
+    font-weight: bold;   
+    text-align: center;
+}
+
+.wrHUD{
+    background-color:#111111;
+    color:  #58a7ff;
+    border-radius: 25px;
+    border: 1px solid #111111;
+    padding:5px;
+    min-width: 30px;
+    font-size: 11px;    
+    font-weight: bold;    
+    text-align: center;
+}
+
+.teHUD{
+    background-color:#111111;
+    color:#faae58;
+    border-radius: 25px;
+    border: 1px solid #111111;
+    padding:5px;
+    min-width: 30px;
+    font-size: 11px;    
+    font-weight: bold;    
+    text-align: center;
+}
+
+.leagueLogo {
+    max-width: 100%;
+}
+
+.ownerLogo {
+    border-radius: 50%;
+    width: 29px;
+}
+.ownerLogoMD {
+    border-radius:2%;
+    width: 2.5rem;
+    height: 3.5rem;
+    background-size: 4rem;
+    background-repeat: no-repeat;
+    background-position: center;
+    border-top-left-radius: 10px 10px;
+    border-bottom-left-radius: 10px 10px;
+    /* border: 1px solid whitesmoke; */
+}
+
+.minusLogo {
+    border-radius: 50%;
+    width: 25px;
+    background-color: whitesmoke;
+}
+
+.displayHUD{
+    position: relative;
+    z-index: 1;
+    top: -20px;
+    text-align: center;
+}
+
+.tradeIcon{
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    top:-7rem
+}
+
+.truncate {
+    width: 85.22px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.bold{
+    font-weight: bold;
+}
+
+.box1 {
+    background-image: linear-gradient( -135deg, #f20000 10%, #f5286b 100%);
+}
+  
+.box2 {
+    background-image: linear-gradient( -135deg, #00ccb4 10%, #36ceb8 100%);
+}
+  
+.box3 {
+    background-image: linear-gradient( -135deg, #0095ff 10%, #58a7ff 100%);
+}
+  
+.box4 {
+    background-image: linear-gradient( -135deg, #fe8800 10%, #faae58 100%);
+}
