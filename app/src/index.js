@@ -1,5 +1,5 @@
-import './App.css';
-import './Index.css';
+import './styles/App.css';
+import './styles/Index.css';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';

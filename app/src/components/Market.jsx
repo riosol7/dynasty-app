@@ -15,6 +15,7 @@ const SHOW_TAG_M={
 export default function Market(props) {
     const league=props.league
     const findPlayer=props.findPlayer
+    const players=props.players
     // const loadTransactions=props.loadTransactions
     const transactions=props.transactions
     const findLogo=props.findLogo
@@ -32,7 +33,7 @@ export default function Market(props) {
     const waiverBidsDefault=waiverBidsH && waiverBidsH.concat(waiverBidsC).map(b=>{ 
         return{
             ...b,
-            player:findPlayer(Object.keys(b.adds)[0])
+            player:findPlayer(Object.keys(b.adds)[0], players)
         }    
     }).filter(b=>b.player.position!=="DEF")
     const waiverBids=waiverBidsDefault&&waiverBidsDefault.filter(b=>{

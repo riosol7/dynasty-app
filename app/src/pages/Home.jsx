@@ -18,6 +18,7 @@ export default function Home (props) {
     const setActivityBar=props.setActivityBar
     const findLogo=props.findLogo
     const findPlayer=props.findPlayer
+    const players=props.players
     const getTotalPts=props.getTotalPts
     const findRosterByName=props.findRosterByName
     const findRosterByID=props.findRosterByID
@@ -47,6 +48,7 @@ export default function Home (props) {
                                     setActivityBar={setActivityBar}
                                     findLogo={findLogo}
                                     findPlayer={findPlayer}
+                                    players={players}
                                     getTotalPts={getTotalPts}
                                     findRosterByName={findRosterByName}
                                     findRosterByID={findRosterByID}

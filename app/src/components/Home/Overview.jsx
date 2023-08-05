@@ -1,10 +1,10 @@
 import React from 'react';
 
-import MVP from "../MVP";
-import Rankings from "../Rankings";
+// import MVP from "../MVP";
+// import Rankings from "../Rankings";
 import Market from '../Market';
 import LeagueWidget from "../LeagueWidget";
-import { Icon } from '@iconify/react';
+// import { Icon } from '@iconify/react';
 
 export default function Overview(props) {
     const loadLeague = props.loadLeague
@@ -17,8 +17,9 @@ export default function Overview(props) {
     const setActivityBar=props.setActivityBar
     const findLogo=props.findLogo
     const findPlayer=props.findPlayer
-    const getTotalPts=props.getTotalPts
-    const findRosterByName=props.findRosterByName
+    const players=props.players
+    // const getTotalPts=props.getTotalPts
+    // const findRosterByName=props.findRosterByName
     const findRosterByID=props.findRosterByID
     const handleRostersBySzn=props.handleRostersBySzn
     const foundHistory=props.foundHistory
@@ -40,7 +41,7 @@ export default function Overview(props) {
                             setActivityBar={setActivityBar}
                         />
                     </div>
-                    <div className="my-5"> 
+                    {/* <div className="my-5"> 
                         <div className="d-flex align-items-center justify-content-between mb-3"> 
                             <div className="d-flex align-items-center">
                                 <Icon icon="fluent:star-line-horizontal-3-24-regular" style={{color:"#a9dfd8", fontSize:"1.1rem"}}/>
@@ -58,11 +59,12 @@ export default function Overview(props) {
                             getTotalPts={getTotalPts}
                             findRosterByName={findRosterByName}
                         />
-                    </div>
+                    </div> */}
                     <div className="my-5">
                         <Market
                             league={league}
                             findPlayer={findPlayer}
+                            players={players}
                             loadTransactions={loadTransactions}
                             transactions={transactions}
                             findLogo={findLogo}
@@ -70,7 +72,7 @@ export default function Overview(props) {
                             roundToHundredth={roundToHundredth}
                         />
                     </div>
-                    <div className="">
+                    {/* <div className="">
                         <Rankings
                             loadLeague={loadLeague}
                             league={league}
@@ -83,7 +85,7 @@ export default function Overview(props) {
                             winPCT={winPCT}
                             lineupEfficiency={lineupEfficiency}
                         />
-                    </div>
+                    </div> */}
                 </div>
             </div>
        </>

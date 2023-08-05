@@ -1,216 +1,46 @@
-import './App.css';
-import React, { useEffect, useState } from "react";
-import { BrowserRouter as Router, Routes ,Route } from "react-router-dom";
+import "./styles/App.css";
+import React, { useState } from "react";
+import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
-import Home from "./pages/Home";
-import Owner from "./pages/Owner";
+import AppRouter from "./router/AppRouter";
 import Tabs from "./components/Tabs";
-import ActivityBar from './components/ActivityBar';
+import ActivityBar from "./components/ActivityBar";
+import {
+    findLogo,
+    findPlayer,
+    findRosterByID,
+    findRosterByName,
+    getTotalPts,
+    handleRostersBySzn,
+    lineupEfficiency,
+    toDateTime,
+    roundToHundredth,
+    winPCT,
+  } from "./utils";
 
-import {logos} from "./assets/logos";
-
+import { 
+    useLeagueData,
+    useMatches,
+    useRosters,
+    useTransactions,
+    usePlayers,
+} from "./hooks";
+import { processMatchups } from "./helpers";
 
 function App() {
+    const { league, loadLeague } = useLeagueData();
+    const { rosters, loadRosters } = useRosters();
+    const { transactions, loadTransactions } = useTransactions();
+    const { matches, loadMatches } = useMatches();
+    const { players, loadPlayers } = usePlayers();
 
-  const [league, setLeague] = useState({})
-  const [loadLeague, setLoadLeague] = useState(true)
+    const [activityBar, setActivityBar] = useState(false)
 
-  const [rosters, setRosters] = useState([])
-  const [loadRosters, setLoadRosters] = useState(true)
-  
-  const [transactions, setTransactions] = useState([])
-  const [loadTransactions, setLoadTransactions] = useState(true)
-
-  const [matches, setMatches] = useState([])
-  const [loadMatches, setLoadMatches] = useState(true)
-
-  const [players, setPlayers] = useState([])
-  const [loadPlayers, setLoadPlayers] = useState(true)
-
-  const [activityBar, setActivityBar] = useState(false)
-
-  useEffect(() => {
-      getRosters();
-      getLeague();
-      getTransactions();
-      getMatches();
-      getPlayers();
-      // return () => {setRosters([])};
-      // eslint-disable-next-line 
-  }, [])
-  
-  const getRosters = async () => {
-    try{
-      const call = await fetch("http://localhost:5000/player/rosters")
-      const parsedRosters = await call.json()
-      setRosters(parsedRosters)
-      setLoadRosters(false)
-      console.log("getRosters:",parsedRosters)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  const getLeague = async () => {
-      try {
-          const call = await fetch(`http://localhost:5000/league`)
-          const parsedLeague = await call.json()
-          setLeague(parsedLeague)
-          setLoadLeague(false)
-          console.log("getLeague:",parsedLeague)
-      } catch(err) {
-          console.log(err)
-      }
-  }
-  const getTransactions = async () => {
-      try{
-          const call = await fetch(`http://localhost:5000/league/transactions`)
-          const parsedTransactions = await call.json()
-          setTransactions(parsedTransactions)
-          setLoadTransactions(false)
-          console.log("getTransactions:",parsedTransactions)
-      } catch (err) {
-          console.log(err)
-      }
-  }
-  const getMatches = async () => {
-    try{
-      const call = await fetch(`http://localhost:5000/league/matches`)
-      const parsedMatches = await call.json()
-      setMatches(parsedMatches)
-      setLoadMatches(false)
-      console.log("getMatches:",parsedMatches)
-    } catch (err) {
-      console.log(err)
-    }
-  }
-  const getPlayers = async () => {
-    try{
-      const call = await fetch(`http://localhost:5000/player`)
-      const parsedPlayers = await call.json()
-      setPlayers(parsedPlayers)
-      setLoadPlayers(false)
-      console.log("getPlayers:",parsedPlayers)
-    }catch (err) {
-      console.log(err)
-    }
-  }
-  let winPCT = (w, l) => {
-    return roundToHundredth((w/(w + l))*100)
-  }
-  const roundToHundredth = (value) => {
-    if(value !== undefined){
-      return Number(value.toFixed(2));
-    } else return 0
-  }
-  let findLogo = (team) => {
-    if(team === null || undefined){
-      return "FA"
-    } else {
-      let foundLogo = logos.filter(logo => logo[team])
-      return Object.values(foundLogo[0])[0]
-    }
-  }
-  const findPlayer = (pID) => {
-    let foundPlayer = players && players?.filter(p => p.player_id === pID)[0]
-    return foundPlayer
-  } 
-  const getTotalPts = (rID, pID) => {
-    let historyMaxPts = 0;
-    let currentMaxPts = 0;
-    let historyPts=0; 
-    let currentPts=0;
-
-    if(rID !== undefined && pID !== undefined){
-      historyPts = league && league.history && league.history.map(l => 
-        Object.entries(l.matchups)
-          .map(g => g[1]
-            .filter(t => t.roster_id === rID)[0].starters.find(s => s === pID) !== undefined ? 
-              Object.entries(g[1].filter(t => t.roster_id === rID)[0].players_points)
-                .filter(p => p[0] === pID)[0][1]
-            :0
-          ).reduce((partialSum,a) => partialSum + a, 0)
-        ).reduce((partialSum,a) => partialSum + a, 0)
-
-      currentPts = matches && matches.map(m => 
-        m.filter(r => r.roster_id === rID)[0] &&
-        m.filter(r => r.roster_id === rID)[0].starters.find(s => s === pID) !== undefined ?
-          Object.entries(m.filter(t => t.roster_id === rID)[0].players_points)
-            .filter(p => p[0] === pID)[0][1]
-        :0
-        ).reduce((partialSum,a) => partialSum + a, 0)
-
-      let checkHUndefined = league && league.history && league.history.map(l => Object.entries(l.matchups)
-        .map(g => Object.entries(g[1].filter(t => t.roster_id === rID)[0].players_points)
-      .filter(p => p[0] === pID)[0]).filter(t => t !== undefined)).filter(t => t.length > 0)
-      
-      let checkCUndefined = []
-
-      if(matches[0] && matches[0].length>0){
-        checkCUndefined = matches && matches.map(m => 
-          Object.entries(m.filter(r => r.roster_id === rID)[0]) && 
-            Object.entries(m.filter(r => r.roster_id === rID)[0].players_points)
-              .filter(p => p[0] === pID)[0]).filter(t => t !== undefined).filter(t => t !== [])
-      }
-
-      if(checkHUndefined && checkHUndefined[0] && checkHUndefined[0].length > 0 && checkCUndefined.length > 0){
-        historyMaxPts = checkHUndefined.map(l => l.map(a => a[1]).reduce((partialSum,a) => partialSum + a, 0)).reduce((partialSum,a) => partialSum + a, 0)
-        currentMaxPts = checkCUndefined.map((a) => a[1]).reduce((partialSum,a) => partialSum + a, 0)
-
-      } else if(checkHUndefined && checkHUndefined[0] && checkHUndefined[0].length > 0 && checkCUndefined.length === 0){
-        historyMaxPts = checkHUndefined.map(l => l.map(a => a[1]).reduce((partialSum,a) => partialSum + a, 0)).reduce((partialSum,a) => partialSum + a, 0)
-
-      } else if(checkCUndefined && checkCUndefined.length > 0){
-        currentMaxPts = checkCUndefined.map((a) => a[1]).reduce((partialSum,a) => partialSum + a, 0)
-      }
-    }
-    return {
-      pts:roundToHundredth(historyPts + currentPts),
-      maxPts:roundToHundredth(historyMaxPts + currentMaxPts)
-    }
-  }
-  const findRosterByName = (dName) => {
-    return rosters && rosters.totalRoster.filter(r => r.owner.display_name === dName)[0]&&
-    rosters.totalRoster.filter(r => r.owner.display_name === dName)[0].roster_id     
-  }
-  const findRosterByID = (rID) => {
-    return rosters.totalRoster && rosters.totalRoster.map((roster, idx) => ({...roster, rank:idx+1})).find(roster => roster.roster_id === Number(rID))
-  }
-  const handleRostersBySzn = (yr) => {
-    let foundSzn=[]
-    if(yr === league.season){
-        foundSzn=rosters.totalRoster && rosters.totalRoster.sort((a,b) => {
-            if(a.settings.wins === b.settings.wins) {
-              return Number(b.settings.fpts + "." + b.settings.fpts_decimal) - Number(a.settings.fpts + "." + a.settings.fpts_decimal);
-            } else {
-              return b.settings.wins - a.settings.wins
-            }
-        }).map((roster, idx) => ({...roster, rank:idx+1}))
-    } else {
-        foundSzn = league.history.filter(l => l.year === yr).map((l,) => 
-        l.rosters.sort((a,b) => {
-          if(a.settings.wins === b.settings.wins) {
-            return Number(b.settings.fpts + "." + b.settings.fpts_decimal) - Number(a.settings.fpts + "." + a.settings.fpts_decimal);
-          } else {
-            return b.settings.wins - a.settings.wins
-          }
-        }).map((roster, idx) => ({...roster, rank:idx+1}))
-      )
-    }
-    return foundSzn 
-  }
-  let matchups = matches &&  matches[0] && matches[0].length>0? matches.filter(m => m !== null).map(wk => wk.reduce((acc,team) => {
-    acc[team.matchup_id] = acc[team.matchup_id] || [];
-    acc[team.matchup_id].push(team);
-    return acc;
-  }, Object.create(null))):[]
-
-    let lineupEfficiency = (pf, maxPF) => {
-        return roundToHundredth((pf/maxPF)*100) 
-    }
+    let matchups = processMatchups(matches);
 
     const foundHistory = (rosterID, yr) => {
         if(rosterID !== undefined || null){
@@ -812,92 +642,52 @@ function App() {
         } 
     }
 }
-function toDateTime(secs) {
-    var t = Number(secs);
-    let dateObj = new Date(t);
-    var month = dateObj.toLocaleString('default', { month: 'long' });
-    var day = dateObj.getUTCDate();
-    var year = dateObj.getUTCFullYear();
-    return  month + " " + day + ", " + year
-}
-  return (
-      <div className="App d-flex">
-        <div className="tabs">
-          <Tabs/>
+
+    return (
+        <div className="App d-flex">
+            <div className="tabs">
+                <Tabs/>
+            </div>
+            <Router>
+                <AppRouter  
+                    activityBar={activityBar}
+                    findLogo={findLogo}
+                    findPlayer={findPlayer}
+                    findRosterByID={findRosterByID}
+                    findRosterByName={findRosterByName}
+                    foundHistory={foundHistory}
+                    getTotalPts={getTotalPts}
+                    handleRostersBySzn={handleRostersBySzn}
+                    league={league}
+                    lineupEfficiency={lineupEfficiency}
+                    loadLeague={loadLeague}
+                    loadMatches={loadMatches}
+                    loadPlayers={loadPlayers}
+                    loadRosters={loadRosters}
+                    loadTransactions={loadTransactions}
+                    matches={matches}
+                    players={players}
+                    rosters={rosters}
+                    roundToHundredth={roundToHundredth}
+                    setActivityBar={setActivityBar}
+                    toDateTime={toDateTime}
+                    transactions={transactions}
+                    winPCT={winPCT}
+                />          
+            </Router>
+            <div className="">
+                <ActivityBar
+                    activityBar={activityBar}
+                    loadLeague={loadLeague}
+                    league={league}
+                    loadTransactions={loadTransactions}
+                    setActivityBar={setActivityBar}
+                    toDateTime={toDateTime}
+                    transactions={transactions}
+                />
+            </div>
         </div>
-        <Router>
-          <Routes>
-            <Route 
-              exact path={`/Home`} 
-              element={ 
-                <Home 
-                  loadLeague={loadLeague}
-                  league={league}
-                  loadRosters={loadRosters}
-                  rosters={rosters}
-                  loadTransactions={loadTransactions}
-                  transactions={transactions}
-                  loadMatches={loadMatches}
-                  matches={matches}
-                  activityBar={activityBar}
-                  setActivityBar={setActivityBar}
-                  findLogo={findLogo}
-                  findPlayer={findPlayer}
-                  getTotalPts={getTotalPts}
-                  findRosterByName={findRosterByName}
-                  findRosterByID={findRosterByID}
-                  handleRostersBySzn={handleRostersBySzn}
-                  foundHistory={foundHistory}
-                  roundToHundredth={roundToHundredth}
-                  winPCT={winPCT}
-                  lineupEfficiency={lineupEfficiency}
-                  toDateTime={toDateTime}
-                />  
-              }>
-            </Route>
-            <Route 
-              exact path={`/Owner/:id`} 
-              element={ 
-                <Owner 
-                  loadLeague={loadLeague}
-                  league={league}
-                  loadRosters={loadRosters}
-                  rosters={rosters}
-                  loadTransactions={loadTransactions}
-                  transactions={transactions}
-                  loadMatches={loadMatches}
-                  matches={matches}
-                  loadPlayers={loadPlayers}
-                  players={players}
-                  winPCT={winPCT}
-                  roundToHundredth={roundToHundredth}
-                  findLogo={findLogo}
-                  findPlayer={findPlayer}
-                  activityBar={activityBar}
-                  setActivityBar={setActivityBar}
-                  getTotalPts={getTotalPts}
-                  findRosterByName={findRosterByName}
-                  findRosterByID={findRosterByID}
-                  foundHistory={foundHistory}
-                  lineupEfficiency={lineupEfficiency}
-                />  
-              }>
-            </Route>
-          </Routes>
-        </Router>
-        <div className="">
-          <ActivityBar
-            activityBar={activityBar}
-            setActivityBar={setActivityBar}
-            loadLeague={loadLeague}
-            league={league}
-            loadTransactions={loadTransactions}
-            transactions={transactions}
-            toDateTime={toDateTime}
-          />
-        </div>
-      </div>
-  );
+    );
 }
 
 export default App;
