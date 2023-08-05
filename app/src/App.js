@@ -7,7 +7,6 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import AppRouter from "./router/AppRouter";
-import Tabs from "./components/Tabs";
 import ActivityBar from "./components/ActivityBar";
 import {
     findLogo,
@@ -643,9 +642,7 @@ function App() {
 
     return (
         <div className="App d-flex">
-            <div className="tabs">
-                <Tabs/>
-            </div>
+            {/* <SidenavBar/> */}
             <Router>
                 <AppRouter  
                     activityBar={activityBar}

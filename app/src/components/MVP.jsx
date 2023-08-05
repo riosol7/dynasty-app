@@ -1,14 +1,16 @@
-import React from 'react';
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
-import { Icon } from '@iconify/react';
+import { Icon } from "@iconify/react";
 import value from "../assets/value.png";
-import { findOwner, processRosters } from '../helpers';
+import { processRosters } from "../helpers";
 
 export default function MVP(props) {
     const findLogo=props.findLogo
     const getTotalPts=props.getTotalPts
+    const league=props.league
     const loadRosters=props.loadRosters
+    const matches=props.matches
     const owners=props.owners
     const players=props.players
     const rosters=props.rosters
@@ -122,7 +124,7 @@ export default function MVP(props) {
                                                 <p className="m-0 d-flex align-items-center" style={{fontSize:"12px", paddingInline:"6px"}}>
                                                     {getMVP(roster.kct.owner.display_name).position} 
                                                     <span style={{color:"whitesmoke", fontWeight:"normal", paddingLeft:"12px"}}>
-                                                        {getTotalPts(findOwner(roster.kct.owner.display_name),getMVP(roster.kct.owner.display_name).player_id).pts}
+                                                        {getTotalPts(league, matches, roster.kct.owner.roster_id, getMVP(roster.kct.owner.display_name).player_id).pts}
                                                         <span style={{color:"lightgray"}}> pts</span>
                                                     </span>
                                                 </p> 

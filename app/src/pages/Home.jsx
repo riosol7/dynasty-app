@@ -21,6 +21,7 @@ export default function Home (props) {
     const loadOwners=props.loadOwners
     const loadRosters=props.loadRosters
     const loadTransactions=props.loadTransactions
+    const matches=props.matches
     const owners=props.owners
     const players=props.players
     const rosters=props.rosters
@@ -50,6 +51,7 @@ export default function Home (props) {
                                     setActivityBar={setActivityBar}
                                     findLogo={findLogo}
                                     findPlayer={findPlayer}
+                                    matches={matches}
                                     owners={owners}
                                     players={players}
                                     getTotalPts={getTotalPts}

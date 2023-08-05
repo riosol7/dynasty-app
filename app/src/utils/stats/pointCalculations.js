@@ -13,7 +13,7 @@ export const lineupEfficiency = (pf, maxPF) => {
     return roundToHundredth((pf/maxPF)*100); 
 };
 
-export const getTotalPts = (rID, pID, league, matches) => {
+export const getTotalPts = (league, matches, rID, pID) => {
     let historyMaxPts = 0;
     let currentMaxPts = 0;
     let historyPts=0; 

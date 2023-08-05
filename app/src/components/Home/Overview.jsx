@@ -1,7 +1,7 @@
 import React from 'react';
 
 import MVP from "../MVP";
-// import Rankings from "../Rankings";
+import Rankings from "../Rankings";
 import Market from '../Market';
 import LeagueWidget from "../LeagueWidget";
 import { Icon } from '@iconify/react';
@@ -18,6 +18,7 @@ export default function Overview(props) {
     const setActivityBar=props.setActivityBar
     const findLogo=props.findLogo
     const findPlayer=props.findPlayer
+    const matches=props.matches
     const owners=props.owners
     const players=props.players
     const getTotalPts=props.getTotalPts
@@ -53,9 +54,11 @@ export default function Overview(props) {
                             </div>
                         </div>
                         <MVP
-                            loadRosters={loadRosters}
                             findLogo={findLogo}
                             getTotalPts={getTotalPts}
+                            league={league}
+                            loadRosters={loadRosters}
+                            matches={matches}
                             owners={owners}
                             players={players}
                             rosters={rosters}
@@ -75,20 +78,23 @@ export default function Overview(props) {
                             toDateTime={toDateTime}
                         />
                     </div>
-                    {/* <div className="">
+                    <div className="">
                         <Rankings
-                            loadLeague={loadLeague}
-                            league={league}
-                            loadRosters={loadRosters}
-                            rosters={rosters}
+                            findPlayer={findPlayer}
                             findRosterByID={findRosterByID}
-                            handleRostersBySzn={handleRostersBySzn}
                             foundHistory={foundHistory}
+                            handleRostersBySzn={handleRostersBySzn}
+                            league={league}
+                            lineupEfficiency={lineupEfficiency}
+                            loadLeague={loadLeague}
+                            loadRosters={loadRosters}
+                            owners={owners}
+                            players={players}
+                            rosters={rosters}
                             roundToHundredth={roundToHundredth}
                             winPCT={winPCT}
-                            lineupEfficiency={lineupEfficiency}
                         />
-                    </div> */}
+                    </div>
                 </div>
             </div>
        </>

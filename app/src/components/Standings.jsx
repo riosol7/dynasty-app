@@ -1,18 +1,23 @@
-import React, {useState} from 'react';
-import StandingRow from './temp/StandingRow';
-import { Icon } from '@iconify/react';
-import PostSeasonBracket from './PostSeasonBracket';
+import React, {useState} from "react";
+import StandingRow from "./temp/StandingRow";
+import { Icon } from "@iconify/react";
+import PostSeasonBracket from "./PostSeasonBracket";
+import { processRosters } from "../helpers";
 
-export default function Standings(props){
-  const rosters=props.rosters
-  const league=props.league
-  const selectSzn=props.selectSzn
-  const playoffs=props.playoffs
-  const findRosterByID=props.findRosterByID
-  const handleRostersBySzn=props.handleRostersBySzn
-  const foundHistory=props.foundHistory
-  const roundToHundredth=props.roundToHundredth
-  const winPCT=props.winPCT
+export default function Standings({
+  findRosterByID,
+  foundHistory,
+  handleRostersBySzn,
+  league,
+  owners,
+  players,
+  playoffs,
+  rosters,
+  roundToHundredth,
+  selectSzn,
+  winPCT,
+}){
+  const processedRosters = processRosters(rosters, players, owners);
 
   const [sort, setSort] = useState("RANK")
   const [asc, setAsc] = useState(false)
@@ -86,34 +91,34 @@ export default function Standings(props){
       return standing.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1}))
     }
   } 
-  let divsRanks = rosters.totalRoster && rosters.totalRoster.sort((a,b) => 
+  let divsRanks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.sort((a,b) => 
   { if(a.settings.wins === b.settings.wins) {
       return (b.settings.fpts) - (a.settings.fpts);
     } else {
       return b.settings.wins - a.settings.wins
     }
-  }).map((team, i) => ({...team, rank:i+1}))
+  }).map((team, i) => ({...team, rank:i+1})) : []
 
-  let div1Ranks = rosters.totalRoster && rosters.totalRoster.filter(roster => roster.settings.division === 1).sort((a,b) => 
+  let div1Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 1).sort((a,b) => 
   { if(a.settings.wins === b.settings.wins) {
       return (b.settings.fpts) - (a.settings.fpts);
     } else {
       return b.settings.wins - a.settings.wins
     }
-  }).map((team, i) => ({...team, rank:i+1}))
+  }).map((team, i) => ({...team, rank:i+1})) : []
 
-  let div2Ranks = rosters.totalRoster && rosters.totalRoster.filter(roster => roster.settings.division === 2).sort((a,b) => 
+  let div2Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 2).sort((a,b) => 
   { if(a.settings.wins === b.settings.wins) {
       return (b.settings.fpts) - (a.settings.fpts);
     } else {
       return b.settings.wins - a.settings.wins
     }
-  }).map((team, i) => ({...team, rank:i+1}))
+  }).map((team, i) => ({...team, rank:i+1})) : []
 
   const all_time = league.owners && league.owners.map(owner => {
     let id = owner.roster_id
 
-    let currentYR = rosters.totalRoster && rosters.totalRoster.find(roster => roster.roster_id === id).settings
+    let currentYR = processedRosters?.totalRoster?.length > 1 && processedRosters?.totalRoster.find(roster => roster.roster_id === id).settings
 
     let foundHistory = league.history.map(szn => szn.rosters.filter(roster => roster.roster_id === id)[0])
     let historyWs = foundHistory.reduce((acc, item) =>  acc + item.settings.wins, 0)
@@ -151,9 +156,9 @@ export default function Standings(props){
   const findRosterBySzn=(szn, id)=>{
     if(szn !== undefined && id !== undefined){
       if(szn===league.season){
-        return handleRostersBySzn(selectSzn).filter(r=>r.roster_id === id)[0]
+        return handleRostersBySzn(selectSzn, league, rosters).filter(r=>r.roster_id === id)[0]
       } else {
-        return handleRostersBySzn(selectSzn)[0].filter(r=>r.roster_id === id)[0]
+        return handleRostersBySzn(selectSzn, league, rosters)[0].filter(r=>r.roster_id === id)[0]
       }
     } 
   }
@@ -905,7 +910,7 @@ export default function Standings(props){
             }
           </div>
         : 
-          handleRostersBySzn(selectSzn).map((r,j) => 
+          handleRostersBySzn(selectSzn, league, rosters).map((r,j) => 
             playoffs===true?
               <PostSeasonBracket
                 key={j}

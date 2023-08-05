@@ -22,6 +22,8 @@ export default function Rankings(props) {
   const handleRostersBySzn=props.handleRostersBySzn
   const foundHistory=props.foundHistory
   const roundToHundredth=props.roundToHundredth
+  const owners=props.owners
+  const players=props.players
   const winPCT=props.winPCT
   const lineupEfficiency=props.lineupEfficiency
 
@@ -112,6 +114,8 @@ export default function Rankings(props) {
         { 
           rankings==="Standings"? 
             <Standings
+              owners={owners}
+              players={players}
               rosters={rosters}
               league={league}
               selectSzn={selectSzn}
