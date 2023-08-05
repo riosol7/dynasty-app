@@ -642,47 +642,49 @@ function App() {
     }
 
     return (
-        <div className="App d-flex">
-            <SidenavBar/>
-            <Router>
-                <AppRouter  
-                    activityBar={activityBar}
-                    findLogo={findLogo}
-                    findPlayer={findPlayer}
-                    findRosterByID={findRosterByID}
-                    foundHistory={foundHistory}
-                    getTotalPts={getTotalPts}
-                    handleRostersBySzn={handleRostersBySzn}
-                    league={league}
-                    lineupEfficiency={lineupEfficiency}
-                    loadLeague={loadLeague}
-                    loadMatches={loadMatches}
-                    loadOwners={loadOwners}
-                    loadPlayers={loadPlayers}
-                    loadRosters={loadRosters}
-                    loadTransactions={loadTransactions}
-                    matches={matches}
-                    matchups={matchups}
-                    owners={owners}
-                    players={players}
-                    rosters={rosters}
-                    roundToHundredth={roundToHundredth}
-                    setActivityBar={setActivityBar}
-                    toDateTime={toDateTime}
-                    transactions={transactions}
-                    winPCT={winPCT}
-                />          
-            </Router>
-            <div className="">
-                <ActivityBar
-                    activityBar={activityBar}
-                    loadLeague={loadLeague}
-                    league={league}
-                    loadTransactions={loadTransactions}
-                    setActivityBar={setActivityBar}
-                    toDateTime={toDateTime}
-                    transactions={transactions}
-                />
+        <div className="app">
+            <div className="appContainer">
+                <SidenavBar/>
+                <Router>
+                    <AppRouter  
+                        activityBar={activityBar}
+                        findLogo={findLogo}
+                        findPlayer={findPlayer}
+                        findRosterByID={findRosterByID}
+                        foundHistory={foundHistory}
+                        getTotalPts={getTotalPts}
+                        handleRostersBySzn={handleRostersBySzn}
+                        league={league}
+                        lineupEfficiency={lineupEfficiency}
+                        loadLeague={loadLeague}
+                        loadMatches={loadMatches}
+                        loadOwners={loadOwners}
+                        loadPlayers={loadPlayers}
+                        loadRosters={loadRosters}
+                        loadTransactions={loadTransactions}
+                        matches={matches}
+                        matchups={matchups}
+                        owners={owners}
+                        players={players}
+                        rosters={rosters}
+                        roundToHundredth={roundToHundredth}
+                        setActivityBar={setActivityBar}
+                        toDateTime={toDateTime}
+                        transactions={transactions}
+                        winPCT={winPCT}
+                    />          
+                </Router>
+                <div className="">
+                    <ActivityBar
+                        activityBar={activityBar}
+                        loadLeague={loadLeague}
+                        league={league}
+                        loadTransactions={loadTransactions}
+                        setActivityBar={setActivityBar}
+                        toDateTime={toDateTime}
+                        transactions={transactions}
+                    />
+                </div>
             </div>
         </div>
     );

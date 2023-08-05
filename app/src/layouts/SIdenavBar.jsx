@@ -4,8 +4,8 @@ import vs from "../assets/vs.png";
 export default function SidenavBar(props) {
 
     return (
-        <div className="tabs">
-            <div className="">
+        <div className="sidebar">
+            <div className="navigation">
                 <div className="mt-4 mb-5 d-flex justify-content-center align-items-center">
                     {/* <div id="displayMenu"></div> */}
                     {/* <div></div> */}

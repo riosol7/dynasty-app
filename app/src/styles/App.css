@@ -46,7 +46,7 @@
     background:  #40414e;;
     border-radius: 100vw;
 }
-.App{
+.app{
     background:black;
     color: white;
     user-select: none; /* supported by Chrome and Opera */
@@ -55,22 +55,35 @@
     -moz-user-select: none; /* Firefox */
     -ms-user-select: none; /* Internet Explorer/Edge */  
 }
+.appContainer {
+    display: flex;
+}
 .MVP{
     position: relative;
     bottom:14em;
     font-size: 1rem;
 }
 
-.tabs{
+.sidebar {
     position: fixed;
     top:0;
     min-Height:100vh;
     min-Width:4rem; 
     padding-Right:1.6em;
     padding-left: 1.6em;
-    background:black;
+    background-color: black;
+    border-right:#0f0f0f .4em solid;
     z-index: 999999;
 }
+.overview {
+    min-height: 100%;
+    width: 100%;
+    height: 100%;
+    margin-left: calc(4rem + 1.6em);
+}
+/* .navigation {
+    background-color: black;
+} */
 .thumb{
     width: 100%;
 }
