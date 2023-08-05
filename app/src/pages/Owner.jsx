@@ -18,6 +18,7 @@ export default function Owner(props) {
     // const transactions = props.transactions
     const loadMatches = props.loadMatches
     const matches = props.matches
+    const matchups = props.matchups
     const players = props.players
     const findPlayer = props.findPlayer
     const findLogo = props.findLogo
@@ -93,12 +94,6 @@ export default function Owner(props) {
     }
 
     let foundStats = rosters.totalRoster && rosters.totalRoster.find(roster => roster.roster_id === Number(id)).settings
-    
-    let matchups = matches &&  matches[0] && matches[0].length>0? matches.filter(m => m !== null).map(wk => wk.reduce((acc,team) => {
-        acc[team.matchup_id] = acc[team.matchup_id] || [];
-        acc[team.matchup_id].push(team);
-        return acc;
-    }, Object.create(null))):[]
     
     let foundMyMatchups = matchups && matchups.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
         if(team.filter(owner => owner.roster_id === Number(id)).length > 0){

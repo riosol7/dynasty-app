@@ -8,8 +8,8 @@ const AppRouter = ({
     activityBar, findLogo, findPlayer, findRosterByID, 
     findRosterByName, foundHistory, getTotalPts, handleRostersBySzn,
     league, lineupEfficiency, loadLeague, loadMatches, 
-    loadPlayers, loadRosters, loadTransactions, matches, 
-    players, roundToHundredth, rosters, setActivityBar, toDateTime, 
+    loadOwners, loadPlayers, loadRosters, loadTransactions, matches, matchups,
+    owners, players, roundToHundredth, rosters, setActivityBar, toDateTime, 
     transactions, winPCT,
 
 }) => {
@@ -31,10 +31,12 @@ const AppRouter = ({
                         lineupEfficiency={lineupEfficiency}
                         loadLeague={loadLeague}
                         loadMatches={loadMatches}
+                        loadOwners={loadOwners}
                         loadPlayers={loadPlayers}
                         loadRosters={loadRosters}
                         loadTransactions={loadTransactions}
                         matches={matches}
+                        owners={owners}
                         players={players}
                         rosters={rosters}
                         roundToHundredth={roundToHundredth}
@@ -65,6 +67,7 @@ const AppRouter = ({
                         loadRosters={loadRosters}
                         loadTransactions={loadTransactions}
                         matches={matches}
+                        matchups={matchups}
                         players={players}
                         rosters={rosters}
                         roundToHundredth={roundToHundredth}

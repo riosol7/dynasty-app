@@ -1,6 +1,7 @@
 import React, {useState,useEffect} from 'react';
 import { Icon } from '@iconify/react';
 import MarketTable from '../components/tables/MarketTable'
+import { processWaiverBids } from "../helpers";
 
 const SELECT_TAG_M={border:"none", background:"inherit",color:"#7d91a6",fontSize:".7rem",fontWeight:"bold"}
 const SHOW_TAG_M={
@@ -12,30 +13,26 @@ const SHOW_TAG_M={
     paddingBlock:"3px",
 }
 
-export default function Market(props) {
-    const league=props.league
-    const findPlayer=props.findPlayer
-    const players=props.players
-    // const loadTransactions=props.loadTransactions
-    const transactions=props.transactions
-    const findLogo=props.findLogo
-    const toDateTime=props.toDateTime
-    const roundToHundredth=props.roundToHundredth
-
+export default function Market({
+    findLogo,
+    findPlayer,
+    league,
+    loadOwners,
+    loadTransactions,
+    owners,
+    players,
+    toDateTime,
+    transactions,
+    roundToHundredth,
+}) {
     const [position,setPosition]=useState("POSITION")
     const [owner,setOwner]=useState("OWNER")
 
-    const findRosterByUID = (uID) => {
-        return league && league.owners.find(o => o.user_id === uID)
-    }  
-    const waiverBidsC=transactions && transactions.filter(t=>t.settings && t.settings.waiver_bid && t.settings.waiver_bid!==null && t.status==="complete")
-    const waiverBidsH=league.history && league.history.map(l=>l.transactions.filter(t=>t.settings && t.settings.waiver_bid && t.settings.waiver_bid!==null && t.status==="complete")).flat().map(t=>{return{...t, creator:findRosterByUID(t.creator).display_name}})
-    const waiverBidsDefault=waiverBidsH && waiverBidsH.concat(waiverBidsC).map(b=>{ 
-        return{
-            ...b,
-            player:findPlayer(Object.keys(b.adds)[0], players)
-        }    
-    }).filter(b=>b.player.position!=="DEF")
+    const waiverBidsC = processWaiverBids(transactions, owners, players, true);
+    const waiverBidsH = processWaiverBids(league.history, owners, players, false);
+
+    const waiverBidsDefault=waiverBidsH && waiverBidsH.concat(waiverBidsC).filter(bid => bid.player?.position!=="DEF")
+
     const waiverBids=waiverBidsDefault&&waiverBidsDefault.filter(b=>{
         if(position==="QB"){
             return b.player.position==="QB"
@@ -166,6 +163,7 @@ export default function Market(props) {
             setCurrentPage(currentPage+1)
         }
     }
+
     useEffect(() => {
         if(waiverBids&&waiverBids.length<recordsPerPage){
             if(waiverBids.length>10){
@@ -180,6 +178,7 @@ export default function Market(props) {
             }
         }
     },[recordsPerPage, waiverBids])
+
     return (
         <div>
             <div className="d-flex align-items-center justify-content-between py-2">

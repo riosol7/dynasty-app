@@ -8,30 +8,31 @@ import Overview from "../components/Home/Overview";
 
 export default function Home (props) {
     // const [dashboard, setDashboard] = useState("Overview")
-    const loadLeague=props.loadLeague
-    const league=props.league
-    const loadRosters=props.loadRosters
-    const rosters=props.rosters
-    const loadTransactions=props.loadTransactions
-    const transactions=props.transactions
     const activityBar=props.activityBar
-    const setActivityBar=props.setActivityBar
+    const findRosterByID=props.findRosterByID
     const findLogo=props.findLogo
     const findPlayer=props.findPlayer
-    const players=props.players
-    const getTotalPts=props.getTotalPts
-    const findRosterByName=props.findRosterByName
-    const findRosterByID=props.findRosterByID
-    const handleRostersBySzn=props.handleRostersBySzn
     const foundHistory=props.foundHistory
-    const roundToHundredth=props.roundToHundredth
-    const winPCT=props.winPCT
+    const getTotalPts=props.getTotalPts
+    const handleRostersBySzn=props.handleRostersBySzn
+    const league=props.league
     const lineupEfficiency=props.lineupEfficiency
+    const loadLeague=props.loadLeague
+    const loadOwners=props.loadOwners
+    const loadRosters=props.loadRosters
+    const loadTransactions=props.loadTransactions
+    const owners=props.owners
+    const players=props.players
+    const rosters=props.rosters
+    const roundToHundredth=props.roundToHundredth
+    const setActivityBar=props.setActivityBar
     const toDateTime=props.toDateTime
+    const transactions=props.transactions
+    const winPCT=props.winPCT
     return (
         <>
             { 
-                loadRosters && loadLeague ? 
+                loadOwners && loadRosters && loadLeague ? 
                     <div style={{height:"100vh"}}></div>
                 :
                     <div className="" style={{paddingLeft:"5.7em",width:"100%",background:"#0f0f0f",height:"100%"}}>
@@ -40,6 +41,7 @@ export default function Home (props) {
                                 <Overview
                                     loadRosters={loadRosters}
                                     rosters={rosters}
+                                    loadOwners={loadOwners}
                                     loadTransactions={loadTransactions}
                                     transactions={transactions}
                                     loadLeague={loadLeague}
@@ -48,9 +50,9 @@ export default function Home (props) {
                                     setActivityBar={setActivityBar}
                                     findLogo={findLogo}
                                     findPlayer={findPlayer}
+                                    owners={owners}
                                     players={players}
                                     getTotalPts={getTotalPts}
-                                    findRosterByName={findRosterByName}
                                     findRosterByID={findRosterByID}
                                     handleRostersBySzn={handleRostersBySzn}
                                     foundHistory={foundHistory}

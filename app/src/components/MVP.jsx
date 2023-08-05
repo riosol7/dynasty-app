@@ -3,17 +3,19 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { Icon } from '@iconify/react';
 import value from "../assets/value.png";
+import { findOwner, processRosters } from '../helpers';
 
 export default function MVP(props) {
-    const rosters=props.rosters
-    const loadRosters=props.loadRosters
     const findLogo=props.findLogo
-    const findPlayer=props.findPlayer
     const getTotalPts=props.getTotalPts
-    const findRosterByName=props.findRosterByName
+    const loadRosters=props.loadRosters
+    const owners=props.owners
+    const players=props.players
+    const rosters=props.rosters
 
+    const processedRosters = processRosters(rosters, players, owners); 
     function getMVP(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
+        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
         let topPlayers = [
             foundTeam.kct.qb.players[0],
             foundTeam.kct.rb.players[0],
@@ -76,7 +78,7 @@ export default function MVP(props) {
                     }}
                     className="mySwiper"
                 >
-                {rosters.teamRank.map((roster, i) => 
+                {processedRosters && processedRosters.teamRank?.length > 1 && processedRosters?.teamRank.map((roster, i) => 
                     <SwiperSlide key={i} className={""}>
                         <div className="" style={{border:"none", borderRadius:"4px", background:findLogo(getMVP(roster.kct.owner.display_name).team).bgColor}}>
                             <div className="d-flex" style={{
@@ -101,8 +103,8 @@ export default function MVP(props) {
                                 <div className="col">
                                     <div className="d-flex justify-content-between">
                                         <div className="mt-2">
-                                            <p className="m-0">{findPlayer(getMVP(roster.kct.owner.display_name).player_id).first_name}</p>
-                                            <p className="m-0 bold" style={{fontSize:"1.3em"}}>{findPlayer(getMVP(roster.kct.owner.display_name).player_id).last_name}</p>
+                                            <p className="m-0">{getMVP(roster.kct.owner.display_name).first_name}</p>
+                                            <p className="m-0 bold" style={{fontSize:"1.3em"}}>{getMVP(roster.kct.owner.display_name).last_name}</p>
                                         </div>
                                         <div className="p-2">
                                             <img className="ownerLogo" alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
@@ -120,7 +122,7 @@ export default function MVP(props) {
                                                 <p className="m-0 d-flex align-items-center" style={{fontSize:"12px", paddingInline:"6px"}}>
                                                     {getMVP(roster.kct.owner.display_name).position} 
                                                     <span style={{color:"whitesmoke", fontWeight:"normal", paddingLeft:"12px"}}>
-                                                        {getTotalPts(findRosterByName(roster.kct.owner.display_name),getMVP(roster.kct.owner.display_name).player_id).pts}
+                                                        {getTotalPts(findOwner(roster.kct.owner.display_name),getMVP(roster.kct.owner.display_name).player_id).pts}
                                                         <span style={{color:"lightgray"}}> pts</span>
                                                     </span>
                                                 </p> 

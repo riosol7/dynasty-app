@@ -25,8 +25,13 @@ export default function MarketTable(props) {
     const wrRECENT=wrWaiver&&wrWaiver.sort((a,b)=>b.created-a.created)
     const teRECENT=teWaiver&&teWaiver.sort((a,b)=>b.created-a.created)
 
-    function percentageChange(newValue,ogValue){
-        return ((newValue-ogValue)/ogValue)*100
+    function percentageChange(newValue, ogValue) {
+        // Check if both inputs are valid numbers
+        if (typeof newValue !== 'number' || typeof ogValue !== 'number' || ogValue === 0) {
+            return 0; // Or any other appropriate default value if the inputs are invalid
+        }
+    
+        return ((newValue - ogValue) / ogValue) * 100;
     }
 
 

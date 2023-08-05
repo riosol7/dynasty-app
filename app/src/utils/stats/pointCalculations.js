@@ -1,6 +1,5 @@
 export const roundToHundredth = (value) => {
-    if(value !== undefined){
-    
+    if(value !== undefined && typeof value === "number"){
         return Number(value.toFixed(2));
     
     } else return 0;
