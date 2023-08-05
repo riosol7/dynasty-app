@@ -1,9 +1,9 @@
 import React from 'react';
 
-import MVP from "../MVP";
-import Rankings from "../Rankings";
-import Market from '../Market';
-import LeagueWidget from "../LeagueWidget";
+import MVP from "../components/MVP";
+import Rankings from "../components/Rankings";
+import Market from '../components/Market';
+import LeagueWidget from "../components/LeagueWidget";
 import { Icon } from '@iconify/react';
 
 export default function Overview(props) {

@@ -1,5 +1,5 @@
 import React from "react";
-import Overview from "../components/Home/Overview";
+import Overview from "../layouts/Overview";
 
 export default function Home ({
     activityBar,
