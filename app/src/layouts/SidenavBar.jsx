@@ -2,6 +2,7 @@ import { Icon } from "@iconify/react";
 import vs from "../assets/vs.png";
 
 export default function SidenavBar() {
+
     return (
         <div className="sidebar">
             <div className="navigation">

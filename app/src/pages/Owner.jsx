@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react'
-import { useParams } from 'react-router-dom' 
-import LeagueWidget from '../components/LeagueWidget'
+import { useParams } from "react-router-dom";
+import LeagueNavigation from "../components/LeagueNavigation";
 import Summary from '../components/Owner/Summary';
 import Dynasty from '../components/Owner/Dynasty';
 import Modal from '../components/modals/Modal';
@@ -211,7 +211,7 @@ export default function Owner(props) {
                 <div className="" style={{paddingLeft:"5.7em",width:"100%",background:"#0f0f0f",height:"100%"}}>
                     <div className="pt-3" style={{background:"black", height:"100%", minHeight:"100vh"}}>
                         <div className="col my-2 mx-5">
-                            <LeagueWidget
+                            <LeagueNavigation
                                 league={league}
                                 loadLeague={loadLeague}
                                 activityBar={activityBar}

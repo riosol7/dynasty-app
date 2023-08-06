@@ -7,7 +7,7 @@ import "swiper/css/pagination";
 import "swiper/css/navigation";
 
 import AppRouter from "./router/AppRouter";
-import SidenavBar from "./layouts/SIdenavBar";
+import SidenavBar from "./layouts/SidenavBar";
 import ActivityBar from "./components/ActivityBar";
 import {
     findLogo,

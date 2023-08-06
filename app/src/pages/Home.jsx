@@ -32,7 +32,6 @@ export default function Home ({
                 loadOwners && loadRosters && loadLeague ? 
                     <div style={{height:"100vh"}}></div>
                 :
-                    
                     <Overview
                         loadRosters={loadRosters}
                         rosters={rosters}
