@@ -674,17 +674,17 @@ function App() {
                         winPCT={winPCT}
                     />          
                 </Router>
-                <div className="">
-                    <ActivityBar
-                        activityBar={activityBar}
-                        loadLeague={loadLeague}
-                        league={league}
-                        loadTransactions={loadTransactions}
-                        setActivityBar={setActivityBar}
-                        toDateTime={toDateTime}
-                        transactions={transactions}
-                    />
-                </div>
+                <ActivityBar
+                    activityBar={activityBar}
+                    loadLeague={loadLeague}
+                    league={league}
+                    loadTransactions={loadTransactions}
+                    owners={owners}
+                    players={players}
+                    setActivityBar={setActivityBar}
+                    toDateTime={toDateTime}
+                    transactions={transactions}
+                />
             </div>
         </div>
     );

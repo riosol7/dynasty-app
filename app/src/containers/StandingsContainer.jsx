@@ -150,7 +150,6 @@ export default function StandingsContainer({
   const findRosterBySzn=(szn, id) => {
     if (szn !== undefined && id !== undefined) {
       if (szn===league.season){
-        console.log("processedRosters:", processedRosters)
         return handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.roster_id === id)[0]
       } else {
         return handleRostersBySzn(selectSzn, league, rosters)[0].filter(r=>r.roster_id === id)[0]

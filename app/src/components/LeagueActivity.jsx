@@ -14,14 +14,17 @@ const TAG_STYLE = {
     fontSize:"1em"
 }
 
-export default function LeagueActivity(props) {
-    const loadTransactions = props.loadTransactions
-    const transactions = props.transactions
-    const loadLeague = props.loadLeague
-    const league = props.league
-    const activityBar=props.activityBar
-    const setActivityBar=props.setActivityBar
-    const toDateTime=props.toDateTime
+export default function LeagueActivity({
+    activityBar,
+    league,
+    loadLeague,
+    loadTransactions,
+    owners,
+    players,
+    setActivityBar,
+    toDateTime,
+    transactions,
+}) {
 
     const [filterBtn, setFilterBtn] = useState(false)
     const [sortBtn, setSortBtn] = useState(false)
@@ -161,8 +164,10 @@ export default function LeagueActivity(props) {
                 <div>
                     <Transaction
                         loadTransactions={loadTransactions}
-                        transactions={transactions}
+                        owners={owners}
+                        players={players}
                         toDateTime={toDateTime}
+                        transactions={transactions}
                     />
                 </div>
             </div>

@@ -21,26 +21,32 @@ const OVERLAY_STYLES = {
     background: 'rgba(0,0,0,0.6)',
     zIndex:9999
 }
-export default function RightSideBar(props) {
-    const loadTransactions = props.loadTransactions
-    const transactions = props.transactions
-    const loadLeague = props.loadLeague
-    const league = props.league
-    const activityBar=props.activityBar
-    const setActivityBar=props.setActivityBar
-    const toDateTime=props.toDateTime
+export default function RightSideBar({
+    activityBar,
+    league,
+    loadLeague,
+    loadTransactions,
+    owners,
+    players,
+    setActivityBar,
+    toDateTime,
+    transactions,
+}) {
+
     if(!activityBar) return null
     return (
         <div style={OVERLAY_STYLES}>
             <div style={MODAL_STYLES}>
                 <LeagueActivity
+                    activityBar={activityBar}
                     loadLeague={loadLeague}
                     league={league}
                     loadTransactions={loadTransactions}
-                    transactions={transactions}
-                    activityBar={activityBar}
+                    owners={owners}
+                    players={players}
                     setActivityBar={setActivityBar}
                     toDateTime={toDateTime}
+                    transactions={transactions}
                 />
             </div>
         </div>

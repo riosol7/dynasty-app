@@ -5,12 +5,18 @@ import { Icon } from '@iconify/react';
 import Sleeper from "../assets/sleeper.png";
 // import PERSON from "../assets/person.png";
 import {logos} from "../assets/logos";
+import { processTransactions } from '../helpers';
 
-export default function Transaction(props) {
-    const transactions = props.transactions
-    const loadTransactions = props.loadTransactions
-    const toDateTime=props.toDateTime
-    
+export default function Transaction({
+    loadTransactions,
+    owners,
+    players,
+    toDateTime,
+    transactions,
+}) {
+    const processedTransactions = processTransactions(transactions, players, owners);
+    console.log("processedTransactions:", processedTransactions)
+ 
     const [isOpen, setIsOpen] = useState(false)
     const [transaction, setTransaction] = useState({})
 
@@ -57,8 +63,8 @@ export default function Transaction(props) {
     }
     function getKeyByValue(object, value, players) {
         let playerID = Object.keys(object).find(key => object[key] === value);
-        let foundPlayer = players.adds.filter(player => player.player_id === playerID)
-        if((foundPlayer[0] === undefined || null)){
+        let foundPlayer = players?.adds?.filter(player => player.player_id === playerID)
+        if((foundPlayer === undefined)){
             return {position:"null"}
         } else {
             return foundPlayer[0]
@@ -67,7 +73,7 @@ export default function Transaction(props) {
     return (
         <>
             {   loadTransactions ? <p>Loading </p> :
-                    transactions.map((transaction, i) => 
+                    processedTransactions?.map((transaction, i) => 
                         <div key={i} className="my-2">
                             { 
                                 transaction.type === "trade" ?
