@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import MarketPositions from "../components/MarketPositions";
-import MarketActivity from "../components/MarketActivity";
+import MarketPositions from "../components/market/MarketPositions";
+import MarketActivity from "../components/market/MarketActivity";
 
 export default function MarketUI({
     asc,

@@ -1,51 +1,16 @@
-import React, {useState} from 'react'
-import { Icon } from '@iconify/react';
+import React from "react";
+import { Icon } from "@iconify/react";
 
-export default function PowerRankings(props) {
-    const rosters=props.rosters
-    const foundHistory=props.foundHistory
-    const winPCT=props.winPCT
-    const selectSzn=props.selectSzn
-    const league=props.league
-    const roundToHundredth=props.roundToHundredth
-    // const lineupEfficiency=props.lineupEfficiency
-
-    const [sort,setSort] = useState("")
-    const [asc,setAsc] = useState(false)
-    const handleSort = (value) => {
-        if(value === "RANK"){
-          setAsc(false)
-          setSort(value)
-        } else if(value === "W"){
-          setAsc(true)
-          setSort(value)
-        } else if(value === "L"){
-          setAsc(true)
-          setSort(value)
-        } else if(value === "Luck"){
-          setAsc(true)
-          setSort(value)
-        } else {
-          setSort("")
-        }
-    }
-             
-    const powerRankC=rosters && rosters.totalRoster.map(r => ({
-        ...r,
-        apW:foundHistory(r.roster_id).c.allPlayRecordW,
-        apL:foundHistory(r.roster_id).c.allPlayRecordL,
-        apR:winPCT(foundHistory(r.roster_id).c.allPlayRecordW,foundHistory(r.roster_id).c.allPlayRecordL)
-
-    })).sort((a,b) => b.apR - a.apR)
-    let powerRankS=league && league.history.filter(l => l.year === selectSzn)[0] !== undefined?
-        league.history.filter(l => l.year === selectSzn)[0].rosters.map(r => ({
-            ...r,
-            apW:foundHistory(r.roster_id,selectSzn).s.allPlayRecordW,
-            apL:foundHistory(r.roster_id,selectSzn).s.allPlayRecordL,
-            apR:winPCT(foundHistory(r.roster_id,selectSzn).s.allPlayRecordW,foundHistory(r.roster_id,selectSzn).s.allPlayRecordL)
-        })).sort((a,b) => b.apR - a.apR)
-    :[]
-    let pwrRank=powerRankS.length>0?powerRankS:powerRankC
+export default function PowerRankingsUI({
+    asc,
+    handleSort,
+    pwrRank,
+    roundToHundredth,
+    setAsc,
+    sort,
+    winPCT,
+}) {
+    
     return (
         <div>
             <div>

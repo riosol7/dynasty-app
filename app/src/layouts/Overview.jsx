@@ -1,8 +1,8 @@
-import React from 'react';
-import LeagueNavigation from '../components/LeagueNavigation';
-import Rankings from "../components/Rankings";
-import MarketContainer from '../containers/MarketContainer';
-import MVPContainer from '../containers/MVPContainer';
+import React from "react";
+import LeagueNavigation from "../components/LeagueNavigation";
+import MarketContainer from "../containers/MarketContainer";
+import MVPContainer from "../containers/MVPContainer";
+import RankingsContainer from "../containers/RankingsContainer";
 
 export default function Overview({
     activityBar,
@@ -59,7 +59,7 @@ export default function Overview({
                 transactions={transactions}
                 toDateTime={toDateTime}
             />
-            <Rankings
+            <RankingsContainer
                 findPlayer={findPlayer}
                 findRosterByID={findRosterByID}
                 foundHistory={foundHistory}

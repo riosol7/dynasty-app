@@ -1,5 +1,5 @@
 import React from 'react';
-import PositionChart from './charts/PositionChart';
+import PositionChart from '../charts/PositionChart';
 
 export default function MarketPositions({
     rbWaiver,

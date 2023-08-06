@@ -1,6 +1,6 @@
-import React from 'react';
-import PlayoffBracket from './PlayoffBracket';
-import ToiletBracket from './ToiletBracket';
+import React from "react";
+import PlayoffBracket from "./PlayoffBracket";
+import ToiletBracket from "./ToiletBracket";
 
 export default function PostSeasonBracket(props) {
     const league=props.league

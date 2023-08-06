@@ -1,52 +1,19 @@
-import React, {useState} from 'react';
-import { Icon } from '@iconify/react';
+import React from "react";
+import { Icon } from "@iconify/react";
 
-export default function DynastyRankings(props) {
-    const rosters=props.rosters
-    const loadRosters=props.loadRosters
-    // const loadLeague=props.loadLeague
-    // const league=props.league
-    // const roundToHundredth=props.roundToHundredth
-
-
-    const [sort, setSort] = useState("")
-    const [asc, setAsc] = useState(false)
-
-    const handleSort = (value) => {
-        if(value === "RANK"){
-          setAsc(false)
-          setSort(value)
-        } else if(value === "TOTAL"){
-          setAsc(true)
-          setSort(value)
-        } else if(value === "QB"){
-          setAsc(true)
-          setSort(value)
-        } else if(value === "RB"){
-          setAsc(true)
-          setSort(value)
-        } else if(value === "WR"){
-          setAsc(true)
-          setSort(value)
-        } else if(value === "TE"){
-            setAsc(true)
-            setSort(value)
-        } else {
-          setSort("")
-        }
-    }
-
-    const handleRank = (display_name) => {
-        let foundTeamRank = rosters.teamRank.filter(roster => roster.kct.owner.display_name === display_name)
-        return foundTeamRank[0].rank
-    }
-    const findEXP = (display_name) => {
-        let foundTotalRoster = rosters.totalRoster.filter(roster => roster.owner.display_name === display_name)
-        return foundTotalRoster[0].owner.exp
-    }
-
+export default function DynastyRankingsUI({
+    asc,
+    findEXP,
+    handleRank,
+    handleSort,
+    loadRosters,
+    processedRosters,
+    setAsc,
+    sort,
+}) {
+ 
     return (
-        <>
+        <div>
         { loadRosters ? <p>Loading </p> :
             <div className="">
                 <div className="mt-2">
@@ -162,7 +129,7 @@ export default function DynastyRankings(props) {
                 <div>
                     { 
                         sort === "QB" && asc === true ? 
-                            rosters.qbRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
+                            processedRosters?.qbRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -206,7 +173,7 @@ export default function DynastyRankings(props) {
                                 </div>    
                             )
                         : sort === "QB" && asc === false ?
-                            rosters.qbRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
+                            processedRosters?.qbRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -250,7 +217,7 @@ export default function DynastyRankings(props) {
                                 </div>    
                             )            
                         : sort === "RB" && asc === true ? 
-                            rosters.rbRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
+                            processedRosters?.rbRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -294,7 +261,7 @@ export default function DynastyRankings(props) {
                                 </div>  
                             ) 
                         : sort === "RB" && asc === false ? 
-                            rosters.rbRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
+                            processedRosters?.rbRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -338,7 +305,7 @@ export default function DynastyRankings(props) {
                                 </div>  
                             ) 
                         : sort === "WR" && asc === true ? 
-                            rosters.wrRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
+                            processedRosters?.wrRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -382,7 +349,7 @@ export default function DynastyRankings(props) {
                                 </div>     
                             )
                         : sort === "WR" && asc === false ? 
-                            rosters.wrRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
+                            processedRosters?.wrRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -426,7 +393,7 @@ export default function DynastyRankings(props) {
                                 </div>     
                             )
                         : sort === "TE" && asc === true ? 
-                            rosters.teRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
+                            processedRosters?.teRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -470,7 +437,7 @@ export default function DynastyRankings(props) {
                                 </div>      
                             ) 
                         : sort === "TE" && asc === false ? 
-                            rosters.teRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
+                            processedRosters?.teRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -514,7 +481,7 @@ export default function DynastyRankings(props) {
                                 </div>    
                             )
                         : (sort === "TOTAL" && asc === true) || (sort === "RANK" && asc === false) ? 
-                            rosters.teamRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
+                            processedRosters?.teamRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -558,7 +525,7 @@ export default function DynastyRankings(props) {
                                 </div>  
                             )
                         : (sort === "TOTAL" && asc === false) || (sort === "RANK" && asc === true) ? 
-                            rosters.teamRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
+                            processedRosters?.teamRank.sort((a,b) => b.rank - a.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -602,7 +569,7 @@ export default function DynastyRankings(props) {
                                 </div>
                             ) 
                         : 
-                            rosters.teamRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
+                            processedRosters?.teamRank.sort((a,b) => a.rank - b.rank).map((roster, i) => 
                                 <div key={i} className="team d-flex align-items-center py-3" onClick={() => (roster)}>
                                     <div className="col-sm-7 d-flex align-items-center">
                                         <div className="col-sm-1">
@@ -648,8 +615,7 @@ export default function DynastyRankings(props) {
                     }    
                 </div>  
             </div>
-        }
-          
-        </>
+        }          
+        </div>
     )
 }
