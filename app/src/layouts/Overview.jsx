@@ -1,7 +1,7 @@
 import React from 'react';
 import LeagueNavigation from '../components/LeagueNavigation';
 import Rankings from "../components/Rankings";
-import Market from '../components/Market';
+import MarketContainer from '../containers/MarketContainer';
 import MVPContainer from '../containers/MVPContainer';
 
 export default function Overview({
@@ -47,20 +47,18 @@ export default function Overview({
                 players={players}
                 rosters={rosters}
             />
-            <div className="my-5">
-                <Market
-                    findLogo={findLogo}
-                    findPlayer={findPlayer}
-                    league={league}
-                    loadOwners={loadOwners}
-                    loadTransactions={loadTransactions}
-                    owners={owners}
-                    players={players}
-                    roundToHundredth={roundToHundredth}
-                    transactions={transactions}
-                    toDateTime={toDateTime}
-                />
-            </div>
+            <MarketContainer
+                findLogo={findLogo}
+                findPlayer={findPlayer}
+                league={league}
+                loadOwners={loadOwners}
+                loadTransactions={loadTransactions}
+                owners={owners}
+                players={players}
+                roundToHundredth={roundToHundredth}
+                transactions={transactions}
+                toDateTime={toDateTime}
+            />
             <div className="">
                 <Rankings
                     findPlayer={findPlayer}
