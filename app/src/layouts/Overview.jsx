@@ -59,23 +59,21 @@ export default function Overview({
                 transactions={transactions}
                 toDateTime={toDateTime}
             />
-            <div className="">
-                <Rankings
-                    findPlayer={findPlayer}
-                    findRosterByID={findRosterByID}
-                    foundHistory={foundHistory}
-                    handleRostersBySzn={handleRostersBySzn}
-                    league={league}
-                    lineupEfficiency={lineupEfficiency}
-                    loadLeague={loadLeague}
-                    loadRosters={loadRosters}
-                    owners={owners}
-                    players={players}
-                    rosters={rosters}
-                    roundToHundredth={roundToHundredth}
-                    winPCT={winPCT}
-                />
-            </div>
+            <Rankings
+                findPlayer={findPlayer}
+                findRosterByID={findRosterByID}
+                foundHistory={foundHistory}
+                handleRostersBySzn={handleRostersBySzn}
+                league={league}
+                lineupEfficiency={lineupEfficiency}
+                loadLeague={loadLeague}
+                loadRosters={loadRosters}
+                owners={owners}
+                players={players}
+                rosters={rosters}
+                roundToHundredth={roundToHundredth}
+                winPCT={winPCT}
+            />
         </div>
     )
 }

@@ -1,7 +1,7 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 
-const SELECT_TAG_M={border:"none", background:"inherit",color:"#7d91a6",fontSize:".7rem",fontWeight:"bold"}
+const SELECT_TAG_M={border:"none", background:"inherit",color:"#7d91a6",fontSize:".7rem",fontWeight:"bold"};
 const SHOW_TAG_M={
     borderBottom:"none", 
     background:"inherit",
@@ -9,7 +9,7 @@ const SHOW_TAG_M={
     fontSize:"13.5px",
     fontWeight:"normal",
     paddingBlock:"3px",
-}
+};
 
 export default function MarketActivity ({
     asc,
@@ -33,6 +33,7 @@ export default function MarketActivity ({
     toDateTime,
     waiverBids,
 }) {
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
 
     return (
         <div className="pt-4">
@@ -198,7 +199,7 @@ export default function MarketActivity ({
                                     <td className="d-flex align-items-top">
                                         <div className="">
                                             <div className="smallHeadShot"
-                                                style={{borderRadius:"5%",width:"40px",height:"55px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
+                                                style={{borderRadius:"5%",width:"40px",height:"55px",backgroundImage: `url(${playerBaseURL}${
                                                     r.player.player_id}.jpg)`,
                                                 }}>
                                                     {

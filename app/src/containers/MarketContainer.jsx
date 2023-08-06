@@ -2,6 +2,11 @@ import React, {useState,useEffect} from 'react';
 import { processWaiverBids } from "../helpers";
 import MarketUI from '../ui/MarketUI';
 
+// IDEAS
+//  Showcase a graph of the previous QBs, RBs, WRs, TEs that were bought at what price & by who
+//  And Trades per position; draft picks EX: Joe Burrow trade for 2 1st round picks...
+//  Available players FA
+
 export default function MarketContainer({
     findLogo,
     // findPlayer,
@@ -19,9 +24,7 @@ export default function MarketContainer({
 
     const waiverBidsC = processWaiverBids(transactions, owners, players, true);
     const waiverBidsH = processWaiverBids(league.history, owners, players, false);
-
     const waiverBidsDefault=waiverBidsH && waiverBidsH.concat(waiverBidsC).filter(bid => bid.player?.position!=="DEF")
-
     const waiverBids=waiverBidsDefault&&waiverBidsDefault.filter(b=>{
         if(position==="QB"){
             return b.player.position==="QB"
@@ -46,9 +49,6 @@ export default function MarketContainer({
     const wrWaiver=waiverBidsDefault&&waiverBidsDefault.filter(b=>b.player.position==="WR")
     const teWaiver=waiverBidsDefault&&waiverBidsDefault.filter(b=>b.player.position==="TE")
     
-    // const highestBid=waiverBids&&waiverBids.sort((a,b) => b.settings.waiver_bid - a.settings.waiver_bid)
-    // const lowestBid=waiverBids&&waiverBids.sort((a,b) => a.settings.waiver_bid - b.settings.waiver_bid)
-
     const [asc,setAsc]=useState(false)
     const [sort,setSort]=useState("DATE")
 
@@ -56,10 +56,6 @@ export default function MarketContainer({
         if(s==="DATE"){
             setAsc(false)
             setSort(s)
-        // } else if(s==="OWNER"){
-        //     setSort(s)
-        // } else if(s==="POSITION"){
-        //     setSort(s)
         } else if(s==="BID"){
             setAsc(false)
             setSort(s)
@@ -119,16 +115,7 @@ export default function MarketContainer({
     for(let i=1; i <= Math.ceil(waiverBids&&waiverBids.length/recordsPerPage);i++){
         pageNumbers.push(i)
     }
-    // console.log(pageNumbers)  
-    // const handleQBMarket = () => {
-    //     // 1. map every transaction and find the player's position by using the KEY value (playerID). DONE
-    //     // 2. if conditional / filter ? the transactions by position
-    //     // 3. Determine the highest / lowest cost of player acquired and who bid on said player.
-    //     // 4. Showcase a graph of the previous QBs, RBs, WRs, TEs that were bought at what price & by who
-    //     // 5. And Trades per position; draft picks EX: Joe Burrow trade for 2 1st round picks...
-    //     // 6. Available players FA
 
-    // }
     const handleShowPage=(e)=>{
         setRecordsPerPage(e.target.value)
     }

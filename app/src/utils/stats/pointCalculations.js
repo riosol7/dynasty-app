@@ -1,5 +1,5 @@
 export const roundToHundredth = (value) => {
-    if(value !== undefined && typeof value === "number"){
+    if (typeof value === "number" && !isNaN(value)) {
         return Number(value.toFixed(2));
     
     } else return 0;

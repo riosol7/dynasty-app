@@ -27,7 +27,7 @@ export default function Home ({
 }) {
     
     return (
-        <div className="overview">
+        <div className="home">
             { 
                 loadOwners && loadRosters && loadLeague ? 
                     <div style={{height:"100vh"}}></div>
