@@ -32,7 +32,7 @@ export default function LeagueNavigation({
     loadLeague,
     setActivityBar,
 }) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
 
     return (
         <div className="my-2">
