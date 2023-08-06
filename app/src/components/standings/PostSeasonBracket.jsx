@@ -2,13 +2,15 @@ import React from "react";
 import PlayoffBracket from "./PlayoffBracket";
 import ToiletBracket from "./ToiletBracket";
 
-export default function PostSeasonBracket(props) {
-    const league=props.league
-    const selectSzn=props.selectSzn
-    const findRosterByID=props.findRosterByID
-    const foundHistory=props.foundHistory
-    const findRosterBySzn=props.findRosterBySzn
-    const handleRostersBySzn=props.handleRostersBySzn
+export default function PostSeasonBracket({
+    findRosterByID,
+    findRosterBySzn,
+    foundHistory,
+    handleRostersBySzn,
+    league,
+    processedRosters,
+    selectSzn,
+}) {
 
     return (
         <div className="d-flex justify-content-center">
@@ -28,12 +30,13 @@ export default function PostSeasonBracket(props) {
                     </div>
                     <div className="" style={{}}>
                         <PlayoffBracket
-                            league={league}
-                            selectSzn={selectSzn}
                             findRosterByID={findRosterByID}
-                            handleRostersBySzn={handleRostersBySzn}
-                            foundHistory={foundHistory}
                             findRosterBySzn={findRosterBySzn}
+                            foundHistory={foundHistory}
+                            handleRostersBySzn={handleRostersBySzn}
+                            league={league}
+                            processedRosters={processedRosters}
+                            selectSzn={selectSzn} 
                         />
                     </div> 
                 </div>
@@ -52,12 +55,13 @@ export default function PostSeasonBracket(props) {
                     </div>
                     <div className="" style={{}}>
                         <ToiletBracket
-                            league={league}
-                            selectSzn={selectSzn}
                             findRosterByID={findRosterByID}
-                            handleRostersBySzn={handleRostersBySzn}
-                            foundHistory={foundHistory}
                             findRosterBySzn={findRosterBySzn}
+                            foundHistory={foundHistory}
+                            handleRostersBySzn={handleRostersBySzn}
+                            league={league}
+                            processedRosters={processedRosters}
+                            selectSzn={selectSzn} 
                         />
                     </div>
                 </div>

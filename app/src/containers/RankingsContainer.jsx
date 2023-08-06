@@ -1,24 +1,24 @@
-import React, {useState, useEffect} from 'react'
-import RankingsUI from '../ui/RankingsUI'
+import React, {useState, useEffect} from "react";
+import RankingsUI from "../ui/RankingsUI";
 import { processRosters } from "../helpers";
 
 export default function RankingsContainer({
-    findRosterByID,
-    foundHistory,
-    handleRostersBySzn,
-    league,
-    lineupEfficiency,
-    loadLeague,
-    loadRosters,
-    owners,
-    players,
-    rosters,
-    roundToHundredth,
-    winPCT,
+  findRosterByID,
+  foundHistory,
+  handleRostersBySzn,
+  league,
+  lineupEfficiency,
+  loadLeague,
+  loadRosters,
+  owners,
+  players,
+  rosters,
+  roundToHundredth,
+  winPCT,
 }) {
-  const [rankings, setRankings] = useState("Standings")
-  const [selectSzn,setSelectSzn] = useState(league.season)
-  const [playoffs,setPlayoffs] = useState(false)
+  const [rankings, setRankings] = useState("Standings");
+  const [selectSzn, setSelectSzn] = useState(league.season);
+  const [playoffs, setPlayoffs] = useState(false);
 
   const processedRosters = processRosters(rosters, players, owners);
 

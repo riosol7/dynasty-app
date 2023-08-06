@@ -2,49 +2,49 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import StandingRow from "../components/standings/StandingRow";
 import PostSeasonBracket from "../components/standings/PostSeasonBracket";
-
+// FIX VARIABLES FOR division -> roster
 export default function StandingsUI({
-    all_time,
-    asc,
-    asc1,
-    asc2,
-    divsRanks,
-    div1Ranks,
-    div2Ranks,
-    findRosterByID,
-    findRosterBySzn,
-    foundHistory,
-    handleRank,
-    handleRostersBySzn,
-    handleSort,
-    handleSort1,
-    handleSort2,
-    league,
-    playoffs,
-    rosters,
-    selectSzn,
-    setAsc,
-    setAsc1,
-    setAsc2,
-    sort,
-    sort1,
-    sort2,
-    winPCT,
+  all_time,
+  asc,
+  asc1,
+  asc2,
+  divsRanks,
+  div1Ranks,
+  div2Ranks,
+  findRosterByID,
+  findRosterBySzn,
+  foundHistory,
+  handleRank,
+  handleRostersBySzn,
+  handleSort,
+  handleSort1,
+  handleSort2,
+  league,
+  playoffs,
+  processedRosters,
+  selectSzn,
+  setAsc,
+  setAsc1,
+  setAsc2,
+  sort,
+  sort1,
+  sort2,
+  winPCT,
 }){
 
- return (
+  return (
     <div>
-        { 
+      { // IN SEASON :: CURRENT YR
         selectSzn === league.season ?
-        // IN SEASON :: CURRENT YR
           playoffs===true?
             <PostSeasonBracket
-              league={league}
-              selectSzn={selectSzn}
               findRosterByID={findRosterByID}
-              handleRostersBySzn={handleRostersBySzn}
-              foundHistory={foundHistory}
               findRosterBySzn={findRosterBySzn}
+              foundHistory={foundHistory}
+              handleRostersBySzn={handleRostersBySzn}
+              league={league}
+              processedRosters={processedRosters}
+              selectSzn={selectSzn}              
             />  
           :
             <div className="">
@@ -780,16 +780,17 @@ export default function StandingsUI({
             }
           </div>
         : 
-          handleRostersBySzn(selectSzn, league, rosters).map((r,j) => 
+          handleRostersBySzn(selectSzn, league, processedRosters).map((r,j) => 
             playoffs===true?
               <PostSeasonBracket
                 key={j}
-                league={league}
-                selectSzn={selectSzn}
                 findRosterByID={findRosterByID}
-                handleRostersBySzn={handleRostersBySzn}
-                foundHistory={foundHistory}
                 findRosterBySzn={findRosterBySzn}
+                foundHistory={foundHistory}
+                handleRostersBySzn={handleRostersBySzn}
+                league={league}
+                processedRosters={processedRosters}
+                selectSzn={selectSzn} 
               />  
             :
               <div key={j}>

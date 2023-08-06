@@ -36,6 +36,7 @@ const processRosters = (rosters, players, owners) => {
       return {
         ...roster,
         players: foundPlayers,
+        owner: foundOwner,
         // starters: foundStarters,
         // reserve: foundReserve,
         // taxi: foundTaxi,

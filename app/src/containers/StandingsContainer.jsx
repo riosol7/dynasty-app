@@ -13,13 +13,12 @@ export default function StandingsContainer({
   selectSzn,
   winPCT,
 }){
-
-  const [sort, setSort] = useState("RANK")
-  const [asc, setAsc] = useState(false)
-  const [sort1, setSort1] = useState("RANK")
-  const [asc1, setAsc1] = useState(false)
-  const [sort2, setSort2] = useState("RANK")
-  const [asc2, setAsc2] = useState(false)
+  const [sort, setSort] = useState("RANK");
+  const [asc, setAsc] = useState(false);
+  const [sort1, setSort1] = useState("RANK");
+  const [asc1, setAsc1] = useState(false);
+  const [sort2, setSort2] = useState("RANK");
+  const [asc2, setAsc2] = useState(false);
 
   const handleSort = (value) => {
     if(value === "RANK"){
@@ -82,28 +81,28 @@ export default function StandingsContainer({
     }
   }
   const handleRank = (standing, division) => {
-    if(standing !== undefined && division !== undefined){
+    if (standing !== undefined && division !== undefined){
       return standing.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1}))
     }
-  } 
-  let divsRanks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.sort((a,b) => 
-  { if(a.settings.wins === b.settings.wins) {
+  }; 
+  let divsRanks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.sort((a,b) => { 
+    if (a.settings.wins === b.settings.wins) {
       return (b.settings.fpts) - (a.settings.fpts);
     } else {
       return b.settings.wins - a.settings.wins
     }
   }).map((team, i) => ({...team, rank:i+1})) : []
 
-  let div1Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 1).sort((a,b) => 
-  { if(a.settings.wins === b.settings.wins) {
+  let div1Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 1).sort((a,b) => { 
+    if (a.settings.wins === b.settings.wins) {
       return (b.settings.fpts) - (a.settings.fpts);
     } else {
       return b.settings.wins - a.settings.wins
     }
   }).map((team, i) => ({...team, rank:i+1})) : []
 
-  let div2Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 2).sort((a,b) => 
-  { if(a.settings.wins === b.settings.wins) {
+  let div2Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 2).sort((a,b) => { 
+    if (a.settings.wins === b.settings.wins) {
       return (b.settings.fpts) - (a.settings.fpts);
     } else {
       return b.settings.wins - a.settings.wins
@@ -111,24 +110,25 @@ export default function StandingsContainer({
   }).map((team, i) => ({...team, rank:i+1})) : []
 
   const all_time = league.owners && league.owners.map(owner => {
-    let id = owner.roster_id
+    let id = owner.roster_id;
 
-    let currentYR = processedRosters?.totalRoster?.length > 1 && processedRosters?.totalRoster.find(roster => roster.roster_id === id).settings
+    let currentYR = processedRosters?.totalRoster?.length > 1 && processedRosters?.totalRoster.find(roster => roster.roster_id === id).settings;
 
-    let foundHistory = league.history.map(szn => szn.rosters.filter(roster => roster.roster_id === id)[0])
-    let historyWs = foundHistory.reduce((acc, item) =>  acc + item.settings.wins, 0)
-    let historyLs = foundHistory.reduce((acc, item) =>  acc + item.settings.losses, 0)
-    let historyFPTS = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.fpts + "." + item.settings.fpts_decimal), 0)
-    let historyPPTS = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.ppts + "." + item.settings.ppts_decimal), 0)
-    let historyPA = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.fpts_against + "." + item.settings.fpts_against_decimal), 0)
+    let foundHistory = league.history.map(szn => szn.rosters.filter(roster => roster.roster_id === id)[0]);
+    let historyWs = foundHistory.reduce((acc, item) =>  acc + item.settings.wins, 0);
+    let historyLs = foundHistory.reduce((acc, item) =>  acc + item.settings.losses, 0);
+    let historyFPTS = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.fpts + "." + item.settings.fpts_decimal), 0);
+    let historyPPTS = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.ppts + "." + item.settings.ppts_decimal), 0);
+    let historyPA = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.fpts_against + "." + item.settings.fpts_against_decimal), 0);
 
-    let fptsCurrentYR=0;
-    let pptsCurrentYR=0;
-    let fpts_againstCurrentYR=0
-    if(currentYR.fpts!==0&&currentYR.ppts!==undefined&&currentYR.fpts_against!==undefined){
+    let fptsCurrentYR = 0;
+    let pptsCurrentYR = 0;
+    let fpts_againstCurrentYR = 0;
+
+    if (currentYR.fpts!==0 && currentYR.ppts!==undefined && currentYR.fpts_against!==undefined) {
       fptsCurrentYR = currentYR ? Number(currentYR.fpts + "." + currentYR.fpts_decimal) : 0
-      pptsCurrentYR = Number(currentYR.ppts + "." + currentYR.ppts_decimal)
-      fpts_againstCurrentYR = Number(currentYR.fpts_against + "." + currentYR.fpts_against_decimal)
+      pptsCurrentYR = Number(currentYR.ppts + "." + currentYR.ppts_decimal);
+      fpts_againstCurrentYR = Number(currentYR.fpts_against + "." + currentYR.fpts_against_decimal);
     }
 
     return {
@@ -138,53 +138,54 @@ export default function StandingsContainer({
       fpts:roundToHundredth(fptsCurrentYR + historyFPTS),
       ppts:roundToHundredth(pptsCurrentYR + historyPPTS),
       fpts_against:roundToHundredth(fpts_againstCurrentYR + historyPA)
-      }
-    } 
-  ).sort((a,b) => {
-    if(b.percentage === a.percentage){
+    }
+  }).sort((a,b) => {
+    if (b.percentage === a.percentage) {
       return b.fpts - a.fpts
     } else {
       return parseFloat(b.percentage) - parseFloat(a.percentage)
     }
   }).map((roster, idx) => ({...roster, rank:idx +1}))
 
-  const findRosterBySzn=(szn, id)=>{
-    if(szn !== undefined && id !== undefined){
-      if(szn===league.season){
-        return handleRostersBySzn(selectSzn, league, rosters).filter(r=>r.roster_id === id)[0]
+  const findRosterBySzn=(szn, id) => {
+    if (szn !== undefined && id !== undefined) {
+      if (szn===league.season){
+        console.log("processedRosters:", processedRosters)
+        return handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.roster_id === id)[0]
       } else {
         return handleRostersBySzn(selectSzn, league, rosters)[0].filter(r=>r.roster_id === id)[0]
       }
     } 
   }
-    return (
-        <StandingsUI
-            all_time={all_time}
-            asc={asc}
-            asc1={asc1}
-            asc2={asc2}
-            divsRanks={divsRanks}
-            div1Ranks={div1Ranks}
-            div2Ranks={div2Ranks}
-            findRosterByID={findRosterByID}
-            findRosterBySzn={findRosterBySzn}
-            foundHistory={foundHistory}
-            handleRank={handleRank}
-            handleRostersBySzn={handleRostersBySzn}
-            handleSort={handleSort}
-            handleSort1={handleSort1}
-            handleSort2={handleSort2}
-            league={league}
-            playoffs={playoffs}
-            rosters={rosters}
-            selectSzn={selectSzn}
-            setAsc={setAsc}
-            setAsc1={setAsc1}
-            setAsc2={setAsc2}
-            sort={sort}
-            sort1={sort1}
-            sort2={sort2}
-            winPCT={winPCT}
-        />
-    )
+  
+  return (
+    <StandingsUI
+      all_time={all_time}
+      asc={asc}
+      asc1={asc1}
+      asc2={asc2}
+      divsRanks={divsRanks}
+      div1Ranks={div1Ranks}
+      div2Ranks={div2Ranks}
+      findRosterByID={findRosterByID}
+      findRosterBySzn={findRosterBySzn}
+      foundHistory={foundHistory}
+      handleRank={handleRank}
+      handleRostersBySzn={handleRostersBySzn}
+      handleSort={handleSort}
+      handleSort1={handleSort1}
+      handleSort2={handleSort2}
+      league={league}
+      playoffs={playoffs}
+      processedRosters={processedRosters}
+      selectSzn={selectSzn}
+      setAsc={setAsc}
+      setAsc1={setAsc1}
+      setAsc2={setAsc2}
+      sort={sort}
+      sort1={sort1}
+      sort2={sort2}
+      winPCT={winPCT}
+    />
+  )
 }
