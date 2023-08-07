@@ -7,30 +7,34 @@ import Modal from '../components/modals/Modal';
 import DraftWidget from '../components/DraftWidget';
 import Power from '../components/Owner/Power';
 import { Icon } from '@iconify/react';
+import { processRosters } from "../helpers";
 
-export default function Owner(props) {
+export default function Owner({
+    activityBar,
+    findPlayer,
+    findLogo,
+    findRosterByID,
+    findRosterByName,
+    foundHistory,
+    getTotalPts,
+    league,
+    lineupEfficiency,
+    loadLeague,
+    loadMatches,
+    loadRosters,
+    owners,
+    matches,
+    matchups,
+    players,
+    rosters,
+    roundToHundredth,
+    setActivityBar,
+    winPCT,
+}) {
     const {id} = useParams()
-    const loadLeague = props.loadLeague
-    const league = props.league
-    const loadRosters = props.loadRosters
-    const rosters = props.rosters
+    const processedRosters = processRosters(rosters, players, owners);
     // const loadTransactions = props.loadTransactions
     // const transactions = props.transactions
-    const loadMatches = props.loadMatches
-    const matches = props.matches
-    const matchups = props.matchups
-    const players = props.players
-    const findPlayer = props.findPlayer
-    const findLogo = props.findLogo
-    const activityBar=props.activityBar
-    const setActivityBar=props.setActivityBar
-    const roundToHundredth=props.roundToHundredth
-    const winPCT=props.winPCT
-    const getTotalPts=props.getTotalPts
-    const findRosterByID=props.findRosterByID
-    const findRosterByName=props.findRosterByName
-    const foundHistory=props.foundHistory
-    const lineupEfficiency=props.lineupEfficiency
 
     const [tab, setTab] = useState("Summary")
     const [isOpen, setIsOpen] = useState(false)
@@ -93,7 +97,7 @@ export default function Owner(props) {
         return foundSzn[0].filter(team => team.roster_id === Number(id))
     }
 
-    let foundStats = rosters.totalRoster && rosters.totalRoster.find(roster => roster.roster_id === Number(id)).settings
+    let foundStats = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id)).settings
     
     let foundMyMatchups = matchups && matchups.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
         if(team.filter(owner => owner.roster_id === Number(id)).length > 0){
@@ -102,7 +106,7 @@ export default function Owner(props) {
         return acc
     })).map(match => match.sort((a,b) => b.points - a.points))
      
-    let rosterRank = rosters.totalRoster && rosters.totalRoster.sort((a,b) => 
+    let rosterRank = processedRosters?.totalRoster?.sort((a,b) => 
     { if(a.settings.wins === b.settings.wins) {
         return (b.settings.fpts) - (a.settings.fpts);
       } else {
@@ -205,10 +209,12 @@ export default function Owner(props) {
     // const handleWeeklyMatch = (e) => {
     //     setWeeklyMatch(e.target.value)
     // }
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
+
     return (
-        loadLeague && loadRosters && loadMatches ? <div style={{background:"black", width:"100%", height:"100vh"}}></div>:
+        loadLeague && loadRosters && loadMatches ? <div style={{width:"100%", height:"100vh"}}></div>:
             <>
-                <div className="" style={{paddingLeft:"5.7em",width:"100%",background:"#0f0f0f",height:"100%"}}>
+                <div className="home">
                     <div className="pt-3" style={{background:"black", height:"100%", minHeight:"100vh"}}>
                         <div className="col my-2 mx-5">
                             <LeagueNavigation
@@ -219,13 +225,13 @@ export default function Owner(props) {
                             />
                         </div>
                         {
-                            rosters.totalRoster && league.history && matches ?
+                            processedRosters?.totalRoster && league.history && matches ?
                                 rosterRank.filter(roster => roster.roster_id === Number(id)).map((owner,i) => 
                                     <div key={i} className="">
                                         <div className="d-flex align-items-center justify-content-between flex-wrap mx-5">
                                             <div className="d-flex align-items-center my-4">
                                                 <div>
-                                                    <img src={`https://sleepercdn.com/avatars/thumbs/${owner.owner.avatar}`} style={{borderRadius:"50%", border:"4px outset #a9dfd8", padding:"4px", background:"black"}} alt="profile"/>
+                                                    <img src={`${avatarBaseURL}${owner.owner.avatar}`} style={{borderRadius:"50%", border:"4px outset #a9dfd8", padding:"4px", background:"black"}} alt="profile"/>
                                                 </div>
                                                 <div className="mx-3">
                                                     <div className="d-flex align-items-center">
@@ -273,6 +279,7 @@ export default function Owner(props) {
                                                     findPlayer={findPlayer}
                                                     findLogo={findLogo}
                                                     openModal={openModal}
+                                                    players={players}
                                                 />
                                             </div>
                                         </div>
@@ -321,6 +328,7 @@ export default function Owner(props) {
                                                         findRosterByID={findRosterByID}
                                                         findRecord={findRecord}
                                                         players={players}
+                                                        processedRosters={processedRosters}
                                                         findLogo={findLogo}
                                                         loadRosters={loadRosters}
                                                         rosters={rosters}

@@ -1,17 +1,19 @@
 import React from 'react'
 import { Icon } from '@iconify/react';
 
-export default function VS(props) {
-    const id=props.id
-    const findRosterByID=props.findRosterByID
-    const handleVS=props.handleVS
-    const vs=props.vs
-    const selectAllPlay=props.selectAllPlay
-    const league=props.league
-    const handleAllPlay=props.handleAllPlay
-    const foundHistory=props.foundHistory
-    const winPCT=props.winPCT
-    const openModal=props.openModal
+export default function VS({
+    findRosterByID,
+    foundHistory,
+    handleAllPlay,
+    handleVS,
+    id,
+    league,
+    openModal,
+    processedRosters,
+    selectAllPlay,
+    vs,
+    winPCT,
+}) {   
     function MouseOver(event) {
         event.target.style.color="#a9dfd8";
     }
@@ -78,19 +80,19 @@ export default function VS(props) {
                                             <div className="d-flex align-items-center">
                                                 <div>
                                                     <img style={{width:"48px", borderRadius:"0%"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                        findRosterByID(t.oID).owner ? 
-                                                            findRosterByID(t.oID).owner.avatar 
+                                                        findRosterByID(t.oID, processedRosters.totalRoster).owner ? 
+                                                            findRosterByID(t.oID, processedRosters.totalRoster).owner.avatar 
                                                         : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                                 </div>
                                                 <div className="" style={{marginLeft:"14px"}}>
                                                     {
-                                                        findRosterByID(t.oID).owner ?
-                                                        findRosterByID(t.oID).owner.team_name ?
+                                                        findRosterByID(t.oID, processedRosters.totalRoster).owner ?
+                                                        findRosterByID(t.oID, processedRosters.totalRoster).owner.team_name ?
                                                             <div className="">
-                                                                <p className="m-0">{findRosterByID(t.oID).owner.display_name}</p>
-                                                                <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(t.oID).owner.team_name}</p>
+                                                                <p className="m-0">{findRosterByID(t.oID, processedRosters.totalRoster).owner.display_name}</p>
+                                                                <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(t.oID, processedRosters.totalRoster).owner.team_name}</p>
                                                             </div>
-                                                        :<p className="m-0">{findRosterByID(t.oID).owner.display_name}</p>
+                                                        :<p className="m-0">{findRosterByID(t.oID, processedRosters.totalRoster).owner.display_name}</p>
                                                         :<></>
                                                     }
                                                 </div>
@@ -124,17 +126,18 @@ export default function VS(props) {
                                         <div className="col d-flex align-items-center" style={{minWidth:"230px"}}>
                                             <div>
                                                 <img style={{width:"48px", borderRadius:"0%"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                    findRosterByID(o.oID).owner ? findRosterByID(o.oID).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
+                                                    findRosterByID(o.oID, processedRosters.totalRoster)?.owner?.avatar ? findRosterByID(o.oID, processedRosters.totalRoster).owner.avatar 
+                                                    : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                             </div>
                                             <div className="" style={{marginLeft:"14px"}}>
                                                 {
-                                                    findRosterByID(o.oID).owner ?
-                                                    findRosterByID(o.oID).owner.team_name ?
+                                                    findRosterByID(o.oID, processedRosters.totalRoster).owner ?
+                                                    findRosterByID(o.oID, processedRosters.totalRoster).owner.team_name ?
                                                         <>
-                                                            <p className="m-0">{findRosterByID(o.oID).owner.display_name}</p>
-                                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(o.oID).owner.team_name}</p>
+                                                            <p className="m-0">{findRosterByID(o.oID, processedRosters.totalRoster).owner.display_name}</p>
+                                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(o.oID, processedRosters.totalRoster).owner.team_name}</p>
                                                         </>
-                                                    :<p className="m-0">{findRosterByID(o.oID).owner.display_name}</p>
+                                                    :<p className="m-0">{findRosterByID(o.oID, processedRosters.totalRoster).owner.display_name}</p>
                                                     :<></>
                                                 }
                                             </div>
@@ -161,17 +164,17 @@ export default function VS(props) {
                                         <div className="col d-flex align-items-center" style={{minWidth:"230px"}}>
                                             <div>
                                                 <img style={{width:"48px", borderRadius:"0%"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                    findRosterByID(o.oID).owner ? findRosterByID(o.oID).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
+                                                    findRosterByID(o.oID, processedRosters.totalRoster).owner ? findRosterByID(o.oID, processedRosters.totalRoster).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                             </div>
                                             <div className="" style={{marginLeft:"14px"}}>
                                                 {
-                                                    findRosterByID(o.oID).owner ?
-                                                    findRosterByID(o.oID).owner.team_name ?
+                                                    findRosterByID(o.oID, processedRosters.totalRoster).owner ?
+                                                    findRosterByID(o.oID, processedRosters.totalRoster).owner.team_name ?
                                                         <>
-                                                            <p className="m-0">{findRosterByID(o.oID).owner.display_name}</p>
-                                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(o.oID).owner.team_name}</p>
+                                                            <p className="m-0">{findRosterByID(o.oID, processedRosters.totalRoster).owner.display_name}</p>
+                                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(o.oID, processedRosters.totalRoster).owner.team_name}</p>
                                                         </>
-                                                    :<p className="m-0">{findRosterByID(o.oID).owner.display_name}</p>
+                                                    :<p className="m-0">{findRosterByID(o.oID, processedRosters.totalRoster).owner.display_name}</p>
                                                     :<></>
                                                 }
                                             </div>
@@ -197,17 +200,17 @@ export default function VS(props) {
                                     <div className="col d-flex align-items-center" style={{minWidth:"230px"}}>
                                         <div>
                                             <img style={{width:"48px", borderRadius:"0%"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                findRosterByID(o.oID).owner ? findRosterByID(o.oID).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
+                                                findRosterByID(o.oID, processedRosters.totalRoster).owner ? findRosterByID(o.oID, processedRosters.totalRoster).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                         </div>
                                         <div className="" style={{marginLeft:"14px"}}>
                                             {
-                                                findRosterByID(o.oID).owner ?
-                                                findRosterByID(o.oID).owner.team_name ?
+                                                findRosterByID(o.oID, processedRosters.totalRoster).owner ?
+                                                findRosterByID(o.oID, processedRosters.totalRoster).owner.team_name ?
                                                     <>
-                                                        <p className="m-0">{findRosterByID(o.oID).owner.display_name}</p>
-                                                        <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(o.oID).owner.team_name}</p>
+                                                        <p className="m-0">{findRosterByID(o.oID, processedRosters.totalRoster).owner.display_name}</p>
+                                                        <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(o.oID, processedRosters.totalRoster).owner.team_name}</p>
                                                     </>
-                                                :<p className="m-0">{findRosterByID(o.oID).owner.display_name}</p>
+                                                :<p className="m-0">{findRosterByID(o.oID, processedRosters.totalRoster).owner.display_name}</p>
                                                 :<></>
                                             }
                                         </div>

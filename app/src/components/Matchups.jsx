@@ -4,20 +4,23 @@ import { Icon } from '@iconify/react';
 import { Autoplay } from 'swiper';
 import LoadMatchups from './temp/LoadMatchups';
 
-export default function Matchups(props) {
-    let id=props.id;
-    let foundMyMatchups=props.foundMyMatchups
-    const players=props.players
-    const findRosterByID=props.findRosterByID
-    const findRecord=props.findRecord
-    const findLogo=props.findLogo
-    const foundHistory=props.foundHistory
-    const league=props.league
-    // const loadLeague = props.loadLeague
-    const weeklyMatch=props.weeklyMatch
-    const findWeeklyMatchups=props.findWeeklyMatchups
-    const openModal=props.openModal
-    const roundToHundredth=props.roundToHundredth
+export default function Matchups({
+    id,
+    findLogo,
+    findRecord,
+    findRosterByID,
+    findWeeklyMatchups,
+    foundHistory,
+    foundMyMatchups,
+    league,
+    loadLeague,
+    openModal,
+    players,
+    processedRosters,
+    roundToHundredth,
+    weeklyMatch,
+}) {
+    const foundRoster = findRosterByID(id, processedRosters.totalRoster);
 
     const foundPlayer = (m, pts) => {
         let playerID;
@@ -174,7 +177,7 @@ export default function Matchups(props) {
                                                             <div className="d-flex align-items-center justify-content-start mb-2">
                                                                 <div className="d-flex align-items-center mx-2">
                                                                     <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                                        findRosterByID(id).owner ? findRosterByID(id).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
+                                                                        foundRoster?.owner?.avatar ? foundRoster.owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                                                 </div>
                                                                 {
                                                                     idx === 14 ?
@@ -187,16 +190,16 @@ export default function Matchups(props) {
                                                             {
                                                                 foundHistory(id).c.playoff === true ?
                                                                     idx === 14 ? 
-                                                                        <p className="m-0">Clinched Division {findRosterByID(id).settings.division} and Bye</p>
+                                                                        <p className="m-0">Clinched Division {foundRoster.settings.division} and Bye</p>
                                                                     :  
                                                                         <div className="d-flex justify-content-between align-items-center">
-                                                                            <p className="m-0">{findRosterByID(id).rank}th overall</p>
-                                                                            <p className="m-0">{findRosterByID(id).settings.wins}-{findRosterByID(id).settings.losses}</p>
+                                                                            <p className="m-0">{foundRoster.rank}th overall</p>
+                                                                            <p className="m-0">{foundRoster.settings.wins}-{foundRoster.settings.losses}</p>
                                                                         </div>
                                                                 : 
                                                                     <div className="d-flex justify-content-between align-items-center">
-                                                                        <p className="m-0">{findRosterByID(id).rank}th overall</p>
-                                                                        <p className="m-0">{findRosterByID(id).settings.wins}-{findRosterByID(id).settings.losses}</p>
+                                                                        <p className="m-0">{foundRoster.rank}th overall</p>
+                                                                        <p className="m-0">{foundRoster.settings.wins}-{foundRoster.settings.losses}</p>
                                                                     </div>
                                                             }
                                                         </div>
@@ -244,10 +247,10 @@ export default function Matchups(props) {
                                                                             <p className="m-0" style={{color:"#c9cfd1"}}>vs</p>
                                                                             <div className="d-flex align-items-center mx-2">
                                                                                 <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                                                    findRosterByID(o.roster_id).owner ? findRosterByID(o.roster_id).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
+                                                                                    findRosterByID(o.roster_id, processedRosters.totalRoster)?.owner?.avatar ? findRosterByID(o.roster_id, processedRosters.totalRoster).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                                                             </div>
-                                                                            <p className="m-0 text-truncate" style={{maxWidth:"140px"}}>{findRosterByID(o.roster_id).owner.team_name ?
-                                                                                findRosterByID(o.roster_id).owner.team_name:findRosterByID(o.roster_id).owner.display_name}
+                                                                            <p className="m-0 text-truncate" style={{maxWidth:"140px"}}>{findRosterByID(o.roster_id, processedRosters.totalRoster)?.owner?.team_name ?
+                                                                                findRosterByID(o.roster_id, processedRosters.totalRoster).owner.team_name:findRosterByID(o.roster_id, processedRosters.totalRoster).owner.display_name}
                                                                             </p>
                                                                         </div>
                                                                         
@@ -481,7 +484,7 @@ export default function Matchups(props) {
                                                             <div className="d-flex align-items-center justify-content-start mb-2">
                                                                 <div className="d-flex align-items-center mx-2">
                                                                     <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                                        findRosterByID(id).owner ? findRosterByID(id).owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
+                                                                        foundRoster?.owner?.avatar ? foundRoster.owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                                                 </div>
                                                                 {
                                                                     idx === 14 ?
@@ -494,16 +497,16 @@ export default function Matchups(props) {
                                                             {
                                                                 foundHistory(id,weeklyMatch).s.playoff === true ?
                                                                     idx === 14 ? 
-                                                                        <p className="m-0">Clinched Division {findRosterByID(id).settings.division} and Bye</p>
+                                                                        <p className="m-0">Clinched Division {foundRoster.settings.division} and Bye</p>
                                                                     :  
                                                                         <div className="d-flex justify-content-between align-items-center">
-                                                                            <p className="m-0">{findRosterByID(id).rank}th overall</p>
-                                                                            <p className="m-0">{findRosterByID(id).settings.wins}-{findRosterByID(id).settings.losses}</p>
+                                                                            <p className="m-0">{foundRoster.rank}th overall</p>
+                                                                            <p className="m-0">{foundRoster.settings.wins}-{foundRoster.settings.losses}</p>
                                                                         </div>
                                                                 : 
                                                                     <div className="d-flex justify-content-between align-items-center">
-                                                                        <p className="m-0">{findRosterByID(id).rank}th overall</p>
-                                                                        <p className="m-0">{findRosterByID(id).settings.wins}-{findRosterByID(id).settings.losses}</p>
+                                                                        <p className="m-0">{foundRoster.rank}th overall</p>
+                                                                        <p className="m-0">{foundRoster.settings.wins}-{foundRoster.settings.losses}</p>
                                                                     </div>
                                                             }
                                                         </div>

@@ -1,15 +1,16 @@
 import React,{useState} from 'react'
 import { Icon } from '@iconify/react';
 import {logos} from "../assets/logos";
-export default function Roster(props) {
-    const owner = props.owner
-    const rosters = props.rosters
-    const roundToHundredth = props.roundToHundredth
-    const findPlayer = props.findPlayer
-    const isOdd = props.isOdd
-    const tab=props.tab
-    const getTotalPts=props.getTotalPts
-
+export default function Roster({
+    findPlayer,
+    getTotalPts,
+    isOdd,
+    owner,
+    players,
+    rosters,
+    roundToHundredth,
+    tab,
+}) {
     const [showQBs, setShowQBs] = useState(true)
     const [qbArrow, setQbArrow] = useState(false)
     const [showRBs, setShowRBs] = useState(true)
@@ -258,10 +259,10 @@ export default function Roster(props) {
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
                                                 <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id).number} {player.position} - {player.team}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -336,10 +337,10 @@ export default function Roster(props) {
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
                                             <p className="m-0 bold">{getTopQB(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopQB(owner.kct.owner.display_name).player_id).number} {getTopQB(owner.kct.owner.display_name).position} - {getTopQB(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopQB(owner.kct.owner.display_name).player_id, players).number} {getTopQB(owner.kct.owner.display_name).position} - {getTopQB(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopQB(owner.kct.owner.display_name).player_id).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopQB(owner.kct.owner.display_name).player_id, players).years_exp}</p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -482,10 +483,10 @@ export default function Roster(props) {
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
                                                 <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id).number} {player.position} - {player.team}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -560,10 +561,10 @@ export default function Roster(props) {
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
                                             <p className="m-0 bold">{getTopRB(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopRB(owner.kct.owner.display_name).player_id).number} {getTopRB(owner.kct.owner.display_name).position} - {getTopRB(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopRB(owner.kct.owner.display_name).player_id, players).number} {getTopRB(owner.kct.owner.display_name).position} - {getTopRB(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopRB(owner.kct.owner.display_name).player_id).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopRB(owner.kct.owner.display_name).player_id, players).years_exp}</p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -705,10 +706,10 @@ export default function Roster(props) {
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
                                                 <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id).number} {player.position} - {player.team}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -783,10 +784,10 @@ export default function Roster(props) {
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
                                             <p className="m-0 bold">{getTopWR(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopWR(owner.kct.owner.display_name).player_id).number} {getTopWR(owner.kct.owner.display_name).position} - {getTopWR(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopWR(owner.kct.owner.display_name).player_id, players).number} {getTopWR(owner.kct.owner.display_name).position} - {getTopWR(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopWR(owner.kct.owner.display_name).player_id).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopWR(owner.kct.owner.display_name).player_id, players).years_exp}</p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -934,10 +935,10 @@ export default function Roster(props) {
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
                                                 <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id).number} {player.position} - {player.team}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
@@ -1012,10 +1013,10 @@ export default function Roster(props) {
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
                                             <p className="m-0 bold">{getTopTE(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopTE(owner.kct.owner.display_name).player_id).number} {getTopTE(owner.kct.owner.display_name).position} - {getTopTE(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopTE(owner.kct.owner.display_name).player_id, players).number} {getTopTE(owner.kct.owner.display_name).position} - {getTopTE(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopTE(owner.kct.owner.display_name).player_id).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopTE(owner.kct.owner.display_name).player_id, players).years_exp}</p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>

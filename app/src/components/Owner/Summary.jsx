@@ -14,6 +14,7 @@ export default function Summary(props) {
     const league = props.league
     const foundMyMatchups = props.foundMyMatchups
     const players = props.players
+    const processedRosters=props.processedRosters
     const rosters = props.rosters
     const loadRosters=props.loadRosters
     const foundHistory = props.foundHistory
@@ -229,6 +230,7 @@ export default function Summary(props) {
                             findRecord={findRecord}
                             foundHistory={foundHistory}
                             players={players}
+                            processedRosters={processedRosters}
                             findLogo={findLogo}
                             weeklyMatch={weeklyMatch}
                             loadLeague={loadLeague}
@@ -240,18 +242,19 @@ export default function Summary(props) {
                     </div>
                 </div>
             </div>
-            <div className="my-4">
+            {/* <div className="my-4">
                 <div className="col">
                     <LineChart
                         id={id}
+                        findRosterByID={findRosterByID}
+                        foundHistory={foundHistory}
                         loadRosters={loadRosters}
+                        processedRosters={processedRosters}
                         rosters={rosters}
                         weeklyMatch={weeklyMatch}
-                        foundHistory={foundHistory}
-                        findRosterByID={findRosterByID}
                     />
                 </div>
-            </div>
+            </div> */}
             <div className="py-4">
                 <Stats
                     id={id}
@@ -272,16 +275,17 @@ export default function Summary(props) {
             </div>
             <div className="py-4">
                 <VS
-                    id={id}
                     findRosterByID={findRosterByID}
                     foundHistory={foundHistory}
-                    handleVS={handleVS}
-                    vs={vs}
-                    selectAllPlay={selectAllPlay}
-                    league={league}
                     handleAllPlay={handleAllPlay}
-                    winPCT={winPCT}
+                    handleVS={handleVS}
+                    id={id}
+                    league={league}
                     openModal={openModal}
+                    processedRosters={processedRosters}
+                    selectAllPlay={selectAllPlay}
+                    vs={vs}
+                    winPCT={winPCT}
                 />
             </div>
             {/* <div className="py-4">
@@ -298,14 +302,15 @@ export default function Summary(props) {
             </div> */}
             <div className="py-4">
                 <Roster
-                    owner={owner}
-                    rosters={rosters}
-                    roundToHundredth={roundToHundredth}
                     findLogo={findLogo}
                     findPlayer={findPlayer}
                     isOdd={isOdd}
-                    tab={tab}
                     getTotalPts={getTotalPts}
+                    owner={owner}
+                    players={players}
+                    rosters={processedRosters}
+                    roundToHundredth={roundToHundredth}
+                    tab={tab}
                 />
             </div>
             <div>

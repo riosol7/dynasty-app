@@ -1,16 +1,19 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-export default function LineChart(props) {
-    const id=props.id
-    // const loadRosters=props.loadRosters
-    // const rosters=props.rosters
-    const weeklyMatch=props.weeklyMatch
-    const foundHistory=props.foundHistory
-    const findRosterByID=props.findRosterByID
+export default function LineChart({
+    id,
+    findRosterByID,
+    foundHistory,
+    processedRosters,
+    weeklyMatch,
+}) {
+
+    const foundRoster = findRosterByID(id, processedRosters)?.totalRoster;
+
     let lineSeriesC = [
         {
-            name:findRosterByID(id).owner.display_name,
+            name:foundRoster.owner.display_name,
             data:foundHistory(id).c.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
         },
         {
@@ -24,7 +27,7 @@ export default function LineChart(props) {
     ]
     let lineSeriesS = [
         {
-            name:findRosterByID(id).owner.display_name,
+            name:foundRoster.owner.display_name,
             data:foundHistory(id,weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
         },
         {

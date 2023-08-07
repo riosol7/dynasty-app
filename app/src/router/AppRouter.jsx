@@ -65,6 +65,7 @@ const AppRouter = ({
                     loadTransactions,
                     matches,
                     matchups,
+                    owners,
                     players,
                     rosters,
                     roundToHundredth,
