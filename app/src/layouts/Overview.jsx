@@ -1,5 +1,5 @@
 import React from "react";
-import LeagueNavigation from "../components/LeagueNavigation";
+import LeagueNavigation from "./LeagueNavigation";
 import MarketContainer from "../containers/MarketContainer";
 import MVPContainer from "../containers/MVPContainer";
 import RankingsContainer from "../containers/RankingsContainer";

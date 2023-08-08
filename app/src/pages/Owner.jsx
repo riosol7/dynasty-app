@@ -1,24 +1,21 @@
 import React, {useState, useEffect} from 'react'
 import { useParams } from "react-router-dom";
-import LeagueNavigation from "../components/LeagueNavigation";
-import Summary from '../components/Owner/Summary';
-import Dynasty from '../components/Owner/Dynasty';
-import Modal from '../components/modals/Modal';
-import DraftWidget from '../components/DraftWidget';
-import Power from '../components/Owner/Power';
-import { Icon } from '@iconify/react';
 import { processRosters } from "../helpers";
+import LeagueNavigation from "../layouts/LeagueNavigation";
+import OwnerHeader from "../layouts/OwnerHeader";
+import OwnerBody from "../layouts/OwnerBody";
+import Modal from "../components/modals/Modal";
 
 export default function Owner({
     activityBar,
     findPlayer,
     findLogo,
     findRosterByID,
-    findRosterByName,
+    // findRosterByName,
     foundHistory,
-    getTotalPts,
+    // getTotalPts,
     league,
-    lineupEfficiency,
+    // lineupEfficiency,
     loadLeague,
     loadMatches,
     loadRosters,
@@ -27,16 +24,15 @@ export default function Owner({
     matchups,
     players,
     rosters,
-    roundToHundredth,
+    // roundToHundredth,
     setActivityBar,
-    winPCT,
+    // winPCT,
 }) {
     const {id} = useParams()
     const processedRosters = processRosters(rosters, players, owners);
     // const loadTransactions = props.loadTransactions
     // const transactions = props.transactions
 
-    const [tab, setTab] = useState("Summary")
     const [isOpen, setIsOpen] = useState(false)
     const [match, setMatch] = useState([])
     const [oID, setOID]=useState("")
@@ -84,27 +80,6 @@ export default function Owner({
         setIsOpen(false)
         setMatch([])
     }
-    const handleSzn = (yr) => {
-        let foundSzn = league.history.filter(l => l.year === yr).map((l,) => 
-          l.rosters.sort((a,b) => {
-            if(a.settings.wins === b.settings.wins) {
-              return Number(b.settings.fpts + "." + b.settings.fpts_decimal) - Number(a.settings.fpts + "." + a.settings.fpts_decimal);
-            } else {
-              return b.settings.wins - a.settings.wins
-            }
-          }).map((roster, idx) => ({...roster, rank:idx+1}))
-        )
-        return foundSzn[0].filter(team => team.roster_id === Number(id))
-    }
-
-    let foundStats = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id)).settings
-    
-    let foundMyMatchups = matchups && matchups.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
-        if(team.filter(owner => owner.roster_id === Number(id)).length > 0){
-            return team
-        }  
-        return acc
-    })).map(match => match.sort((a,b) => b.points - a.points))
      
     let rosterRank = processedRosters?.totalRoster?.sort((a,b) => 
     { if(a.settings.wins === b.settings.wins) {
@@ -114,17 +89,6 @@ export default function Owner({
       }
     }).map((team, i) => ({...team, rank:i+1}))
 
-    let totalPtsPerGame = (p ,s) => {
-        if(s === "All Time"){
-            return roundToHundredth(Number(p/(foundHistory(id).allTime.w + foundHistory(id).allTime.l))) 
-        } else if(Number(s) <= 2020){
-            return roundToHundredth(Number(p/13))
-        } else if(Number(s) > 2020){
-            return roundToHundredth(Number(p/14))
-        } else if(s === league.season){
-            return roundToHundredth(Number(p/(foundStats.losses + foundStats.wins + foundStats.ties)))
-        }
-    }    
     let findRecord = (ms, wk) => {
         let w = 0;
         let l = 0;
@@ -209,203 +173,49 @@ export default function Owner({
     // const handleWeeklyMatch = (e) => {
     //     setWeeklyMatch(e.target.value)
     // }
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
 
     return (
         loadLeague && loadRosters && loadMatches ? <div style={{width:"100%", height:"100vh"}}></div>:
             <>
                 <div className="home">
-                    <div className="pt-3" style={{background:"black", height:"100%", minHeight:"100vh"}}>
-                        <div className="col my-2 mx-5">
-                            <LeagueNavigation
-                                league={league}
-                                loadLeague={loadLeague}
-                                activityBar={activityBar}
-                                setActivityBar={setActivityBar}
-                            />
-                        </div>
+                    <div className="pt-3 px-5">
+                        <LeagueNavigation
+                            activityBar={activityBar}
+                            league={league}
+                            loadLeague={loadLeague}
+                            setActivityBar={setActivityBar}
+                        />
                         {
-                            processedRosters?.totalRoster && league.history && matches ?
+                            processedRosters?.totalRoster && league?.history && matches ?
                                 rosterRank.filter(roster => roster.roster_id === Number(id)).map((owner,i) => 
                                     <div key={i} className="">
-                                        <div className="d-flex align-items-center justify-content-between flex-wrap mx-5">
-                                            <div className="d-flex align-items-center my-4">
-                                                <div>
-                                                    <img src={`${avatarBaseURL}${owner.owner.avatar}`} style={{borderRadius:"50%", border:"4px outset #a9dfd8", padding:"4px", background:"black"}} alt="profile"/>
-                                                </div>
-                                                <div className="mx-3">
-                                                    <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{fontSize:"18px"}}>
-                                                            {
-                                                                owner.owner.team_name ?
-                                                                    owner.owner.team_name
-                                                                :
-                                                                    owner.owner.display_name
-                                                            }
-                                                        </p>
-                                                        <div>
-                                                            <p style={{color:"#cbcbcb", fontWeight:"lighter", paddingLeft:"6px"}} className="m-0">@{owner.owner.display_name}</p>         
-                                                        </div>
-                                                    </div>
-                                                    <div className="d-flex align-items-center">
-
-                                                    </div>
-                            
-                                                    <p className="m-0 d-flex align-items-center" style={{fontSize:"14.5px"}}>
-                                                        {owner.settings.wins}
-                                                        <span className="" style={{color:"whitesmoke"}}>-</span>  
-                                                        {owner.settings.losses}
-                                                        <Icon icon="ic:round-circle" className="mx-2" style={{fontSize:".35em", color:"#698b87"}}/>
-                                                        <span className=""style={{color:"whitesmoke"}}>{owner.rank}</span>
-                                                        <span style={{}}>{
-                                                            owner.rank === 1?
-                                                                "st"
-                                                            : owner.rank === 2?
-                                                                "nd"
-                                                            : owner.rank === 3?
-                                                                "rd"
-                                                            : "th"
-                                                        } </span>
-                                                    </p>
-                                                    <p className="m-0 bold" style={{fontSize:"11.5px",color:"#7d91a6"}}>
-                                                        <span className="">EXP</span> {owner.owner.exp}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                            <div className="my-4">
-                                                <DraftWidget
-                                                    league={league}
-                                                    topDraftPick={topDraftPick}
-                                                    findPlayer={findPlayer}
-                                                    findLogo={findLogo}
-                                                    openModal={openModal}
-                                                    players={players}
-                                                />
-                                            </div>
-                                        </div>
-                                        <div className="mx-5">
-                                            <div className="d-flex align-items-center">
-                                                {
-                                                    tab === "Summary" ?
-                                                        <div className="pb-2 px-3" style={{borderBottom:"2px solid #a9dfd8"}}>
-                                                            <p className="m-0">Summary</p>
-                                                        </div>
-                                                    :
-                                                        <div className="pb-2 px-3" onClick={() => setTab("Summary")}>
-                                                            <p className="m-0">Summary</p>
-                                                        </div>
-                                                }
-                                                {
-                                                    tab === "Dynasty" ?
-                                                        <div className="pb-2 px-3" style={{borderBottom:"2px solid #a9dfd8"}}>
-                                                            <p className="m-0">Dynasty</p>
-                                                        </div>
-                                                    :
-                                                        <div className="pb-2 px-3" onClick={() => setTab("Dynasty")}>
-                                                            <p className="m-0">Dynasty</p>
-                                                        </div>
-                                                }
-                                                {
-                                                    tab === "Power" ?
-                                                        <div className="pb-2 px-3" style={{borderBottom:"2px solid #a9dfd8"}}>
-                                                            <p className="m-0">Power</p>
-                                                        </div>
-                                                    :
-                                                        <div className="pb-2 px-3" onClick={() => setTab("Power")}>
-                                                            <p className="m-0">Power</p>
-                                                        </div>
-                                                }
-                                            </div>
-                                        </div>
-                                        <div style={{}} className="px-5">
-                                            {
-                                                tab === "Summary" ?
-                                                    <Summary
-                                                        id={id}
-                                                        loadLeague={loadLeague}
-                                                        league={league}
-                                                        foundMyMatchups={foundMyMatchups}
-                                                        findRosterByID={findRosterByID}
-                                                        findRecord={findRecord}
-                                                        players={players}
-                                                        processedRosters={processedRosters}
-                                                        findLogo={findLogo}
-                                                        loadRosters={loadRosters}
-                                                        rosters={rosters}
-                                                        foundHistory={foundHistory}
-                                                        owner={owner}
-                                                        handleSzn={handleSzn}
-                                                        winPCT={winPCT}
-                                                        roundToHundredth={roundToHundredth}
-                                                        lineupEfficiency={lineupEfficiency}
-                                                        totalPtsPerGame={totalPtsPerGame}
-                                                        findPlayer={findPlayer}
-                                                        isOdd={isOdd}
-                                                        openModal={openModal}
-                                                        tab={tab}
-                                                        getTotalPts={getTotalPts}
-                                                        // weeklyMatch={weeklyMatch}
-                                                        // findWeeklyMatchups={findWeeklyMatchups}
-                                                        // handleWeeklyMatch={handleWeeklyMatch}
-                                                        // vs={vs}
-                                                        // handleAllPlay={handleAllPlay}
-                                                        // handleVS={handleVS}
-                                                        // selectAllPlay={selectAllPlay}
-                                                    />
-                                                : tab === "Dynasty" ?
-                                                    <Dynasty
-                                                        id={id}
-                                                        loadLeague={loadLeague}
-                                                        league={league}
-                                                        players={players}
-                                                        loadRosters={loadRosters}
-                                                        rosters={rosters}
-                                                        foundHistory={foundHistory}
-                                                        owner={owner}
-                                                        findLogo={findLogo}
-                                                        winPCT={winPCT}
-                                                        roundToHundredth={roundToHundredth}
-                                                        findPlayer={findPlayer}
-                                                        isOdd={isOdd}
-                                                        tab={tab}
-                                                        findRosterByName={findRosterByName}
-                                                    />
-                                                : tab === "Power" ?
-                                                    <Power
-                                                        id={id}
-                                                        loadLeague={loadLeague}
-                                                        league={league}
-                                                        foundMyMatchups={foundMyMatchups}
-                                                        findRosterByID={findRosterByID}
-                                                        findRecord={findRecord}
-                                                        players={players}
-                                                        findLogo={findLogo}
-                                                        loadRosters={loadRosters}
-                                                        rosters={rosters}
-                                                        foundHistory={foundHistory}
-                                                        owner={owner}
-                                                        handleSzn={handleSzn}
-                                                        winPCT={winPCT}
-                                                        roundToHundredth={roundToHundredth}
-                                                        lineupEfficiency={lineupEfficiency}
-                                                        totalPtsPerGame={totalPtsPerGame}
-                                                        findPlayer={findPlayer}
-                                                        isOdd={isOdd}
-                                                        openModal={openModal}
-                                                        tab={tab}
-                                                        getTotalPts={getTotalPts}
-                                                        findRosterByName={findRosterByName}   
-                                                        // weeklyMatch={weeklyMatch}
-                                                        // findWeeklyMatchups={findWeeklyMatchups}
-                                                        // handleWeeklyMatch={handleWeeklyMatch}  
-                                                        // vs={vs}
-                                                        // handleAllPlay={handleAllPlay}
-                                                        // handleVS={handleVS}
-                                                        // selectAllPlay={selectAllPlay}
-                                                    />
-                                                :<></>
-                                            }
-                                        </div>
+                                        <OwnerHeader 
+                                            findLogo={findLogo}
+                                            findPlayer={findPlayer}
+                                            league={league}
+                                            openModal={openModal}
+                                            owner={owner}
+                                            players={players}
+                                            topDraftPick={topDraftPick}
+                                        />
+                                        <OwnerBody
+                                            findLogo={findLogo}
+                                            findPlayer={findPlayer}
+                                            findRecord={findRecord}
+                                            findRosterByID={findRosterByID}
+                                            foundHistory={foundHistory}
+                                            id={id}
+                                            isOdd={isOdd}
+                                            league={league} 
+                                            loadLeague={loadLeague} 
+                                            loadRosters={loadRosters} 
+                                            matchups={matchups}
+                                            openModal={openModal}
+                                            owner={owner}
+                                            players={players}
+                                            processedRosters={processedRosters}
+                                            rosters={rosters}
+                                        />
                                     </div>
                                 )
                             :<></>

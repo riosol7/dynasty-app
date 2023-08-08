@@ -10,6 +10,10 @@ function LeagueStatus({ league }) {
         return (
             <p className="m-0">Post Season <span style={{ color: "whitesmoke", marginLeft: "2px" }}>{league.season}</span></p>
         );
+    } else if (league.status === "in_season") {
+        return (
+            <p className="m-0">In Season <span style={{ color: "whitesmoke", marginLeft: "2px" }}>{league.season}</span></p>
+        );
     }
     return null;
 }
