@@ -1,10 +1,10 @@
 import React, {useState} from 'react'
-import Stats from '../components/Stats';
-import Roster from '../components/Roster';
-import VS from '../components/VS';
 import LineChart from '../components/charts/LineChart';
 
 import MatchupContainer from "../containers/MatchupContainer";
+import OwnerStatsContainer from "../containers/OwnerStatsContainer";
+import RivalryRecordContainer from "../containers/RivalryRecordContainer";
+import RosterContainer from "../containers/RosterContainer";
 
 export default function Summary({
     findLogo,
@@ -84,39 +84,35 @@ export default function Summary({
                     />
                 </div>
             </div> */}
-            <div className="py-4">
-                <Stats
-                    id={id}
-                    foundHistory={foundHistory}
-                    league={league}
-                    owner={owner}
-                    selectStats={selectStats}
-                    handleSelectStats={handleSelectStats}
-                    selectSzn={selectSzn}
-                    handleSelectSzn={handleSelectSzn}
-                    handleSzn={handleSzn}
-                    winPCT={winPCT}
-                    roundToHundredth={roundToHundredth}
-                    lineupEfficiency={lineupEfficiency}
-                    totalPtsPerGame={totalPtsPerGame}
-                    tab={tab}
-                />
-            </div>
-            <div className="py-4">
-                <VS
-                    findRosterByID={findRosterByID}
-                    foundHistory={foundHistory}
-                    handleAllPlay={handleAllPlay}
-                    handleVS={handleVS}
-                    id={id}
-                    league={league}
-                    openModal={openModal}
-                    processedRosters={processedRosters}
-                    selectAllPlay={selectAllPlay}
-                    vs={vs}
-                    winPCT={winPCT}
-                />
-            </div>
+            <OwnerStatsContainer
+                foundHistory={foundHistory}
+                handleSelectStats={handleSelectStats}
+                handleSelectSzn={handleSelectSzn}
+                handleSzn={handleSzn}
+                id={id}
+                league={league}
+                lineupEfficiency={lineupEfficiency}
+                owner={owner}
+                roundToHundredth={roundToHundredth}
+                selectStats={selectStats}
+                selectSzn={selectSzn}
+                tab={tab}
+                totalPtsPerGame={totalPtsPerGame}
+                winPCT={winPCT}
+            />
+            <RivalryRecordContainer
+                findRosterByID={findRosterByID}
+                foundHistory={foundHistory}
+                handleAllPlay={handleAllPlay}
+                handleVS={handleVS}
+                id={id}
+                league={league}
+                openModal={openModal}
+                processedRosters={processedRosters}
+                selectAllPlay={selectAllPlay}
+                vs={vs}
+                winPCT={winPCT}
+            />
             {/* <div className="py-4">
                 <Draft
                     id={id}
@@ -129,19 +125,17 @@ export default function Summary({
                     findPlayer={findPlayer}
                 />
             </div> */}
-            <div className="py-4">
-                <Roster
-                    findLogo={findLogo}
-                    findPlayer={findPlayer}
-                    isOdd={isOdd}
-                    getTotalPts={getTotalPts}
-                    owner={owner}
-                    players={players}
-                    rosters={processedRosters}
-                    roundToHundredth={roundToHundredth}
-                    tab={tab}
-                />
-            </div>
+            <RosterContainer
+                findLogo={findLogo}
+                findPlayer={findPlayer}
+                isOdd={isOdd}
+                getTotalPts={getTotalPts}
+                owner={owner}
+                players={players}
+                rosters={processedRosters}
+                roundToHundredth={roundToHundredth}
+                tab={tab}
+            />           
         </div>
     )  
 }

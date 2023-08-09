@@ -94,7 +94,7 @@ export default function Owner({
         let l = 0;
         let record;
 
-        ms.filter((m,k) => k <= wk).forEach(mt => {
+        ms?.filter((m,k) => k <= wk).forEach(mt => {
             if(mt[0].roster_id === Number(id)){
                 w++
                 record = w + " - " + l   

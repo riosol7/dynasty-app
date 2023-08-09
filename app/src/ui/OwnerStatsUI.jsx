@@ -1,24 +1,25 @@
-import React from 'react'
-import { Icon } from '@iconify/react';
+import React from "react";
+import { Icon } from "@iconify/react";
 
-export default function Stats(props) {
-    const id=props.id
-    const owner=props.owner
-    const selectStats=props.selectStats
-    const handleSelectStats=props.handleSelectStats
-    const selectSzn=props.selectSzn
-    const handleSelectSzn=props.handleSelectSzn
-    const league=props.league
-    const foundHistory=props.foundHistory
-    const handleSzn=props.handleSzn
-    const winPCT=props.winPCT
-    const roundToHundredth=props.roundToHundredth
-    const lineupEfficiency=props.lineupEfficiency
-    const totalPtsPerGame=props.totalPtsPerGame
-    const tab=props.tab
+export default function OwnerStatsUI({
+    foundHistory,
+    handleSelectStats,
+    handleSelectSzn,
+    handleSzn,
+    id,
+    league,
+    lineupEfficiency,
+    owner,
+    roundToHundredth,
+    selectStats,
+    selectSzn,
+    tab,
+    totalPtsPerGame,
+    winPCT
+}) {
 
     return (
-        <div style={{minWidth:"300px"}}>
+        <div className="py-4" style={{minWidth:"300px"}}>
             <div className="" style={{marginBottom:"8px"}}>
                 <div className="d-flex align-items-center justify-content-between">
                     <p className="m-0 bold" style={{color:"lightgrey"}}>STATS</p>

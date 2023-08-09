@@ -1,130 +1,39 @@
-import React,{useState} from 'react'
-import { Icon } from '@iconify/react';
-import {logos} from "../assets/logos";
-export default function Roster({
+import React from "react";
+import { Icon } from "@iconify/react";
+
+export default function RosterUI({
+    findLogo,
     findPlayer,
+    getTopQB,
+    getTopRB,
+    getTopTE,
+    getTopWR,
     getTotalPts,
     isOdd,
     owner,
     players,
+    qbArrow,
+    qbRankings,
+    rbArrow,
+    rbRankings,
     rosters,
     roundToHundredth,
+    showMoreQBs,
+    showQBs,
+    showMoreRBs,
+    showRBs,
+    showMoreTEs,
+    showTEs,
+    showMoreWRs,
+    showWRs,
     tab,
+    teArrow,
+    teRankings,
+    wrArrow,
+    wrRankings
 }) {
-    const [showQBs, setShowQBs] = useState(true)
-    const [qbArrow, setQbArrow] = useState(false)
-    const [showRBs, setShowRBs] = useState(true)
-    const [rbArrow, setRbArrow] = useState(false)
-    const [showWRs, setShowWRs] = useState(true)
-    const [wrArrow, setWrArrow] = useState(false)
-    const [showTEs, setShowTEs] = useState(true)
-    const [teArrow, setTeArrow] = useState(false)
-
-    const showMoreQBs = () => {
-        setShowQBs(!showQBs)
-        setQbArrow(!qbArrow)
-    }
-    const showMoreRBs = () => {
-        setShowRBs(!showRBs)
-        setRbArrow(!rbArrow)
-    }
-    const showMoreWRs = () => {
-        setShowWRs(!showWRs)
-        setWrArrow(!wrArrow)
-    }
-    const showMoreTEs = () => {
-        setShowTEs(!showTEs)
-        setTeArrow(!teArrow)
-    }
- 
-    function qbRankings (roster) {
-        let foundTeam = rosters.qbRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
-    }
-    function rbRankings (roster) {
-        let foundTeam = rosters.rbRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
-    }
-    function wrRankings (roster) {
-        let foundTeam = rosters.wrRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
-    }
-    function teRankings (roster) {
-        let foundTeam = rosters.teRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
-    }
-    function getTopQB(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topQB = foundTeam.kct.qb.players[0]
-        return topQB
-    }
-    function getTopRB(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topRB = foundTeam.kct.rb.players[0]
-        return topRB
-    }
-    function getTopWR(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topWR = foundTeam.kct.wr.players[0]
-        return topWR
-    }
-    function getTopTE(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topTE = foundTeam.kct.te.players[0]
-        return topTE
-    }
-    let findLogo = (team) => {
-        if(team !== null || team !== undefined){
-            let foundLogo = logos.filter(logo => logo[team])
-            return Object.values(foundLogo[0])[0]
-        }
-    }
     return (
-        <div className="" style={{minWidth:"388px"}}>
+        <div className="py-4" style={{minWidth:"388px"}}>
             <div className="d-flex align-items-center justify-content-between pb-3" style={{borderBottom:"3px solid #2a2c3e"}}>
                 <div className="d-flex align-items-center bold" style={{color:"lightgrey"}}>
                     <Icon icon="game-icons:american-football-player"style={{color:"#a9dfd8",fontSize:"24px", marginRight:"4px"}}/>

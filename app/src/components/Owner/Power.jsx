@@ -1,14 +1,14 @@
 import React, { useState } from 'react';
 import Matchups from '../Matchups';
-import VS from "../VS";
 import LineChart from '../charts/LineChart';
 import PowerRankingsS from '../sliders/PowerRankingsS';
-import Stats from '../Stats';
 import PowerBarChart from '../charts/PowerBarChart';
 import PowerRadarChart from '../charts/PowerRadarChart';
 // import LuckyChart from '../charts/LuckyChart';
 import PowerScoreStackedChart from '../charts/PowerScoreStackedChart';
 // import { Icon } from '@iconify/react';
+import OwnerStatsContainer from "../../containers/OwnerStatsContainer";
+import RivalryRecordContainer from "../../containers/RivalryRecordContainer";
 
 export default function Power(props) {
     const id=props.id
@@ -34,6 +34,7 @@ export default function Power(props) {
     // const handleWeeklyMatch=props.handleWeeklyMatch 
     const winPCT=props.winPCT
     const tab=props.tab
+    const processedRosters=props.processedRosters
     // const handleAllPlay=props.handleAllPlay
     // const vs=props.vs
     // const selectAllPlay=props.selectAllPlay
@@ -197,38 +198,35 @@ export default function Power(props) {
                         />
                     </div>
                 </div>
-                <div className="py-4">
-                    <Stats
-                        id={id}
-                        foundHistory={foundHistory}
-                        league={league}
-                        owner={owner}
-                        selectStats={selectStats}
-                        handleSelectStats={handleSelectStats}
-                        selectSzn={selectSzn}
-                        handleSelectSzn={handleSelectSzn}
-                        handleSzn={handleSzn}
-                        winPCT={winPCT}
-                        roundToHundredth={roundToHundredth}
-                        lineupEfficiency={lineupEfficiency}
-                        totalPtsPerGame={totalPtsPerGame}
-                        tab={tab}
-                    />
-                </div>
-                <div className="py-4">
-                    <VS
-                        id={id}
-                        findRosterByID={findRosterByID}
-                        foundHistory={foundHistory}
-                        handleVS={handleVS}
-                        vs={vs}
-                        selectAllPlay={selectAllPlay}
-                        league={league}
-                        handleAllPlay={handleAllPlay}
-                        winPCT={winPCT}
-                        openModal={openModal}
-                    />
-                </div>
+                <OwnerStatsContainer
+                    id={id}
+                    foundHistory={foundHistory}
+                    league={league}
+                    owner={owner}
+                    selectStats={selectStats}
+                    handleSelectStats={handleSelectStats}
+                    selectSzn={selectSzn}
+                    handleSelectSzn={handleSelectSzn}
+                    handleSzn={handleSzn}
+                    winPCT={winPCT}
+                    roundToHundredth={roundToHundredth}
+                    lineupEfficiency={lineupEfficiency}
+                    totalPtsPerGame={totalPtsPerGame}
+                    tab={tab}
+                />
+                <RivalryRecordContainer
+                    findRosterByID={findRosterByID}
+                    foundHistory={foundHistory}
+                    handleAllPlay={handleAllPlay}
+                    handleVS={handleVS}
+                    id={id}
+                    league={league}
+                    openModal={openModal}
+                    processedRosters={processedRosters}
+                    selectAllPlay={selectAllPlay}
+                    vs={vs}
+                    winPCT={winPCT}
+                />
             </div>
         </div>
     )

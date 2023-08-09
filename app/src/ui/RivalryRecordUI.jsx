@@ -1,27 +1,23 @@
-import React from 'react'
-import { Icon } from '@iconify/react';
+import React from "react";
+import { Icon } from "@iconify/react";
 
-export default function VS({
+export default function RivalryRecordUI({
     findRosterByID,
     foundHistory,
     handleAllPlay,
     handleVS,
     id,
     league,
+    MouseOut,
+    MouseOver,
     openModal,
     processedRosters,
     selectAllPlay,
     vs,
     winPCT,
 }) {   
-    function MouseOver(event) {
-        event.target.style.color="#a9dfd8";
-    }
-    function MouseOut(event){
-        event.target.style.color="#7f7f7f";
-    }
     return (
-        <div className="col" style={{minWidth:"388px",background:"black"}}>
+        <div className="col py-4" style={{minWidth:"388px",background:"black"}}>
             <div className="d-flex align-items-top justify-content-between pb-3">
                 <select className="bold" value={vs} onChange={handleVS} style={{color:"lightgrey", background:"inherit", border:"none" }}>
                     <option value={"Head"}>Head to Head</option>

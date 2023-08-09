@@ -2,9 +2,10 @@ import React, {} from 'react'
 import AreaChart from '../charts/AreaChart';
 import RadarChart from '../charts/RadarChart';
 import ColumnChart from '../charts/ColumnChart';
-import Roster from '../Roster';
 import DynastyRankingsS from '../sliders/DynastyRankingsS';
 import { Icon } from '@iconify/react';
+
+import RosterContainer from "../../containers/RosterContainer";
 
 export default function Dynasty(props) {
     const id=props.id
@@ -92,17 +93,17 @@ export default function Dynasty(props) {
                             </div>
                         </div>
                     </div>
-                    <div className="" style={{width:"100%"}}>
-                        <Roster
-                            owner={owner}
-                            rosters={rosters}
-                            roundToHundredth={roundToHundredth}
-                            findLogo={findLogo}
-                            findPlayer={findPlayer}
-                            isOdd={isOdd}
-                            tab={tab}
-                        />
-                    </div>
+                    <RosterContainer
+                        findLogo={findLogo}
+                        findPlayer={findPlayer}
+                        isOdd={isOdd}
+                        // getTotalPts={getTotalPts}
+                        owner={owner}
+                        // players={players}
+                        // rosters={processedRosters}
+                        roundToHundredth={roundToHundredth}
+                        tab={tab}
+                    />      
                 </div>
             </div>
         </div>
