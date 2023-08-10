@@ -1,7 +1,6 @@
 import React, { useState } from "react";
 import MatchupUI from "../ui/MatchupUI";
 
-
 export default function MatchupContainer({
     findLogo,
     findRecord,
@@ -14,7 +13,7 @@ export default function MatchupContainer({
     openModal,
     players,
     processedRosters,
-    roundToHundredth
+    roundToHundredth,
 }) {
     const [weeklyMatch, setWeeklyMatch] = useState(foundMyMatchups.length>0?league.season:(Number(league.season)-1).toString())
 

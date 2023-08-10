@@ -11,7 +11,6 @@ export default function Owner({
     findPlayer,
     findLogo,
     findRosterByID,
-    // findRosterByName,
     foundHistory,
     // getTotalPts,
     league,
@@ -30,25 +29,16 @@ export default function Owner({
 }) {
     const {id} = useParams()
     const processedRosters = processRosters(rosters, players, owners);
-    // const loadTransactions = props.loadTransactions
-    // const transactions = props.transactions
 
     const [isOpen, setIsOpen] = useState(false)
     const [match, setMatch] = useState([])
     const [oID, setOID]=useState("")
     const [modalTab, setModalTab] = useState("")
     const [draftClass, setDraftClass] = useState(league.season)
-    // const [vs, setVS] = useState("Head")
-    // const [selectAllPlay, setSelectAllPlay] = useState("All Time")
+
     const handleDraftClass = (e) => {
         setDraftClass(e.target.value)
     }
-    // const handleAllPlay = (e) => {
-    //     setSelectAllPlay(e.target.value)
-    // }
-    // const handleVS = (e) => {
-    //     setVS(e.target.value)
-    // }
     const myDraftPicks = (id, yr) => {
         let picks;
         if(league !== undefined && (id !== null || undefined) && yr === league.season){
@@ -124,9 +114,7 @@ export default function Owner({
             ]}).map(y => {
                 return y[0].map(w => {
                     if(w[1].filter(r => (r.points === s1 || r.points === s2) && (r.roster_id === Number(id) || r.roster_id === opID)).length >0){
-                        // console.log(w[1].filter(r => (r.points === 144.25 || r.points === 148.5) && (r.roster_id === Number(id) || r.roster_id === 4)))
-                        // console.log(w[0])
-                        // console.log(y[1])
+
                         return {
                             game:w[1].filter(r => (r.points === s1 || r.points === s2) && (r.roster_id === Number(id) || r.roster_id === opID)),
                             week:w[0],
@@ -146,33 +134,12 @@ export default function Owner({
         return historyArray !== undefined? historyArray : currentArray
     }
     
-    // const [weeklyMatch, setWeeklyMatch] = useState(league.season)
-
     useEffect(() => {
         if(draftClass === undefined || null){
           setDraftClass(league.season)
         }
       }, [draftClass, league.season])
-    // const findWeeklyMatchups = () => {
-    //     const template = league.history.filter(l => l.year === weeklyMatch).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
-    //         acc[team.matchup_id] = acc[team.matchup_id] || [];
-    //         acc[team.matchup_id].push(team);
-    //         return acc;
-    //     }, Object.create(null))).map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
-    //         if(team.filter(owner => owner.roster_id === Number(id)).length > 0){
-    //             return team
-    //         }  
-    //         return acc
-    //     })).map(match => match.sort((a,b) => b.points - a.points)))[0]
-    //     if(Number(weeklyMatch) > 2020){
-    //         return template
-    //     } else {
-    //         return template.slice(0,16)
-    //     }
-    // }
-    // const handleWeeklyMatch = (e) => {
-    //     setWeeklyMatch(e.target.value)
-    // }
+
 
     return (
         loadLeague && loadRosters && loadMatches ? <div style={{width:"100%", height:"100vh"}}></div>:
@@ -188,7 +155,7 @@ export default function Owner({
                         {
                             processedRosters?.totalRoster && league?.history && matches ?
                                 rosterRank.filter(roster => roster.roster_id === Number(id)).map((owner,i) => 
-                                    <div key={i} className="">
+                                    <div key={i}>
                                         <OwnerHeader 
                                             findLogo={findLogo}
                                             findPlayer={findPlayer}

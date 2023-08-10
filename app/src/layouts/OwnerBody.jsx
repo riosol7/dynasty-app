@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 
 import Summary from "./Summary";
-import Dynasty from "../components/Owner/Dynasty";
-import Power from "../components/Owner/Power";
+import Dynasty from "./Dynasty";
+import Power from "./Power";
 import { 
     getTotalPts,
     lineupEfficiency,
@@ -103,79 +103,72 @@ export default function OwnerBody({
                 {
                     tab === "Summary" ?
                         <Summary
-                            id={id}
-                            loadLeague={loadLeague}
-                            league={league}
-                            foundMyMatchups={foundMyMatchups}
-                            findRosterByID={findRosterByID}
+                            findLogo={findLogo}
+                            findPlayer={findPlayer}
                             findRecord={findRecord}
+                            findRosterByID={findRosterByID}
+                            foundHistory={foundHistory}
+                            foundMyMatchups={foundMyMatchups}
+                            getTotalPts={getTotalPts}
+                            handleSzn={handleSzn}
+                            id={id}
+                            isOdd={isOdd}
+                            league={league}
+                            lineupEfficiency={lineupEfficiency}
+                            loadLeague={loadLeague}
+                            loadRosters={loadRosters}
+                            openModal={openModal}
+                            owner={owner}
                             players={players}
                             processedRosters={processedRosters}
-                            findLogo={findLogo}
-                            loadRosters={loadRosters}
                             rosters={rosters}
-                            foundHistory={foundHistory}
-                            owner={owner}
-                            handleSzn={handleSzn}
-                            winPCT={winPCT}
                             roundToHundredth={roundToHundredth}
-                            lineupEfficiency={lineupEfficiency}
-                            totalPtsPerGame={totalPtsPerGame}
-                            findPlayer={findPlayer}
-                            isOdd={isOdd}
-                            openModal={openModal}
                             tab={tab}
-                            getTotalPts={getTotalPts}
-                            // weeklyMatch={weeklyMatch}
-                            // findWeeklyMatchups={findWeeklyMatchups}
-                            // handleWeeklyMatch={handleWeeklyMatch}
-                            // vs={vs}
-                            // handleAllPlay={handleAllPlay}
-                            // handleVS={handleVS}
-                            // selectAllPlay={selectAllPlay}
+                            totalPtsPerGame={totalPtsPerGame}
+                            winPCT={winPCT}
                         />
                     : tab === "Dynasty" ?
                         <Dynasty
-                            id={id}
-                            loadLeague={loadLeague}
-                            league={league}
-                            players={players}
-                            loadRosters={loadRosters}
-                            rosters={rosters}
-                            foundHistory={foundHistory}
-                            owner={owner}
                             findLogo={findLogo}
-                            winPCT={winPCT}
-                            roundToHundredth={roundToHundredth}
                             findPlayer={findPlayer}
+                            foundHistory={foundHistory}
+                            getTotalPts={getTotalPts}
+                            id={id}
                             isOdd={isOdd}
+                            league={league}
+                            loadLeague={loadLeague}
+                            loadRosters={loadRosters}
+                            owner={owner}
+                            players={players}
+                            processedRosters={processedRosters}
+                            roundToHundredth={roundToHundredth}
                             tab={tab}
-                            // findRosterByName={findRosterByName} -- NEED TO CHECK
+                            winPCT={winPCT}
                         />
                     : tab === "Power" ?
                         <Power
-                            id={id}
-                            loadLeague={loadLeague}
-                            league={league}
-                            foundMyMatchups={foundMyMatchups}
-                            findRosterByID={findRosterByID}
-                            findRecord={findRecord}
-                            players={players}
                             findLogo={findLogo}
-                            loadRosters={loadRosters}
-                            rosters={rosters}
-                            foundHistory={foundHistory}
-                            owner={owner}
-                            handleSzn={handleSzn}
-                            winPCT={winPCT}
-                            roundToHundredth={roundToHundredth}
-                            lineupEfficiency={lineupEfficiency}
-                            totalPtsPerGame={totalPtsPerGame}
                             findPlayer={findPlayer}
-                            isOdd={isOdd}
-                            openModal={openModal}
-                            tab={tab}
+                            findRecord={findRecord}
+                            findRosterByID={findRosterByID}
+                            foundHistory={foundHistory}
+                            foundMyMatchups={foundMyMatchups}
                             getTotalPts={getTotalPts}
+                            handleSzn={handleSzn}
+                            id={id}
+                            isOdd={isOdd}
+                            league={league}
+                            lineupEfficiency={lineupEfficiency}
+                            loadLeague={loadLeague}
+                            loadRosters={loadRosters}
+                            openModal={openModal}
+                            owner={owner}
+                            players={players}
+                            processedRosters={processedRosters}
+                            roundToHundredth={roundToHundredth}
+                            tab={tab}
+                            totalPtsPerGame={totalPtsPerGame}
+                            winPCT={winPCT}
                             // findRosterByName={findRosterByName} -- NEED TO CHECK
                             // weeklyMatch={weeklyMatch}
                             // findWeeklyMatchups={findWeeklyMatchups}

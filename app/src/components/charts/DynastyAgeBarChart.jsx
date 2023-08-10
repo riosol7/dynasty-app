@@ -1,18 +1,19 @@
-import React from 'react'
-import Chart from 'react-apexcharts';
+import React from "react";
+import Chart from "react-apexcharts";
 
-export default function ColumnChart(props) {
-    const loadRosters = props.loadRosters
-    const rosters = props.rosters
-    const roster = props.roster
-
+export default function DynastyAgeBarChart({
+    loadRosters,
+    processedRosters,
+    roster,
+}) {
+    const teamRankRosters = processedRosters.teamRank;
     const roundToHundredth = (value) => {
         return Number(value.toFixed(2));
     }
-    const avgQB = rosters.teamRank.map(team => roundToHundredth(team.kct.qb.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.qb.players.length)).reduce((a,b) => a + b,0)/rosters.teamRank.length
-    const avgRB = rosters.teamRank.map(team => roundToHundredth(team.kct.rb.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.rb.players.length)).reduce((a,b) => a + b,0)/rosters.teamRank.length
-    const avgWR = rosters.teamRank.map(team => roundToHundredth(team.kct.wr.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.wr.players.length)).reduce((a,b) => a + b,0)/rosters.teamRank.length
-    const avgTE = rosters.teamRank.map(team => roundToHundredth(team.kct.te.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.te.players.length)).reduce((a,b) => a + b,0)/rosters.teamRank.length
+    const avgQB = teamRankRosters.map(team => roundToHundredth(team.kct.qb.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.qb.players.length)).reduce((a,b) => a + b,0)/teamRankRosters.length
+    const avgRB = teamRankRosters.map(team => roundToHundredth(team.kct.rb.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.rb.players.length)).reduce((a,b) => a + b,0)/teamRankRosters.length
+    const avgWR = teamRankRosters.map(team => roundToHundredth(team.kct.wr.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.wr.players.length)).reduce((a,b) => a + b,0)/teamRankRosters.length
+    const avgTE = teamRankRosters.map(team => roundToHundredth(team.kct.te.players.reduce((a,b) => a + Number(b.age), 0)/ team.kct.te.players.length)).reduce((a,b) => a + b,0)/teamRankRosters.length
 
     const series = [{
         name:roster.kct.owner.display_name,

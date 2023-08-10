@@ -9,7 +9,7 @@ export default function RosterContainer({
     isOdd,
     owner,
     players,
-    rosters,
+    processedRosters,
     roundToHundredth,
     tab,
 }) {
@@ -40,22 +40,21 @@ export default function RosterContainer({
     }
  
     function qbRankings (roster) {
-        let foundTeam = rosters.qbRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
+        let rank = 0;
+        if (roster !== undefined) {
+            let foundTeam = processedRosters?.qbRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name);
+            foundTeam?.rank === 1?
+                rank = foundTeam.rank + "st"
+            : foundTeam?.rank === 2?
+                rank = foundTeam.rank + "nd"
+            : foundTeam?.rank === 3?
+                rank = foundTeam.rank + "rd"
+            : rank = foundTeam.rank + "th"    
+        }
         return rank
     }
     function rbRankings (roster) {
-        let foundTeam = rosters.rbRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
+        let foundTeam = processedRosters?.rbRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
         let rank = 0
         foundTeam.rank === 1?
         rank = foundTeam.rank + "st"
@@ -70,7 +69,7 @@ export default function RosterContainer({
         return rank
     }
     function wrRankings (roster) {
-        let foundTeam = rosters.wrRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
+        let foundTeam = processedRosters?.wrRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
         let rank = 0
         foundTeam.rank === 1?
         rank = foundTeam.rank + "st"
@@ -85,7 +84,7 @@ export default function RosterContainer({
         return rank
     }
     function teRankings (roster) {
-        let foundTeam = rosters.teRank.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
+        let foundTeam = processedRosters?.teRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
         let rank = 0
         foundTeam.rank === 1?
         rank = foundTeam.rank + "st"
@@ -100,22 +99,22 @@ export default function RosterContainer({
         return rank
     }
     function getTopQB(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
+        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
         let topQB = foundTeam.kct.qb.players[0]
         return topQB
     }
     function getTopRB(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
+        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
         let topRB = foundTeam.kct.rb.players[0]
         return topRB
     }
     function getTopWR(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
+        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
         let topWR = foundTeam.kct.wr.players[0]
         return topWR
     }
     function getTopTE(display_name){
-        let foundTeam = rosters.teamRank.find(roster => roster.kct.owner.display_name === display_name)
+        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
         let topTE = foundTeam.kct.te.players[0]
         return topTE
     }
@@ -141,7 +140,7 @@ export default function RosterContainer({
             qbRankings={qbRankings}
             rbArrow={rbArrow}
             rbRankings={rbRankings}
-            rosters={rosters}
+            rosters={processedRosters}
             roundToHundredth={roundToHundredth}
             showMoreQBs={showMoreQBs}
             showQBs={showQBs}

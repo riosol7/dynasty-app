@@ -410,11 +410,11 @@ export default function MatchupSlide({
                                                     <div className="d-flex align-items-center">
                                                         <div className="d-flex align-items-center">
                                                             <Icon icon="material-symbols:arrow-drop-up-rounded" style={{color:"#42f3e9",fontSize:"2.5em"}}/>
-                                                            <p className="m-0">{foundHistory(id, weeklyMatch).s.allPlayWk[idx].reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w}</p>
+                                                            <p className="m-0">{foundHistory(id, weeklyMatch)?.s?.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w}</p>
                                                         </div>
                                                         <div className="d-flex align-items-center">
                                                             <Icon icon="material-symbols:arrow-drop-down-rounded" style={{color:"#f85012",fontSize:"2.5em"}}/>
-                                                            <p className="m-0">{foundHistory(id, weeklyMatch).s.allPlayWk[idx].reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW}</p>
+                                                            <p className="m-0">{foundHistory(id, weeklyMatch)?.s?.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW}</p>
                                                         </div>
                                                     </div>
                                                     <div className="">
@@ -424,22 +424,21 @@ export default function MatchupSlide({
                                                                     {
                                                                         index === 0 ?
                                                                             index === 0 && team.roster_id === Number(id) ?
-                                                                                roundToHundredth(100-(foundHistory(id,weeklyMatch).s.allPlayWk[idx].reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w/11)*100)!==0?
+                                                                                roundToHundredth(100-(foundHistory(id,weeklyMatch).s.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w/11)*100)!==0?
                                                                                     <div className="d-flex align-items-center">
                                                                                         <p className="m-0 px-1" style={{}}>
-                                                                                            {roundToHundredth(100-(foundHistory(id,weeklyMatch).s.allPlayWk[idx].reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w/11)*100)}
+                                                                                            {roundToHundredth(100-(foundHistory(id,weeklyMatch).s.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w/11)*100)}
                                                                                         </p>
                                                                                         <Icon icon="emojione-monotone:four-leaf-clover" style={{fontSize:"14px", color:"#289a5d"}}/>
                                                                                     </div>
                                                                                 : <Icon icon="fluent-emoji-flat:crown" style={{fontSize:"16px"}}/>
-                                                                                    
                                                                             :
-                                                                                foundHistory(id,weeklyMatch).s.allPlayWk[idx].reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW === 11?
+                                                                                foundHistory(id,weeklyMatch).s.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW === 11?
                                                                                     <Icon icon="emojione-v1:pile-of-poo" style={{fontSize:"16px", color:"#724b21"}}/>
                                                                                 :
                                                                                     <div className="d-flex align-items-center">
                                                                                         <p className="m-0 px-1" style={{}}>
-                                                                                            {roundToHundredth(0-(foundHistory(id,weeklyMatch).s.allPlayWk[idx].reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w/11)*100)}                                                                                                   
+                                                                                            {roundToHundredth(0-(foundHistory(id,weeklyMatch).s.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w/11)*100)}                                                                                                   
                                                                                         </p>
                                                                                         <Icon icon="emojione-monotone:four-leaf-clover" style={{fontSize:"14px", color:"#dab0af"}}/>
                                                                                     </div>   

@@ -1,5 +1,4 @@
-import React, {useState} from 'react'
-import LineChart from '../components/charts/LineChart';
+import React, { useState } from "react";
 
 import MatchupContainer from "../containers/MatchupContainer";
 import OwnerStatsContainer from "../containers/OwnerStatsContainer";
@@ -25,18 +24,15 @@ export default function Summary({
     owner,
     players,
     processedRosters,
-    rosters,
     roundToHundredth,
     tab,
     totalPtsPerGame,
     winPCT,
 }) {
-    
     const [selectStats, setSelectStats] = useState("Season")
     const [selectSzn, setSelectSzn] = useState("All Time")
     const [vs, setVS] = useState("Head")
     const [selectAllPlay, setSelectAllPlay] = useState("All Time")
-
   
     const handleAllPlay = (e) => {
         setSelectAllPlay(e.target.value)
@@ -71,19 +67,6 @@ export default function Summary({
                 processedRosters={processedRosters}
                 roundToHundredth={roundToHundredth}
             />
-            {/* <div className="my-4">
-                <div className="col">
-                    <LineChart
-                        id={id}
-                        findRosterByID={findRosterByID}
-                        foundHistory={foundHistory}
-                        loadRosters={loadRosters}
-                        processedRosters={processedRosters}
-                        rosters={rosters}
-                        weeklyMatch={weeklyMatch}
-                    />
-                </div>
-            </div> */}
             <OwnerStatsContainer
                 foundHistory={foundHistory}
                 handleSelectStats={handleSelectStats}
@@ -132,7 +115,7 @@ export default function Summary({
                 getTotalPts={getTotalPts}
                 owner={owner}
                 players={players}
-                rosters={processedRosters}
+                processedRosters={processedRosters}
                 roundToHundredth={roundToHundredth}
                 tab={tab}
             />           

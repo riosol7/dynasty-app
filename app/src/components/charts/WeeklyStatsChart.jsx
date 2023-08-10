@@ -1,7 +1,7 @@
-import React from 'react';
-import Chart from 'react-apexcharts';
+import React from "react";
+import Chart from "react-apexcharts";
 
-export default function LineChart({
+export default function WeeklyStatsChart({
     id,
     findRosterByID,
     foundHistory,
@@ -9,7 +9,7 @@ export default function LineChart({
     weeklyMatch,
 }) {
 
-    const foundRoster = findRosterByID(id, processedRosters)?.totalRoster;
+    const foundRoster = findRosterByID(id, processedRosters.totalRoster);
 
     let lineSeriesC = [
         {

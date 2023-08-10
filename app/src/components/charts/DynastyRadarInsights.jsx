@@ -1,16 +1,19 @@
-import React from 'react'
-import Chart from 'react-apexcharts';
+import React from "react";
+import Chart from "react-apexcharts";
 
-export default function RadarChart(props) {
-    const roundToHundredth=props.roundToHundredth
-    const loadRosters=props.loadRosters
-    const rosters=props.rosters
-    const roster=props.roster
+export default function DynastyRadarInsights({
+    loadRosters,
+    processedRosters,
+    roster,
+    roundToHundredth,
+    
+}) {
+    const teamRankRosters = processedRosters.teamRank;
 
-    const leagueAvgQBs = roundToHundredth(rosters.teamRank.reduce((a,b) => a + b.kct.qb.total, 0) / rosters.teamRank.length)
-    const leagueAvgRBs = roundToHundredth(rosters.teamRank.reduce((a,b) => a + b.kct.rb.total, 0) / rosters.teamRank.length)
-    const leagueAvgWRs = roundToHundredth(rosters.teamRank.reduce((a,b) => a + b.kct.wr.total, 0) / rosters.teamRank.length)
-    const leagueAvgTEs = roundToHundredth(rosters.teamRank.reduce((a,b) => a + b.kct.te.total, 0) / rosters.teamRank.length)
+    const leagueAvgQBs = roundToHundredth(teamRankRosters.reduce((a,b) => a + b.kct.qb.total, 0) / teamRankRosters.length)
+    const leagueAvgRBs = roundToHundredth(teamRankRosters.reduce((a,b) => a + b.kct.rb.total, 0) / teamRankRosters.length)
+    const leagueAvgWRs = roundToHundredth(teamRankRosters.reduce((a,b) => a + b.kct.wr.total, 0) / teamRankRosters.length)
+    const leagueAvgTEs = roundToHundredth(teamRankRosters.reduce((a,b) => a + b.kct.te.total, 0) / teamRankRosters.length)
     
     const series = [{
         name: roster.kct.owner.display_name,

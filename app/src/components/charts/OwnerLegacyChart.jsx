@@ -1,17 +1,20 @@
 import React from 'react';
 import Chart from 'react-apexcharts';
 
-export default function AreaChart(props) {
-    const id = props.id
-    const loadRosters = props.loadRosters
-    const rosters = props.rosters
-    let lineSeries = rosters.totalRoster && rosters.totalRoster.filter(r => r.roster_id === Number(id)).map(roster => {
+export default function AreaChart({
+    id,
+    loadRosters,
+    processedRosters,
+}) {
+    const foundRoster = processedRosters?.totalRoster?.filter(r => r.roster_id === Number(id));
+
+    let lineSeries = foundRoster.map(roster => {
         return {
             name:roster.owner.display_name,
-            data:roster.owner ? roster.owner.dynasty.slice().map(data => data.value) : []
+            data:roster.owner ? roster.owner.team_rating.slice().map(data => data.value) : []
         }
     })
-    let dates = rosters.totalRoster && rosters.totalRoster.filter(r => r.roster_id === Number(id)).map(roster => roster.owner.dynasty.map(data => new Date(data.date).toLocaleDateString()))
+    let dates = foundRoster?.map(roster => roster.owner.team_rating.map(data => new Date(data.date).toLocaleDateString()))
     const series =  lineSeries !== undefined ? lineSeries : [{name:"", data:[]}]
     const options = {
         chart: {

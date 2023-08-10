@@ -3,17 +3,27 @@ import { Icon } from '@iconify/react';
 import { Swiper, SwiperSlide} from "swiper/react";
 import { Autoplay } from 'swiper';
 
-export default function PowerRankings(props) {
-    const rosters=props.rosters
-    const foundHistory=props.foundHistory
-    const selectSzn=props.selectSzn
-    const winPCT=props.winPCT
-    const league=props.league
-    const findRosterByName=props.findRosterByName
-    const owner=props.owner
-    const pwrRank=props.pwrRank
+export default function PowerRankingSlider({
+    handlePwrRank,
+    league,
+    owner,
+    pwrRank,
+    pwrRankSzn,
+}) {
+
     return (
-        <div>
+        <div className="my-4">
+            <div className="d-flex justify-content-between">
+                <p className="m-0 bold" style={{color:"lightgrey"}}>POWER RANKING</p>
+                <select className="" onChange={handlePwrRank}  value={pwrRankSzn} style={{color:"#fff", background:"inherit", border:"none"}}>
+                    <option value={league.season}>{league.season}</option>
+                    {
+                        league.history.map((l,i) =>
+                            <option key={i} value={l.year}>{l.year}</option>
+                        )
+                    }
+                </select>
+            </div>
             <div style={{maxWidth:"1720px"}}>
                 <Swiper
                     // style={{
@@ -87,7 +97,7 @@ export default function PowerRankings(props) {
                         pwrRank && pwrRank.map((roster, idx) => ({...roster, rank:idx+1})).map((r,i) => 
                             <SwiperSlide key={i}>
                                 <div className="py-4" style={{border:"",background:""}}>
-                                    <a href={`/Owner/${findRosterByName(r.owner && r.owner.display_name)}`} className="cellLink">
+                                    <a href={`/Owner/${r.kct.owner.roster_id}`} className="cellLink">
                                         <div className="d-flex align-items-center">
                                             {
                                                 r.owner?
