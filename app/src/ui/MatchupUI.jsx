@@ -48,7 +48,7 @@ export default function MatchupUI({
                 roundToHundredth={roundToHundredth}
                 weeklyMatch={weeklyMatch}
             />
-            <div className="my-4 col">
+            <div className="my-4">
                 <WeeklyStatsChart
                     findRosterByID={findRosterByID}
                     foundHistory={foundHistory}

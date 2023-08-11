@@ -49,11 +49,6 @@ export default function MatchupSlider({
             foundMyMatchups.length === 0 && weeklyMatch === league.season ? <LoadMatchups></LoadMatchups>:
             <div className="d-flex align-items-center" style={{maxWidth:"1720px"}}>
                 <Swiper
-                    // style={{
-                    //     "--swiper-navigation-color": "black",
-
-                    //     // "--swiper-navigation-size": "25px",
-                    // }}
                     breakpoints = {{
                         1850: {
                             minWidth:1850.44,
@@ -110,7 +105,6 @@ export default function MatchupSlider({
                     loop={true}
                     loopFillGroupWithBlank={true}
                     modules={[Autoplay]}
-                    // navigation={true}
                     autoplay={{
                         delay: 7000,
                         disableOnInteraction: false

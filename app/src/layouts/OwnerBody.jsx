@@ -169,14 +169,6 @@ export default function OwnerBody({
                             tab={tab}
                             totalPtsPerGame={totalPtsPerGame}
                             winPCT={winPCT}
-                            // findRosterByName={findRosterByName} -- NEED TO CHECK
-                            // weeklyMatch={weeklyMatch}
-                            // findWeeklyMatchups={findWeeklyMatchups}
-                            // handleWeeklyMatch={handleWeeklyMatch}  
-                            // vs={vs}
-                            // handleAllPlay={handleAllPlay}
-                            // handleVS={handleVS}
-                            // selectAllPlay={selectAllPlay}
                         />
                     :<></>
                 }

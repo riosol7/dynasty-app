@@ -119,7 +119,7 @@ export default function RosterContainer({
         return topTE
     }
     let findLogo = (team) => {
-        if(team !== null || team !== undefined){
+        if(team !== null && team !== undefined){
             let foundLogo = logos.filter(logo => logo[team])
             return Object.values(foundLogo[0])[0]
         }

@@ -79,13 +79,15 @@ export default function Owner({
       }
     }).map((team, i) => ({...team, rank:i+1}))
 
-    let findRecord = (ms, wk) => {
+    const findRecord = (matches, week) => {
         let w = 0;
         let l = 0;
         let record;
 
-        ms?.filter((m,k) => k <= wk).forEach(mt => {
-            if(mt[0].roster_id === Number(id)){
+        matches?.filter((m, wk) => wk <= week).forEach(team => {
+            if (team[0].matchup_id === null){
+                return record
+            } else if (team[0].roster_id === Number(id)) {
                 w++
                 record = w + " - " + l   
                 return record    

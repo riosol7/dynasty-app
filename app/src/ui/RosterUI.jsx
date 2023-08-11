@@ -32,6 +32,8 @@ export default function RosterUI({
     wrArrow,
     wrRankings
 }) {
+    // const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
     return (
         <div className="py-4" style={{minWidth:"388px"}}>
             <div className="d-flex align-items-center justify-content-between pb-3" style={{borderBottom:"3px solid #2a2c3e"}}>
@@ -153,17 +155,14 @@ export default function RosterUI({
                                                 }
                                             </div>
                                             <div className="mx-2">
-                                                <div className="smallHeadShot"
-                                                    style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                        player.player_id}.jpg)`,
-                                                    }}>
-                                                        {
-                                                            findLogo(player.team).l!==""?
-                                                                <div className="displayOwnerLogoSM">
-                                                                    <img style={{width:"2.8em"}} alt="" src={findLogo(player.team).l}/>
-                                                                </div>
-                                                            :<></>
-                                                        }
+                                                <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${player.player_id}.jpg)`}}>
+                                                    {
+                                                        findLogo(player.team)?.l!==""?
+                                                            <div className="displayOwnerLogoSM">
+                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(player.team)?.l}/>
+                                                            </div>
+                                                        :<></>
+                                                    }
                                                 </div> 
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
@@ -231,17 +230,14 @@ export default function RosterUI({
                                             <Icon icon="bxs:star" style={{}} />
                                         </div>
                                         <div className="mx-2">
-                                            <div className="smallHeadShot"
-                                                style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                    getTopQB(owner.kct.owner.display_name).player_id}.jpg)`,
-                                                }}>
-                                                    {
-                                                        findLogo(getTopQB(owner.kct.owner.display_name).team).l!==""?
-                                                            <div className="displayOwnerLogoSM"> 
-                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(getTopQB(owner.kct.owner.display_name).team).l}/>
-                                                            </div>
-                                                        :<></>
-                                                    }
+                                            <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${getTopQB(owner.kct.owner.display_name).player_id}.jpg)`}}>
+                                                {
+                                                    findLogo(getTopQB(owner.kct.owner.display_name).team).l!==""?
+                                                        <div className="displayOwnerLogoSM"> 
+                                                            <img style={{width:"2.8em"}} alt="" src={findLogo(getTopQB(owner.kct.owner.display_name).team).l}/>
+                                                        </div>
+                                                    :<></>
+                                                }
                                             </div>
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
@@ -377,14 +373,11 @@ export default function RosterUI({
                                                 }
                                             </div>
                                             <div className="mx-2">
-                                                <div className="smallHeadShot"
-                                                    style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                        player.player_id}.jpg)`,
-                                                }}>
+                                                <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${player.player_id}.jpg)`}}>
                                                     {
-                                                        findLogo(player.team).l !== ""?
+                                                        findLogo(player.team)?.l !== ""?
                                                             <div className="displayOwnerLogoSM">
-                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(player.team).l}/>
+                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(player.team)?.l}/>
                                                             </div>
                                                         :<></>
                                                     }
