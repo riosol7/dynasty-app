@@ -123,7 +123,7 @@ export default function MatchupSlide({
                                             :<></>
                                         // 17 Game Season
                                         : idx  === 13 ?
-                                            foundHistory(id,weeklyMatch).s.playoff === true ?
+                                            foundHistory(id, weeklyMatch).s.playoff === true ?
                                                 <p className="m-0 bold">Divisional</p>
                                             : <p className="m-0 bold">Bottom 6</p>
                                         : idx  === 15 ?
@@ -175,20 +175,73 @@ export default function MatchupSlide({
                                                 </div>
                                         : 
                                             <div className="d-flex justify-content-between align-items-center">
-                                                <p className="m-0">{foundRoster.rank}th overall</p>
+                                                <p className="m-0">{foundRoster.rank}
+                                                    {
+                                                        foundRoster.rank === 1 ?
+                                                            <span>st </span>
+                                                        : foundRoster.rank === 2 ?
+                                                            <span>nd </span>
+                                                        : foundRoster.rank === 3 ?
+                                                            <span>rd </span>
+                                                        : <span>th </span>
+                                                    }
+                                                    overall
+                                                </p>
                                                 <p className="m-0">{foundRoster.settings.wins}-{foundRoster.settings.losses}</p>
                                             </div>
                                     : foundHistory(id, weeklyMatch).s.playoff === true ?
-                                        idx === 14 ? 
-                                            <p className="m-0">Clinched Division {findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.division} and Bye</p>
-                                        :  
-                                            <div className="d-flex justify-content-between align-items-center">
-                                                <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).rank}th overall</p>
-                                                <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.wins}-{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.losses}</p>
-                                            </div>
+                                        Number(weeklyMatch) > 2020 ?
+                                            idx === 14 ? 
+                                                <p className="m-0">Clinched Division {findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.division} and Bye</p>
+                                            :  
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank}
+                                                        {
+                                                            findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 1 ?
+                                                                <span>st </span>
+                                                            : findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 2 ?
+                                                                <span>nd </span>
+                                                            : findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 3 ?
+                                                                <span>rd </span>
+                                                            : <span>th </span>
+                                                        }
+                                                        overall
+                                                    </p>                                                    
+                                                    <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.wins}-{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.losses}</p>
+                                                </div>
+                                        : 
+                                            idx === 13 ? 
+                                                <p className="m-0">Clinched Division {findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.division} and Bye</p>
+                                            :  
+                                                <div className="d-flex justify-content-between align-items-center">
+                                                    <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank}
+                                                        {
+                                                            findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 1 ?
+                                                                <span>st </span>
+                                                            : findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 2 ?
+                                                                <span>nd </span>
+                                                            : findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 3 ?
+                                                                <span>rd </span>
+                                                            : <span>th </span>
+                                                        }
+                                                        overall
+                                                    </p>                                                    
+                                                    <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.wins}-{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters)).settings.losses}</p>
+                                                </div>
                                     : 
                                         <div className="d-flex justify-content-between align-items-center">
-                                            <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank}th overall</p>
+                                            <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank}
+                                                {
+                                                    findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 1 ?
+                                                        <span>st </span>
+                                                    : findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 2 ?
+                                                        <span>nd </span>
+                                                    : findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.rank === 3 ?
+                                                        <span>rd </span>
+                                                    : <span>th </span>
+                                                }
+                                                overall
+                                            </p>
                                             <p className="m-0">{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.settings.wins}-{findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters))?.settings.losses}</p>
                                         </div>
                                 }
@@ -202,62 +255,97 @@ export default function MatchupSlide({
                                         Number(weeklyMatch) > 2020 ?
                                             idx < 14 ?
                                                 <p className="m-0 bold">Week {idx + 1}</p>
-                                            : foundHistory(id,weeklyMatch).s.playoff === true || foundHistory(id).c.playoff === true ?
-                                                idx  === 14 ?
-                                                    <p className="m-0 bold">Divisional</p>
-                                                : idx  === 15 ?
-                                                    m.filter(t => t.roster_id === Number(id))[0].matchup_id === 3 ?
-                                                        <p className="m-0 bold">5th Place Match</p>
-                                                    :
-                                                        <p className="m-0 bold">Semi Finals</p>
-                                                : idx  === 16 ?
-                                                    m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 ?
-                                                        <p className="m-0 bold">Finals</p>
+                                            : 
+                                                idx === 14 ?  
+                                                    weeklyMatch === league.season ?
+                                                        foundHistory(id).c.playoff === true ?                                               
+                                                            <p className="m-0 bold">Divisional</p>
+                                                        : 
+                                                            <p className="m-0 bold">Bottom 6</p>
                                                     : 
-                                                        <p className="m-0 bold">3rd Place Match</p>
-                                                :<></>
-                                            : idx  === 14 ?
+                                                        foundHistory(id,weeklyMatch).s.playoff === true ?
+                                                            <p className="m-0 bold">Divisional</p>
+                                                        : 
+                                                            <p className="m-0 bold">Bottom 6</p>
+                                                : 
+                                                    idx === 15 ?
+                                                        weeklyMatch === league.season ?
+                                                            foundHistory(id).c.playoff === true ?                                               
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 || m.filter(t => t.roster_id === Number(id))[0].matchup_id === 2 ?
+                                                                    <p className="m-0 bold">Semi Finals</p>
+                                                                :     
+                                                                    <p className="m-0 bold">5th Place Match</p>
+                                                            :
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 6 ?
+                                                                    <p className="m-0 bold">7th Place Match</p>
+                                                                : 
+                                                                    <p className="m-0 bold">Bottom 4</p>
+                                                        :
+                                                            foundHistory(id,weeklyMatch).s.playoff === true ?
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 || m.filter(t => t.roster_id === Number(id))[0].matchup_id === 2 ?
+                                                                    <p className="m-0 bold">Semi Finals</p>
+                                                                :     
+                                                                    <p className="m-0 bold">5th Place Match</p>
+                                                            :
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 6 ?
+                                                                    <p className="m-0 bold">7th Place Match</p>
+                                                                : 
+                                                                    <p className="m-0 bold">Bottom 4</p>
+                                                : 
+                                                    idx === 16 ?
+                                                        weeklyMatch === league.season ?
+                                                            foundHistory(id).c.playoff === true ?                                               
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 ?
+                                                                    <p className="m-0 bold">Finals</p>
+                                                                : 
+                                                                    <p className="m-0 bold">3rd Place Match</p>
+                                                            :
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 4 ?
+                                                                    <p className="m-0 bold">Toilet Bowl</p>
+                                                                : 
+                                                                    <p className="m-0 bold">9th Place Match</p>
+                                                        :      
+                                                            foundHistory(id,weeklyMatch).s.playoff === true ?
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 ?
+                                                                    <p className="m-0 bold">Finals</p>
+                                                                : 
+                                                                    <p className="m-0 bold">3rd Place Match</p>
+                                                            :
+                                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 4 ?
+                                                                    <p className="m-0 bold">Toilet Bowl</p>
+                                                                : 
+                                                                    <p className="m-0 bold">9th Place Match</p>
+                                            :<></>                                               
+                                        // 17 Game Season
+                                        : idx < 13 ?
+                                            <p className="m-0 bold">Week {idx + 1}</p>
+                                        : idx === 13 ?
+                                            foundHistory(id,weeklyMatch).s.playoff === true ?
+                                                <p className="m-0 bold">Divisional</p>
+                                            :  
                                                 <p className="m-0 bold">Bottom 6</p>
-                                            : idx  === 15 ?
+                                        : idx === 14 ?
+                                            foundHistory(id,weeklyMatch).s.playoff === true ?
+                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 || m.filter(t => t.roster_id === Number(id))[0].matchup_id === 2 ?
+                                                    <p className="m-0 bold">Semi Finals</p>
+                                                :                                                    
+                                                    <p className="m-0 bold">5th Place Match</p>
+                                            : 
                                                 m.filter(t => t.roster_id === Number(id))[0].matchup_id === 6 ?
                                                     <p className="m-0 bold">7th Place Match</p>
                                                 : 
                                                     <p className="m-0 bold">Bottom 4</p>
-                                            : idx  === 16 ?
-                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 4 ?
-                                                    <p className="m-0 bold">Toilet Bowl</p>
-                                                : 
-                                                    <p className="m-0 bold">9th Place Match</p>
-                                            :<></>
-                                        // 17 Game Season
-                                        : idx < 13 ?
-                                            <p className="m-0 bold">Week {idx + 1}</p>
-                                        : foundHistory(id,weeklyMatch).s.playoff === true ?
-                                            idx === 13 ?
-                                                <p className="m-0 bold">Divisional</p>
-                                            : idx === 14 ?
-                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 3 ?
-                                                    <p className="m-0 bold">5th Place Match</p>
-                                                :
-                                                    <p className="m-0 bold">Semi Finals</p>
-                                            : idx === 15 ?
+                                        : idx === 15 ?
+                                            foundHistory(id,weeklyMatch).s.playoff === true ?
                                                 m.filter(t => t.roster_id === Number(id))[0].matchup_id === 1 ?
                                                     <p className="m-0 bold">Finals</p>
                                                 : 
                                                     <p className="m-0 bold">3rd Place Match</p>
-                                            :<></>
-                                        : idx  === 13 ?
-                                            <p className="m-0 bold">Bottom 6</p>
-                                        : idx  === 14 ?
-                                            m.filter(t => t.roster_id === Number(id))[0].matchup_id === 6 ?
-                                                <p className="m-0 bold">7th Place Match</p>
-                                            : 
-                                                <p className="m-0 bold">Bottom 4</p>
-                                        : idx  === 15 ?
-                                            m.filter(t => t.roster_id === Number(id))[0].matchup_id === 4 ?
-                                                <p className="m-0 bold">Toilet Bowl</p>
-                                            : 
-                                                <p className="m-0 bold">9th Place Match</p>
+                                            :
+                                                m.filter(t => t.roster_id === Number(id))[0].matchup_id === 4 ?
+                                                    <p className="m-0 bold">Toilet Bowl</p>
+                                                : 
+                                                    <p className="m-0 bold">9th Place Match</p>
                                         :<></>
                                     }
                                 </div>
