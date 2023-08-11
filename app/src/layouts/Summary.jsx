@@ -20,6 +20,7 @@ export default function Summary({
     lineupEfficiency,
     loadLeague,
     loadRosters,
+    matches,
     openModal,
     owner,
     players,
@@ -113,6 +114,8 @@ export default function Summary({
                 findPlayer={findPlayer}
                 isOdd={isOdd}
                 getTotalPts={getTotalPts}
+                league={league}
+                matches={matches}
                 owner={owner}
                 players={players}
                 processedRosters={processedRosters}

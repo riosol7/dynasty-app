@@ -102,7 +102,7 @@ export default function Owner({
             l:l
         }
     }
-    let topDraftPick = league.draft && league.draft.picks.filter(p => p.roster_id === Number(id))[0]
+    const topDraftPick = league?.draft?.picks?.filter(p => p.roster_id === Number(id))[0]
     function isOdd(num) {
         return num % 2
     }
@@ -178,6 +178,7 @@ export default function Owner({
                                             league={league} 
                                             loadLeague={loadLeague} 
                                             loadRosters={loadRosters} 
+                                            matches={matches}
                                             matchups={matchups}
                                             openModal={openModal}
                                             owner={owner}

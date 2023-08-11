@@ -21,6 +21,7 @@ export default function OwnerBody({
     league,
     loadLeague,
     loadRosters,
+    matches,
     matchups,
     openModal,
     owner,
@@ -117,6 +118,7 @@ export default function OwnerBody({
                             lineupEfficiency={lineupEfficiency}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
+                            matches={matches}
                             openModal={openModal}
                             owner={owner}
                             players={players}
@@ -138,6 +140,7 @@ export default function OwnerBody({
                             league={league}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
+                            matches={matches}
                             owner={owner}
                             players={players}
                             processedRosters={processedRosters}
@@ -161,6 +164,7 @@ export default function OwnerBody({
                             lineupEfficiency={lineupEfficiency}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
+                            matches={matches}
                             openModal={openModal}
                             owner={owner}
                             players={players}

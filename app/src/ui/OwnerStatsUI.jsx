@@ -20,63 +20,29 @@ export default function OwnerStatsUI({
 
     return (
         <div className="py-4" style={{minWidth:"300px"}}>
-            <div className="" style={{marginBottom:"8px"}}>
-                <div className="d-flex align-items-center justify-content-between">
-                    <p className="m-0 bold" style={{color:"lightgrey"}}>STATS</p>
-                    <div className="d-flex align-items-center">
-                        <Icon className="mx-3" icon="mdi:bracket" onClick={() => handleSelectStats()} style={ selectStats === "Post Season" ? {fontSize:"1.4em", color:"#a9dfd8"} : {fontSize:"1.4em", color:"#cbcbcb"}}/>
-                        <select className="p-2"value={selectSzn} onChange={handleSelectSzn} style={{fontSize:".8em", borderRadius:"25px", border:"2px solid #3bdbba", background:"black", color:"white"}}>
-                            {
-                                tab==="Summary"?
-                                    <option value={"All Time"}>All Time</option>
-                                :<></>
-                            }
-                            {
-                                league.history ? 
-                                    league.history.map((l, i) => 
-                                        <option key={i} value={l.year}>{l.year}</option>
-                                    )
-                                :<></>
-                            }
-                            <option value={league.season}>{league.season}</option>
-                        </select>
-                    </div>
+            <div className="d-flex align-items-center justify-content-between" style={{marginBottom:"8px"}}>
+                <p className="m-0 bold" style={{color:"lightgrey"}}>STATS</p>
+                <div className="d-flex align-items-center">
+                    <Icon className="mx-3" icon="mdi:bracket" onClick={() => handleSelectStats()} style={ selectStats === "Post Season" ? {fontSize:"1.4em", color:"#a9dfd8"} : {fontSize:"1.4em", color:"#cbcbcb"}}/>
+                    <select className="p-2"value={selectSzn} onChange={handleSelectSzn} style={{fontSize:".8em", borderRadius:"25px", border:"2px solid #3bdbba", background:"black", color:"white"}}>
+                        {
+                            tab==="Summary"?
+                                <option value={"All Time"}>All Time</option>
+                            :<></>
+                        }
+                        {
+                            league.history ? 
+                                league.history.map((l, i) => 
+                                    <option key={i} value={l.year}>{l.year}</option>
+                                )
+                            :<></>
+                        }
+                        <option value={league.season}>{league.season}</option>
+                    </select>
                 </div>
             </div>
             <div className="mt-4">
                 <div className="" style={{fontSize:"14px"}}>
-                    {/* <div className="d-flex align-items-center justify-content-between pb-2" style={{borderBottom:"3px solid #2a2c3e", color:"#7d91a6", fontSize:"12.85px"}}> 
-                        <div>
-                            {
-                                selectStats === "Season" ?
-                                    <p className="m-0">Regular Season</p>
-                                : <p className="m-0">Post Season</p>
-                            }
-                        </div>
-
-                        <div className="d-flex align-items-center">
-                            {
-                                selectStats === "Season" && selectSzn === "All Time" ?
-                                    foundHistory(id).playoffs.a > 0 ?
-                                        <>
-                                            <p className="m-0" style={{width:"80px"}}>Best</p>
-                                            <p className="m-0" style={{width:"80px"}}>All Play</p>
-                                            <p className="m-0" style={{width:"80px"}}>w/ Playoffs</p>    
-                                        </>
-                                    :<></>
-                                : selectStats === "Season" && selectSzn === league.season && foundHistory(id).c.playoff === true ? 
-                                    <p className="m-0" style={{width:"80px"}}>w/ Playoffs</p>    
-                                : selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true ? 
-                                    <p className="m-0" style={{width:"80px"}}>w/ Playoffs</p> 
-                                :<></>
-                            }
-                            <div className="d-flex justify-content-end"style={{width:"60px"}}>
-                                <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                    owner.owner ? owner.owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
-                            </div>
-                        </div>
-
-                    </div> */}
                     <div className="d-flex align-items-center justify-content-between pb-3" style={{color:"#7d91a6", fontSize:"12.85px"}}> 
                         <div>
                             {
@@ -93,7 +59,7 @@ export default function OwnerStatsUI({
                             :<></>
                         }
                     </div>
-                    <div className=""style={{maxWidth:"100%"}}>
+                    <div className="" style={{maxWidth:"100%"}}>
                         <div>
                             <div className="d-flex align-items-center justify-content-between pb-3" style={selectStats==="Season"?{borderBottom:"2px dashed #0f0f0f"}:{borderBottom:"2px solid #2a2c3e"}}>
                                 <p className={selectStats==="Season"?"m-0 bold":"m-0"}>Record</p>
@@ -150,15 +116,15 @@ export default function OwnerStatsUI({
                             <div style={{fontWeight:"lighter"}}>
                                 <div className="d-flex align-items-center justify-content-between fontHover" style={{borderBottom:"1px dashed #0f0f0f"}}>
                                     {
-                                        (selectStats === "Season" && selectSzn === "All Time" && foundHistory(id).playoffs.a > 0)||
-                                        (selectStats === "Season" && selectSzn === league.season && foundHistory(id).c.playoff === true)?
+                                        (selectStats === "Season" && selectSzn === "All Time" && foundHistory(id).playoffs.a > 0) ||
+                                        (selectStats === "Season" && selectSzn === league.season && foundHistory(id).c.playoff === true) ?
                                             <p className="m-0 py-3">w/ Playoffs</p>  
-                                        : (selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true)?
+                                        : (selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true) ?
                                             <p className="m-0 py-3">w/ Playoffs</p>  
                                         :<></>
                                     }
                                     {
-                                        selectStats === "Season" && selectSzn === "All Time" && foundHistory(id).playoffs.a > 0? 
+                                        selectStats === "Season" && selectSzn === "All Time" && foundHistory(id).playoffs.a > 0 ? 
                                             <div className="d-flex align-items-center py-3">
                                                 <p className="m-0" style={{width:"70px"}}>
                                                     {foundHistory(id).allTime.w + foundHistory(id).playoffs.w}-{foundHistory(id).allTime.l + foundHistory(id).playoffs.l}
@@ -182,7 +148,7 @@ export default function OwnerStatsUI({
                                                     <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                                 </p>
                                             </div>
-                                        :(selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true)?
+                                        :(selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true) ?
                                             handleSzn(selectSzn).map((o,index) =>
                                                 <div key={index}className="d-flex align-items-center">
                                                     <p className="m-0" style={{width:"70px"}}>
@@ -204,7 +170,7 @@ export default function OwnerStatsUI({
                                     }
                                 </div>
                                 {
-                                    selectSzn === "All Time" && selectStats !=="Post Season"?
+                                    selectSzn === "All Time" && selectStats !=="Post Season" ?
                                         <div className="d-flex align-items-center justify-content-between py-3 fontHover" style={{borderBottom:"1px dashed #0f0f0f"}}>
                                             <p className="m-0">Best</p>
                                             <div className="d-flex align-items-center">
@@ -364,7 +330,7 @@ export default function OwnerStatsUI({
                         }
                         {   
                             selectStats === "Post Season" && selectSzn === "All Time" ?
-                                <>
+                                <div>
                                     <div className="d-flex align-items-center justify-content-between mt-3 pb-3" style={{borderBottom:"2px solid #2a2c3e"}}>
                                         <div className="">
                                             <p className="m-0">Toilet Bowl</p>
@@ -389,7 +355,7 @@ export default function OwnerStatsUI({
                                             <p className="d-flex align-items-center m-0" style={{color:"whitesmoke"}}>{foundHistory(id).allTime.finals}</p>
                                         </div>
                                     </div>
-                                </>
+                                </div>
                             :<></>
                                 
                         }

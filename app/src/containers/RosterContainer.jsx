@@ -7,6 +7,8 @@ export default function RosterContainer({
     findPlayer,
     getTotalPts,
     isOdd,
+    league,
+    matches,
     owner,
     players,
     processedRosters,
@@ -134,6 +136,8 @@ export default function RosterContainer({
             getTopWR={getTopWR}
             getTotalPts={getTotalPts}
             isOdd={isOdd}
+            league={league}
+            matches={matches}
             owner={owner}
             players={players}
             qbArrow={qbArrow}

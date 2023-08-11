@@ -11,12 +11,14 @@ export default function RosterUI({
     getTotalPts,
     isOdd,
     owner,
+    league,
+    matches,
     players,
     qbArrow,
     qbRankings,
     rbArrow,
     rbRankings,
-    rosters,
+    // rosters,
     roundToHundredth,
     showMoreQBs,
     showQBs,
@@ -32,7 +34,6 @@ export default function RosterUI({
     wrArrow,
     wrRankings
 }) {
-    // const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
     const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
     return (
         <div className="py-4" style={{minWidth:"388px"}}>
@@ -66,10 +67,10 @@ export default function RosterUI({
                                 <p className="m-0">
                                     {   
                                         roundToHundredth(                                
-                                            owner.kct.qb.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0) +
-                                            owner.kct.rb.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0) +
-                                            owner.kct.wr.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0) +
-                                            owner.kct.te.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0)
+                                            owner.kct.qb.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0) +
+                                            owner.kct.rb.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0) +
+                                            owner.kct.wr.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0) +
+                                            owner.kct.te.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0)
                                         )
                                     }
                                 </p>
@@ -133,7 +134,7 @@ export default function RosterUI({
                                     tab !== "Dynasty"?
                                         <div className="d-flex align-items-center" style={{}}>
                                             <p className="m-0">
-                                                {roundToHundredth(owner.kct.qb.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))}
+                                                {roundToHundredth(owner.kct.qb.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))}
                                             </p>
                                             <p className="m-0 bold" style={{color:"#a9dfd8", paddingRight:"4px"}}>pts</p>
                                         </div> 
@@ -166,17 +167,22 @@ export default function RosterUI({
                                                 </div> 
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                                <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
+                                                <p className="m-0 bold">{player.full_name}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{player.number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                            {
+                                                                player.years_exp === 0 ?
+                                                                    <span>ROOKIE</span>
+                                                                :
+                                                                    <span>EXP {player.years_exp}</span>
+                                                            }
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                        <span style={{color:"white"}}> -</span>
-                                                    </p>
+                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {player.rank}</span></p>
                                                     <p className="m-0" style={{color:"#b0b0b2",width:"60px"}}>
                                                         age <span style={
                                                             player.age < "25" ?
@@ -200,18 +206,18 @@ export default function RosterUI({
                                                         tab !== "Dynasty"?
                                                             <div className="d-flex align-items-center">
                                                                 {
-                                                                    getTotalPts(owner.roster_id,player.player_id).maxPts === getTotalPts(owner.roster_id,player.player_id).pts?
+                                                                    getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts === getTotalPts(league, matches, owner.roster_id, player.player_id).pts?
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                         </span>
                                                                     :
                                                                         <p className="m-0">
                                                                             <span style={{color:"white"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                             </span>
                                                                             <span className="bold"style={{color:"#718396"}}>/</span>
                                                                             <span style={{color:"#c5c5c5"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).maxPts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts}
                                                                             </span>
                                                                         </p>
                                                             
@@ -241,17 +247,22 @@ export default function RosterUI({
                                             </div>
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                            <p className="m-0 bold">{getTopQB(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopQB(owner.kct.owner.display_name).player_id, players).number} {getTopQB(owner.kct.owner.display_name).position} - {getTopQB(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0 bold">{getTopQB(owner.kct.owner.display_name).full_name}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{getTopQB(owner.kct.owner.display_name).number} {getTopQB(owner.kct.owner.display_name).position} - {getTopQB(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopQB(owner.kct.owner.display_name).player_id, players).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                        {
+                                                            getTopQB(owner.kct.owner.display_name).years_exp === 0 ?
+                                                                <span>ROOKIE</span>
+                                                            :
+                                                                <span>EXP {getTopQB(owner.kct.owner.display_name).years_exp}</span>
+                                                        }
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                    <span style={{color:"white"}}> -</span>
-                                                </p>
+                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {getTopQB(owner.kct.owner.display_name).rank}</span></p>
                                                 <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>
                                                     age <span style={
                                                         getTopQB(owner.kct.owner.display_name).age < "25"?
@@ -275,18 +286,18 @@ export default function RosterUI({
                                                     tab !== "Dynasty"?
                                                         <div className="d-flex align-items-center">
                                                             {
-                                                                getTotalPts(owner.roster_id,getTopQB(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(owner.roster_id,getTopQB(owner.kct.owner.display_name).player_id).pts?
+                                                                getTotalPts(league, matches, owner.roster_id, getTopQB(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(league, matches, owner.roster_id, getTopQB(owner.kct.owner.display_name).player_id).pts?
                                                                     <span style={{color:"white"}}>
-                                                                        {getTotalPts(owner.roster_id,getTopQB(owner.kct.owner.display_name).player_id).pts}
+                                                                        {getTotalPts(league, matches, owner.roster_id, getTopQB(owner.kct.owner.display_name).player_id).pts}
                                                                     </span>
                                                                 :
                                                                     <p className="m-0">
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopQB(owner.kct.owner.display_name).player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopQB(owner.kct.owner.display_name).player_id).pts}
                                                                         </span>
                                                                         <span className="bold"style={{color:"#718396"}}>/</span>
                                                                         <span style={{color:"#c5c5c5"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopQB(owner.kct.owner.display_name).player_id).maxPts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopQB(owner.kct.owner.display_name).player_id).maxPts}
                                                                         </span>
                                                                     </p>
                                                         
@@ -352,7 +363,7 @@ export default function RosterUI({
                                 {
                                     tab !== "Dynasty"?
                                         <div className="d-flex align-items-center" style={{}}>
-                                            <p className="m-0">{roundToHundredth(owner.kct.rb.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))}</p>
+                                            <p className="m-0">{roundToHundredth(owner.kct.rb.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))}</p>
                                             <p className="m-0 bold" style={{color:"#a9dfd8", paddingRight:"4px"}}>pts</p>
                                         </div> 
                                     :<></>
@@ -384,17 +395,22 @@ export default function RosterUI({
                                                 </div> 
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                                <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
+                                                <p className="m-0 bold">{player.full_name}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{player.number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                            {
+                                                                player.years_exp === 0 ?
+                                                                    <span>ROOKIE</span>
+                                                                :
+                                                                    <span>EXP {player.years_exp}</span>
+                                                            }  
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                        <span style={{color:"white"}}> -</span>
-                                                    </p>
+                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {player.rank}</span></p>
                                                     <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>
                                                         age <span style={
                                                             player.age < "24"?
@@ -418,18 +434,18 @@ export default function RosterUI({
                                                         tab !== "Dynasty"?
                                                             <div className="d-flex align-items-center">
                                                                 {
-                                                                    getTotalPts(owner.roster_id,player.player_id).maxPts === getTotalPts(owner.roster_id,player.player_id).pts?
+                                                                    getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts === getTotalPts(league, matches, owner.roster_id, player.player_id).pts?
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                         </span>
                                                                     :
                                                                         <p className="m-0">
                                                                             <span style={{color:"white"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                             </span>
                                                                             <span className="bold"style={{color:"#718396"}}>/</span>
                                                                             <span style={{color:"#c5c5c5"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).maxPts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts}
                                                                             </span>
                                                                         </p>
                                                             
@@ -448,31 +464,33 @@ export default function RosterUI({
                                             <Icon icon="bxs:star" style={{}} />
                                         </div>
                                         <div className="mx-2">
-                                            <div className="smallHeadShot"
-                                                style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                    getTopRB(owner.kct.owner.display_name).player_id}.jpg)`,
-                                                }}>
-                                                    {
-                                                        findLogo(getTopRB(owner.kct.owner.display_name).team).l!==""?
-                                                            <div className="displayOwnerLogoSM"> 
-                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(getTopRB(owner.kct.owner.display_name).team).l}/>
-                                                            </div>
-                                                        :<></>
-                                                    }
+                                            <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${getTopRB(owner.kct.owner.display_name).player_id}.jpg)`}}>
+                                                {
+                                                    findLogo(getTopRB(owner.kct.owner.display_name).team).l!==""?
+                                                        <div className="displayOwnerLogoSM"> 
+                                                            <img style={{width:"2.8em"}} alt="" src={findLogo(getTopRB(owner.kct.owner.display_name).team).l}/>
+                                                        </div>
+                                                    :<></>
+                                                }
                                             </div>
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                            <p className="m-0 bold">{getTopRB(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopRB(owner.kct.owner.display_name).player_id, players).number} {getTopRB(owner.kct.owner.display_name).position} - {getTopRB(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0 bold">{getTopRB(owner.kct.owner.display_name).full_name}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{getTopRB(owner.kct.owner.display_name).number} {getTopRB(owner.kct.owner.display_name).position} - {getTopRB(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopRB(owner.kct.owner.display_name).player_id, players).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                        {
+                                                            getTopRB(owner.kct.owner.display_name).years_exp === 0 ?
+                                                                <span>ROOKIE</span>
+                                                            :
+                                                                <span>EXP {getTopRB(owner.kct.owner.display_name).years_exp}</span>
+                                                        }
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                    <span style={{color:"white"}}> -</span>
-                                                </p>
+                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {getTopRB(owner.kct.owner.display_name).rank}</span></p>
                                                 <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>
                                                     age <span style={
                                                         getTopRB(owner.kct.owner.display_name).age < "24" ?
@@ -496,18 +514,18 @@ export default function RosterUI({
                                                     tab !== "Dynasty"?
                                                         <div className="d-flex align-items-center">
                                                             {
-                                                                getTotalPts(owner.roster_id,getTopRB(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(owner.roster_id,getTopRB(owner.kct.owner.display_name).player_id).pts?
+                                                                getTotalPts(league, matches, owner.roster_id, getTopRB(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(league, matches, owner.roster_id, getTopRB(owner.kct.owner.display_name).player_id).pts?
                                                                     <span style={{color:"white"}}>
-                                                                        {getTotalPts(owner.roster_id,getTopRB(owner.kct.owner.display_name).player_id).pts}
+                                                                        {getTotalPts(league, matches, owner.roster_id, getTopRB(owner.kct.owner.display_name).player_id).pts}
                                                                     </span>
                                                                 :
                                                                     <p className="m-0">
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopRB(owner.kct.owner.display_name).player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopRB(owner.kct.owner.display_name).player_id).pts}
                                                                         </span>
                                                                         <span className="bold"style={{color:"#718396"}}>/</span>
                                                                         <span style={{color:"#c5c5c5"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopRB(owner.kct.owner.display_name).player_id).maxPts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopRB(owner.kct.owner.display_name).player_id).maxPts}
                                                                         </span>
                                                                     </p>
                                                         
@@ -573,7 +591,7 @@ export default function RosterUI({
                                 {
                                     tab !== "Dynasty"?
                                         <div className="d-flex align-items-center" style={{}}>
-                                            <p className="m-0">{roundToHundredth(owner.kct.wr.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))}</p>
+                                            <p className="m-0">{roundToHundredth(owner.kct.wr.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))}</p>
                                             <p className="m-0 bold" style={{color:"#a9dfd8", paddingRight:"4px"}}>pts</p>
                                         </div> 
                                     :<></>
@@ -593,10 +611,7 @@ export default function RosterUI({
                                             }
                                             </div>
                                             <div className="mx-2">
-                                                <div className="smallHeadShot"
-                                                    style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                        player.player_id}.jpg)`,
-                                                }}>
+                                                <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${player.player_id}.jpg)`}}>
                                                     {
                                                         findLogo(player.team).l !==""?
                                                             <div className="displayOwnerLogoSM">
@@ -607,17 +622,22 @@ export default function RosterUI({
                                                 </div> 
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                                <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
+                                                <p className="m-0 bold">{player.full_name}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{player.number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                            {
+                                                                player.years_exp === 0 ?
+                                                                    <span>ROOKIE</span>
+                                                                :
+                                                                    <span>EXP {player.years_exp}</span>
+                                                            }
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                        <span style={{color:"white"}}> -</span>
-                                                    </p>
+                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {player.rank}</span></p>
                                                     <p className="m-0" style={{color:"#b0b0b2",width:"60px"}}>
                                                         age <span style={
                                                             player.age < "24"?
@@ -641,18 +661,18 @@ export default function RosterUI({
                                                         tab !== "Dynasty"?
                                                             <div className="d-flex align-items-center">
                                                                 {
-                                                                    getTotalPts(owner.roster_id,player.player_id).maxPts === getTotalPts(owner.roster_id,player.player_id).pts?
+                                                                    getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts === getTotalPts(league, matches, owner.roster_id, player.player_id).pts?
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                         </span>
                                                                     :
                                                                         <p className="m-0">
                                                                             <span style={{color:"white"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                             </span>
                                                                             <span className="bold"style={{color:"#718396"}}>/</span>
                                                                             <span style={{color:"#c5c5c5"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).maxPts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts}
                                                                             </span>
                                                                         </p>
                                                             
@@ -671,31 +691,33 @@ export default function RosterUI({
                                             <Icon icon="bxs:star" style={{}} />
                                         </div>
                                         <div className="mx-2">
-                                            <div className="smallHeadShot"
-                                                style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                    getTopWR(owner.kct.owner.display_name).player_id}.jpg)`,
-                                                }}>
-                                                    {
-                                                        findLogo(getTopWR(owner.kct.owner.display_name).team).l!==""?
-                                                            <div className="displayOwnerLogoSM"> 
-                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(getTopWR(owner.kct.owner.display_name).team).l}/>
-                                                            </div>
-                                                        :<></>
-                                                    }
+                                            <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${getTopWR(owner.kct.owner.display_name).player_id}.jpg)`}}>
+                                                {
+                                                    findLogo(getTopWR(owner.kct.owner.display_name).team).l!==""?
+                                                        <div className="displayOwnerLogoSM"> 
+                                                            <img style={{width:"2.8em"}} alt="" src={findLogo(getTopWR(owner.kct.owner.display_name).team).l}/>
+                                                        </div>
+                                                    :<></>
+                                                }
                                             </div>
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                            <p className="m-0 bold">{getTopWR(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopWR(owner.kct.owner.display_name).player_id, players).number} {getTopWR(owner.kct.owner.display_name).position} - {getTopWR(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0 bold">{getTopWR(owner.kct.owner.display_name).full_name}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{getTopWR(owner.kct.owner.display_name).number} {getTopWR(owner.kct.owner.display_name).position} - {getTopWR(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopWR(owner.kct.owner.display_name).player_id, players).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                        {
+                                                            getTopWR(owner.kct.owner.display_name).years_exp === 0 ?
+                                                                <span>ROOKIE</span>
+                                                            :
+                                                                <span>EXP {getTopWR(owner.kct.owner.display_name).years_exp}</span>
+                                                        }
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                    <span style={{color:"white"}}> -</span>
-                                                </p>
+                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {getTopWR(owner.kct.owner.display_name).rank}</span></p>
                                                 <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>
                                                     age <span style={
                                                         getTopWR(owner.kct.owner.display_name).age < "24"?
@@ -719,18 +741,18 @@ export default function RosterUI({
                                                     tab !== "Dynasty"?
                                                         <div className="d-flex align-items-center">
                                                             {
-                                                                getTotalPts(owner.roster_id,getTopWR(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(owner.roster_id,getTopWR(owner.kct.owner.display_name).player_id).pts?
+                                                                getTotalPts(league, matches, owner.roster_id, getTopWR(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(league, matches, owner.roster_id, getTopWR(owner.kct.owner.display_name).player_id).pts?
                                                                     <span style={{color:"white"}}>
-                                                                        {getTotalPts(owner.roster_id,getTopWR(owner.kct.owner.display_name).player_id).pts}
+                                                                        {getTotalPts(league, matches, owner.roster_id, getTopWR(owner.kct.owner.display_name).player_id).pts}
                                                                     </span>
                                                                 :
                                                                     <p className="m-0">
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopWR(owner.kct.owner.display_name).player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopWR(owner.kct.owner.display_name).player_id).pts}
                                                                         </span>
                                                                         <span className="bold"style={{color:"#718396"}}>/</span>
                                                                         <span style={{color:"#c5c5c5"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopWR(owner.kct.owner.display_name).player_id).maxPts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopWR(owner.kct.owner.display_name).player_id).maxPts}
                                                                         </span>
                                                                     </p>
                                                         
@@ -799,7 +821,7 @@ export default function RosterUI({
                                         <div className="d-flex align-items-center" style={{}}>
                                             <p className="m-0">
                                                 {
-                                                    roundToHundredth(owner.kct.te.players.map((player) => getTotalPts(owner.roster_id,player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))
+                                                    roundToHundredth(owner.kct.te.players.map((player) => getTotalPts(league, matches, owner.roster_id, player.player_id).pts).reduce((partialSum,a) => partialSum + a, 0))
                                                 }
                                             </p>
                                             <p className="m-0 bold" style={{color:"#a9dfd8", paddingRight:"4px"}}>pts</p>
@@ -822,31 +844,33 @@ export default function RosterUI({
                                             }
                                             </div>
                                             <div className="mx-2">
-                                                <div className="smallHeadShot"
-                                                    style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                        player.player_id}.jpg)`,
-                                                    }}>
-                                                        {
-                                                            findLogo(player.team).l !==""?
-                                                                <div className="displayOwnerLogoSM">
-                                                                    <img style={{width:"2.8em"}} alt="" src={findLogo(player.team).l}/>
-                                                                </div>
-                                                            :<></>
-                                                        }
+                                                <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${player.player_id}.jpg)`}}>
+                                                    {
+                                                        findLogo(player.team).l !==""?
+                                                            <div className="displayOwnerLogoSM">
+                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(player.team).l}/>
+                                                            </div>
+                                                        :<></>
+                                                    }
                                                 </div> 
                                             </div>
                                             <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                                <p className="m-0 bold">{player.player}</p>
-                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(player.player_id, players).number} {player.position} - {player.team}</p>
+                                                <p className="m-0 bold">{player.full_name}</p>
+                                                <p className="m-0"style={{fontSize:"10px", color:"#cbcbcb"}}>#{player.number} {player.position} - {player.team}</p>
                                                 <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(player.player_id, players).years_exp}</p>
+                                                        <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                            {
+                                                                player.years_exp === 0 ?
+                                                                    <span>ROOKIE</span>
+                                                                :
+                                                                    <span>EXP {player.years_exp}</span>
+                                                            }
+                                                        </p>
                                                     </div>
                                                 </div>
                                                 <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                        <span style={{color:"white"}}> -</span>
-                                                    </p>
+                                                    <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {player.rank}</span></p>
                                                     <p className="m-0" style={{color:"#b0b0b2",width:"60px"}}>
                                                         age <span style={
                                                             player.age < "25"?
@@ -870,18 +894,18 @@ export default function RosterUI({
                                                         tab !== "Dynasty"?
                                                             <div className="d-flex align-items-center">
                                                                 {
-                                                                    getTotalPts(owner.roster_id,player.player_id).maxPts === getTotalPts(owner.roster_id,player.player_id).pts?
+                                                                    getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts === getTotalPts(league, matches, owner.roster_id, player.player_id).pts?
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                         </span>
                                                                     :
                                                                         <p className="m-0">
                                                                             <span style={{color:"white"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).pts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).pts}
                                                                             </span>
                                                                             <span className="bold"style={{color:"#718396"}}>/</span>
                                                                             <span style={{color:"#c5c5c5"}}>
-                                                                                {getTotalPts(owner.roster_id,player.player_id).maxPts}
+                                                                                {getTotalPts(league, matches, owner.roster_id, player.player_id).maxPts}
                                                                             </span>
                                                                         </p>
                                                             
@@ -900,31 +924,33 @@ export default function RosterUI({
                                             <Icon icon="bxs:star" style={{}} />
                                         </div>
                                         <div className="mx-2">
-                                            <div className="smallHeadShot"
-                                                style={{width:"60px",height:"60px",backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                    getTopTE(owner.kct.owner.display_name).player_id}.jpg)`,
-                                                }}>
-                                                    {
-                                                        findLogo(getTopTE(owner.kct.owner.display_name).team).l!==""?
-                                                            <div className="displayOwnerLogoSM"> 
-                                                                <img style={{width:"2.8em"}} alt="" src={findLogo(getTopTE(owner.kct.owner.display_name).team).l}/>
-                                                            </div>
-                                                        :<></>
-                                                    }
+                                            <div className="smallHeadShot" style={{width:"60px",height:"60px",backgroundImage: `url(${playerBaseURL}${getTopTE(owner.kct.owner.display_name).player_id}.jpg)`}}>
+                                                {
+                                                    findLogo(getTopTE(owner.kct.owner.display_name).team).l!==""?
+                                                        <div className="displayOwnerLogoSM"> 
+                                                            <img style={{width:"2.8em"}} alt="" src={findLogo(getTopTE(owner.kct.owner.display_name).team).l}/>
+                                                        </div>
+                                                    :<></>
+                                                }
                                             </div>
                                         </div>
                                         <div className="col mx-2" style={{fontSize:".9rem"}}>
-                                            <p className="m-0 bold">{getTopTE(owner.kct.owner.display_name).player}</p>
-                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{findPlayer(getTopTE(owner.kct.owner.display_name).player_id, players).number} {getTopTE(owner.kct.owner.display_name).position} - {getTopTE(owner.kct.owner.display_name).team}</p>
+                                            <p className="m-0 bold">{getTopTE(owner.kct.owner.display_name).full_name}</p>
+                                            <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{getTopTE(owner.kct.owner.display_name).number} {getTopTE(owner.kct.owner.display_name).position} - {getTopTE(owner.kct.owner.display_name).team}</p>
                                             <div className="d-flex align-items-center" style={{fontSize:"12px"}}>
                                                 <div className="d-flex align-items-center">
-                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>EXP {findPlayer(getTopTE(owner.kct.owner.display_name).player_id, players).years_exp}</p>
+                                                    <p className="m-0 bold" style={{color:"#7c90a5",fontSize:"10px"}}>
+                                                        {
+                                                            getTopTE(owner.kct.owner.display_name).years_exp === 0 ?
+                                                                <span>ROOKIE</span>
+                                                            :
+                                                                <span>EXP {getTopTE(owner.kct.owner.display_name).years_exp}</span>
+                                                        }
+                                                    </p>
                                                 </div>
                                             </div>
                                             <div className="d-flex align-items-center" style={{fontSize:"11.5px"}}>
-                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank 
-                                                    <span style={{color:"white"}}> -</span>
-                                                </p>
+                                                <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>rank <span style={{color:"white"}}> {getTopTE(owner.kct.owner.display_name).rank}</span></p>
                                                 <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>
                                                     age <span style={
                                                         getTopTE(owner.kct.owner.display_name).age < "25"?
@@ -948,18 +974,18 @@ export default function RosterUI({
                                                     tab !== "Dynasty"?
                                                         <div className="d-flex align-items-center">
                                                             {
-                                                                getTotalPts(owner.roster_id,getTopTE(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(owner.roster_id,getTopTE(owner.kct.owner.display_name).player_id).pts?
+                                                                getTotalPts(league, matches, owner.roster_id, getTopTE(owner.kct.owner.display_name).player_id).maxPts === getTotalPts(league, matches, owner.roster_id, getTopTE(owner.kct.owner.display_name).player_id).pts?
                                                                     <span style={{color:"white"}}>
-                                                                        {getTotalPts(owner.roster_id,getTopTE(owner.kct.owner.display_name).player_id).pts}
+                                                                        {getTotalPts(league, matches, owner.roster_id, getTopTE(owner.kct.owner.display_name).player_id).pts}
                                                                     </span>
                                                                 :
                                                                     <p className="m-0">
                                                                         <span style={{color:"white"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopTE(owner.kct.owner.display_name).player_id).pts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopTE(owner.kct.owner.display_name).player_id).pts}
                                                                         </span>
                                                                         <span className="bold"style={{color:"#718396"}}>/</span>
                                                                         <span style={{color:"#c5c5c5"}}>
-                                                                            {getTotalPts(owner.roster_id,getTopTE(owner.kct.owner.display_name).player_id).maxPts}
+                                                                            {getTotalPts(league, matches, owner.roster_id, getTopTE(owner.kct.owner.display_name).player_id).maxPts}
                                                                         </span>
                                                                     </p>
                                                         
