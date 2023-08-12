@@ -1,9 +1,9 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { findLogo } from "../utils";
 
 export default function DraftWidget({
     findPlayer,
-    findLogo,
     league,
     openModal,
     players,

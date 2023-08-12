@@ -1,14 +1,13 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect } from "react";
 import { processWaiverBids } from "../helpers";
-import MarketUI from '../ui/MarketUI';
-
+import MarketUI from "../ui/MarketUI";
+import { findLogo } from "../utils";
 // IDEAS
 //  Showcase a graph of the previous QBs, RBs, WRs, TEs that were bought at what price & by who
 //  And Trades per position; draft picks EX: Joe Burrow trade for 2 1st round picks...
 //  Available players FA
 
 export default function MarketContainer({
-    findLogo,
     // findPlayer,
     league,
     // loadOwners,

@@ -64,7 +64,7 @@ const processRosters = (rosters, players, owners) => {
     })
 
     return {
-      totalRoster: uploadPlayersToRosters.sort((a, b) => parseFloat(b.kct.teamTotal) - parseFloat(a.kct.teamTotal)).map(roster => roster),
+      totalRoster: uploadPlayersToRosters.sort((a,b) => { if (a.settings.wins === b.settings.wins) { return (b.settings.fpts) - (a.settings.fpts);} else { return b.settings.wins - a.settings.wins;}}).map((team, i) => ({...team, rank:i+1})),
       teamRank: uploadPlayersToRosters.sort((a, b) => parseFloat(b.kct.teamTotal) - parseFloat(a.kct.teamTotal)).map((roster, idx) => { return { rank: idx + 1, kct: roster.kct } }),
       qbRank: uploadPlayersToRosters.sort((a, b) => parseFloat(b.kct.qb.total) - parseFloat(a.kct.qb.total)).map((roster, idx) => { return { rank: idx + 1, kct: roster.kct } }),
       rbRank: uploadPlayersToRosters.sort((a, b) => parseFloat(b.kct.rb.total) - parseFloat(a.kct.rb.total)).map((roster, idx) => { return { rank: idx + 1, kct: roster.kct } }),

@@ -5,11 +5,8 @@ import LegacyComparisonContainer from "../containers/LegacyComparisonContainer";
 import DynastyProfileView from "./DynastyProfileView";
 
 export default function Dynasty({
-    findLogo,
     findPlayer,
-    getTotalPts,
     id,
-    isOdd,
     loadRosters,
     owner,
     players,
@@ -33,11 +30,8 @@ export default function Dynasty({
                 processedRosters={processedRosters}
             />
             <DynastyProfileView
-                findLogo={findLogo}
                 findPlayer={findPlayer}
                 id={id}
-                isOdd={isOdd}
-                getTotalPts={getTotalPts}
                 owner={owner}
                 players={players}
                 processedRosters={processedRosters}

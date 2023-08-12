@@ -1,8 +1,8 @@
-import React from 'react';
-import Draft from '../Draft';
-import { Icon } from '@iconify/react';
-import Matchup from '../Matchup';
-
+import React from "react";
+import Draft from "../Draft";
+import { Icon } from "@iconify/react";
+import Matchup from "../Matchup";
+import { findLogo, isOdd } from "../../utils";
 const MODAL_STYLES = {
     position: 'fixed',
     top: '50%',
@@ -32,8 +32,6 @@ export default function Modal(props) {
     const league=props.league
     const draftClass=props.draftClass
     const myDraftPicks=props.myDraftPicks
-    const isOdd=props.isOdd
-    const findLogo=props.findLogo
     const findPlayer=props.findPlayer
     const closeModal=props.closeModal
     const foundHistory=props.foundHistory

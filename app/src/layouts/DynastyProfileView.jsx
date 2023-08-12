@@ -5,11 +5,8 @@ import DynastyAgeBarChart from "../components/charts/DynastyAgeBarChart";
 import DynastyRadarInsights from "../components/charts/DynastyRadarInsights";
 
 export default function DynastyProfileView({
-    findLogo,
     findPlayer,
     id,
-    isOdd,
-    getTotalPts,
     owner,
     players,
     processedRosters,
@@ -43,10 +40,7 @@ export default function DynastyProfileView({
                     </div>
                 </div>
                 <RosterContainer
-                    findLogo={findLogo}
                     findPlayer={findPlayer}
-                    isOdd={isOdd}
-                    getTotalPts={getTotalPts}
                     owner={owner}
                     players={players}
                     processedRosters={processedRosters}

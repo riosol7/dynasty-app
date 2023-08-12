@@ -1,12 +1,13 @@
 import React,{ useState } from "react";
-import { logos } from "../assets/logos";
-
 import RosterUI from "../ui/RosterUI";
+import { 
+    findLogo,
+    getTotalPts, 
+    isOdd, 
+} from '../utils';
 
 export default function RosterContainer({
     findPlayer,
-    getTotalPts,
-    isOdd,
     league,
     matches,
     owner,
@@ -120,12 +121,7 @@ export default function RosterContainer({
         let topTE = foundTeam.kct.te.players[0]
         return topTE
     }
-    let findLogo = (team) => {
-        if(team !== null && team !== undefined){
-            let foundLogo = logos.filter(logo => logo[team])
-            return Object.values(foundLogo[0])[0]
-        }
-    }
+
     return (
         <RosterUI
             findLogo={findLogo}

@@ -3,7 +3,6 @@ import Overview from "../layouts/Overview";
 
 export default function Home ({
     activityBar,
-    findLogo,
     findPlayer,
     findRosterByID,
     foundHistory,
@@ -42,7 +41,6 @@ export default function Home ({
                         league={league}
                         activityBar={activityBar}
                         setActivityBar={setActivityBar}
-                        findLogo={findLogo}
                         findPlayer={findPlayer}
                         matches={matches}
                         owners={owners}

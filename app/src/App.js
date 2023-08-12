@@ -10,7 +10,6 @@ import AppRouter from "./router/AppRouter";
 import SidenavBar from "./layouts/SidenavBar";
 import ActivityBar from "./components/ActivityBar";
 import {
-    findLogo,
     getTotalPts,
     lineupEfficiency,
     toDateTime,
@@ -658,7 +657,6 @@ function App() {
                 <Router>
                     <AppRouter  
                         activityBar={activityBar}
-                        findLogo={findLogo}
                         findPlayer={findPlayer}
                         findRosterByID={findRosterByID}
                         foundHistory={foundHistory}

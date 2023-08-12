@@ -9,7 +9,6 @@ import OwnerStatsContainer from "../containers/OwnerStatsContainer";
 import RivalryRecordContainer from "../containers/RivalryRecordContainer";
 
 export default function Power({
-    findLogo,
     findRecord,
     findRosterByID,
     foundHistory,
@@ -111,7 +110,6 @@ export default function Power({
                         </div>
                     </div> */}
             <MatchupContainer
-                findLogo={findLogo}
                 findRecord={findRecord}
                 findRosterByID={findRosterByID}
                 foundHistory={foundHistory}

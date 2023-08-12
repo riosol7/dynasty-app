@@ -1,9 +1,8 @@
 import React from "react";
 import MVPUI from "../ui/MVPUI";
 import { processRosters } from "../helpers";
-
+import { findLogo } from "../utils";
 export default function MVPContainer ({
-    findLogo,
     getTotalPts,
     league,
     loadLeague,

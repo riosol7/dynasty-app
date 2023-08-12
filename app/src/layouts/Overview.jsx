@@ -6,7 +6,6 @@ import RankingsContainer from "../containers/RankingsContainer";
 
 export default function Overview({
     activityBar,
-    findLogo,
     findPlayer,
     findRosterByID,
     foundHistory,
@@ -37,7 +36,6 @@ export default function Overview({
                 setActivityBar={setActivityBar}
             />
             <MVPContainer
-                findLogo={findLogo}
                 getTotalPts={getTotalPts}
                 league={league}
                 loadLeague={loadLeague}
@@ -48,7 +46,6 @@ export default function Overview({
                 rosters={rosters}
             />
             <MarketContainer
-                findLogo={findLogo}
                 findPlayer={findPlayer}
                 league={league}
                 loadOwners={loadOwners}

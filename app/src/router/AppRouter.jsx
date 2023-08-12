@@ -5,7 +5,7 @@ import Home from "../pages/Home";
 import Owner from "../pages/Owner";
 
 const AppRouter = ({ 
-    activityBar, findLogo, findPlayer, findRosterByID, 
+    activityBar, findPlayer, findRosterByID, 
     findRosterByName, foundHistory, getTotalPts, handleRostersBySzn,
     league, lineupEfficiency, loadLeague, loadMatches, 
     loadOwners, loadPlayers, loadRosters, loadTransactions, matches, matchups,
@@ -19,7 +19,6 @@ const AppRouter = ({
                 exact path={`/Home`}
                 element={<Home {...{
                     activityBar,
-                    findLogo,
                     findPlayer,
                     findRosterByID,
                     findRosterByName,
@@ -49,7 +48,6 @@ const AppRouter = ({
                 exact path={`/Owner/:id`}
                 element={<Owner {...{
                     activityBar,
-                    findLogo,
                     findPlayer,
                     findRosterByID,
                     findRosterByName,

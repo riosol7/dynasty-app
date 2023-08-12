@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import DraftWidget from '../components/DraftWidget';
 
 export default function OwnerHeader({
-    findLogo,
     findPlayer,
     league,
     openModal,
@@ -63,7 +62,6 @@ export default function OwnerHeader({
                     league={league}
                     topDraftPick={topDraftPick}
                     findPlayer={findPlayer}
-                    findLogo={findLogo}
                     openModal={openModal}
                     players={players}
                 />

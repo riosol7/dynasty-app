@@ -6,15 +6,12 @@ import RivalryRecordContainer from "../containers/RivalryRecordContainer";
 import RosterContainer from "../containers/RosterContainer";
 
 export default function Summary({
-    findLogo,
     findPlayer,
     findRecord,
     findRosterByID,
     foundHistory,
     foundMyMatchups,
-    getTotalPts,
     id,
-    isOdd,
     league,
     lineupEfficiency,
     loadLeague,
@@ -54,7 +51,6 @@ export default function Summary({
     return (
         <div style={{fontSize:"14px"}}>
             <MatchupContainer
-                findLogo={findLogo}
                 findRecord={findRecord}
                 findRosterByID={findRosterByID}
                 foundHistory={foundHistory}
@@ -108,10 +104,7 @@ export default function Summary({
                 />
             </div> */}
             <RosterContainer
-                findLogo={findLogo}
                 findPlayer={findPlayer}
-                isOdd={isOdd}
-                getTotalPts={getTotalPts}
                 league={league}
                 matches={matches}
                 owner={owner}

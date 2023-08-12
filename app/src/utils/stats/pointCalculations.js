@@ -1,3 +1,7 @@
+export const isOdd = (num) => {
+    return num % 2
+}
+
 export const roundToHundredth = (value) => {
     if (typeof value === "number" && !isNaN(value)) {
         return Number(value.toFixed(2));

@@ -4,20 +4,17 @@ import Summary from "./Summary";
 import Dynasty from "./Dynasty";
 import Power from "./Power";
 import { 
-    getTotalPts,
     lineupEfficiency,
     roundToHundredth,
     winPCT 
 } from "../utils";
 
 export default function OwnerBody({
-    findLogo,
     findPlayer,
     findRecord,
     findRosterByID,
     foundHistory,
     id,
-    isOdd,
     league,
     loadLeague,
     loadRosters,
@@ -30,28 +27,28 @@ export default function OwnerBody({
     rosters,
 }) {
 
-    const [tab, setTab] = useState("Summary")
+    const [tab, setTab] = useState("Summary");
 
     const foundMyMatchups = matchups?.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
         if (team.filter(owner => owner.roster_id === Number(id)).length > 0) {
-            return team
-        }  
-        return acc
-    })).map(match => match.sort((a,b) => b.points - a.points))
+            return team;
+        };
+        return acc;
+    })).map(match => match.sort((a,b) => b.points - a.points));
 
-    let foundStats = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id)).settings
+    const foundStats = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id)).settings;
 
-    let totalPtsPerGame = (p ,s) => {
-        if(s === "All Time"){
-            return roundToHundredth(Number(p/(foundHistory(id).allTime.w + foundHistory(id).allTime.l))) 
-        } else if(Number(s) <= 2020){
-            return roundToHundredth(Number(p/13))
-        } else if(Number(s) > 2020){
-            return roundToHundredth(Number(p/14))
-        } else if(s === league.season){
-            return roundToHundredth(Number(p/(foundStats.losses + foundStats.wins + foundStats.ties)))
+    const totalPtsPerGame = (pts ,season) => {
+        if (season === "All Time") {
+            return roundToHundredth(Number(pts/(foundHistory(id).allTime.w + foundHistory(id).allTime.l)));
+        } else if(Number(season) <= 2020){
+            return roundToHundredth(Number(pts/13));
+        } else if(Number(season) > 2020){
+            return roundToHundredth(Number(pts/14));
+        } else if(season === league.season){
+            return roundToHundredth(Number(pts/(foundStats.losses + foundStats.wins + foundStats.ties)));
         }
-    }    
+    };
 
     return (
         <div>
@@ -91,15 +88,12 @@ export default function OwnerBody({
                 {
                     tab === "Summary" ?
                         <Summary
-                            findLogo={findLogo}
                             findPlayer={findPlayer}
                             findRecord={findRecord}
                             findRosterByID={findRosterByID}
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
-                            getTotalPts={getTotalPts}
                             id={id}
-                            isOdd={isOdd}
                             league={league}
                             lineupEfficiency={lineupEfficiency}
                             loadLeague={loadLeague}
@@ -117,12 +111,9 @@ export default function OwnerBody({
                         />
                     : tab === "Dynasty" ?
                         <Dynasty
-                            findLogo={findLogo}
                             findPlayer={findPlayer}
                             foundHistory={foundHistory}
-                            getTotalPts={getTotalPts}
                             id={id}
-                            isOdd={isOdd}
                             league={league}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
@@ -136,16 +127,13 @@ export default function OwnerBody({
                         />
                     : tab === "Power" ?
                         <Power
-                            findLogo={findLogo}
                             findPlayer={findPlayer}
                             findRecord={findRecord}
                             findRosterByID={findRosterByID}
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
-                            getTotalPts={getTotalPts}
                             // handleSzn={handleSzn}
                             id={id}
-                            isOdd={isOdd}
                             league={league}
                             lineupEfficiency={lineupEfficiency}
                             loadLeague={loadLeague}

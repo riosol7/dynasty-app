@@ -1,5 +1,6 @@
 import { 
     getTotalPts, 
+    isOdd,
     lineupEfficiency,
     roundToHundredth, 
     winPCT 
@@ -7,6 +8,7 @@ import {
 
 export {
     getTotalPts,
+    isOdd,
     lineupEfficiency,
     roundToHundredth,
     winPCT,

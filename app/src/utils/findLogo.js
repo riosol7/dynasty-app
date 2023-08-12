@@ -1,12 +1,11 @@
 import { logos } from "../assets/logos";
 
 const findLogo = (team) => {
-    if(team === null || undefined){
+    if(team === null || team === undefined){
         return "FA";
 
     } else {
-
-        let foundLogo = logos.filter(logo => logo[team]);
+        const foundLogo = logos.filter(logo => logo[team]);
         return Object.values(foundLogo[0])[0];
     }
 }

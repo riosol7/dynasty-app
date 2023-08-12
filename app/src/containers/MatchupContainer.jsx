@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import MatchupUI from "../ui/MatchupUI";
+import { findLogo } from "../utils";
 
 export default function MatchupContainer({
-    findLogo,
     findRecord,
     findRosterByID,
     foundHistory,
