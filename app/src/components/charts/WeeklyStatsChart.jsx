@@ -8,52 +8,21 @@ export default function WeeklyStatsChart({
     processedRosters,
     weeklyMatch,
 }) {
-
     const foundRoster = findRosterByID(id, processedRosters.totalRoster);
-
-    let lineSeriesC = [
+    const series = [
         {
             name:foundRoster.owner.display_name,
-            data:foundHistory(id).c.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
+            data:foundHistory(id, weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
         },
         {
             name:"Points Against",
-            data:foundHistory(id).c.matchups.map(m => m.filter(t => t.roster_id !== Number(id)).map(s => s.points)[0])
+            data:foundHistory(id, weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id !== Number(id)).map(s => s.points)[0])
         },
         {
             name:"League Average",
-            data:foundHistory(id).c.leagueAvgPts
+            data:foundHistory(id, weeklyMatch).s.leagueAvgPts
         },
-    ]
-    let lineSeriesS = [
-        {
-            name:foundRoster.owner.display_name,
-            data:foundHistory(id,weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
-        },
-        {
-            name:"Points Against",
-            data:foundHistory(id,weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id !== Number(id)).map(s => s.points)[0])
-        },
-        {
-            name:"League Average",
-            data:foundHistory(id,weeklyMatch).s.leagueAvgPts
-        },
-    ]
-    let seriesConditional = lineSeriesS[0].data.length>0? lineSeriesS : lineSeriesC[0].data.length>0?lineSeriesC:[]
-    // let lineSeries = foundHistory(id,selectSzn) && foundHistory(id,selectSzn).s.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => {
-    //     return {
-    //         name:findRosterByID(id).owner.display_name,
-    //         data:s.points
-    //     }
-    // }))
-    // let lineSeries = rosters.totalRoster && rosters.totalRoster.filter(r => r.roster_id === Number(id)).map(roster => {
-    //     return {
-    //         name:roster.owner.display_name,
-    //         data:roster.owner ? roster.owner.dynasty.slice().map(data => data.value) : []
-    //     }
-    // })
-    // let dates = rosters.totalRoster && rosters.totalRoster.filter(r => r.roster_id === Number(id)).map(roster => roster.owner.dynasty.map(data => new Date(data.date).toLocaleDateString()))
-    const series = seriesConditional
+    ];   
     const options = {
         chart: {
             animations: {
@@ -84,20 +53,6 @@ export default function WeeklyStatsChart({
         dataLabels: {
             enabled: false
         },
-        // fill: {
-        //     type: 'gradient',
-        //     gradient: {
-        //         gradientToColors: [
-        //             "#5ec8d7","#f09819","#00c6ff",
-        //             "#7a2828","#00ACEA","#ff7e5f",
-        //             "#757f9a","#FFB612","#d38312",
-        //             "#D3BC8D","#89216b","#FFC20E"
-        //             ],
-        //         shadeIntensity: .9,
-        //         stops:[0,100]
-
-        //     }
-        // },
         grid: {
             show: false,
             padding: {
@@ -138,16 +93,14 @@ export default function WeeklyStatsChart({
         zoom: {
             enabled: false
         }
-    }
+    };
     return (
-        <div>
-            <Chart
-                options={options} 
-                series={series} 
-                type="line" 
-                height={350}
-                width={"100%"} 
-            />
-        </div>
+        <Chart
+            options={options} 
+            series={series} 
+            type="line" 
+            height={350}
+            width={"100%"} 
+        />
     )
 }

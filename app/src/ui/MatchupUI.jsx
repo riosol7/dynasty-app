@@ -8,7 +8,6 @@ export default function MatchupUI({
     findRosterByID,
     findWeeklyMatchups,
     foundHistory,
-    foundMyMatchups,
     handleWeeklyMatch,
     id,
     league,
@@ -25,11 +24,9 @@ export default function MatchupUI({
                 <p className="m-0" style={{color:"lightgrey"}}>WEEKLY BREAKDOWN</p>
                 <select className="" onChange={handleWeeklyMatch} value={weeklyMatch} style={{color:"#fff", background:"inherit", border:"none"}}>
                     <option value={league.season}>{league.season}</option>
-                    {
-                        league.history.map((l,i) =>
-                            <option key={i} value={l.year}>{l.year}</option>
-                        )
-                    }
+                    {league.history.map((l,i) =>
+                        <option key={i} value={l.year}>{l.year}</option>
+                    )}
                 </select>
             </div>
             <MatchupSlider
@@ -38,7 +35,6 @@ export default function MatchupUI({
                 findRosterByID={findRosterByID}
                 findWeeklyMatchups={findWeeklyMatchups}
                 foundHistory={foundHistory}
-                foundMyMatchups={foundMyMatchups}
                 id={id}
                 league={league}
                 loadLeague={loadLeague}

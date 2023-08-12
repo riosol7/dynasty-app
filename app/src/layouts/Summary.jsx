@@ -13,7 +13,6 @@ export default function Summary({
     foundHistory,
     foundMyMatchups,
     getTotalPts,
-    handleSzn,
     id,
     isOdd,
     league,
@@ -30,16 +29,16 @@ export default function Summary({
     totalPtsPerGame,
     winPCT,
 }) {
-    const [selectStats, setSelectStats] = useState("Season")
-    const [selectSzn, setSelectSzn] = useState("All Time")
-    const [vs, setVS] = useState("Head")
-    const [selectAllPlay, setSelectAllPlay] = useState("All Time")
+    const [selectStats, setSelectStats] = useState("Season");
+    const [selectSzn, setSelectSzn] = useState("All Time");
+    const [vs, setVS] = useState("Head");
+    const [selectAllPlay, setSelectAllPlay] = useState("All Time");
   
     const handleAllPlay = (e) => {
         setSelectAllPlay(e.target.value)
     }
     const handleSelectStats = () => {
-        if(selectStats ==="Post Season"){
+        if (selectStats ==="Post Season") {
             setSelectStats("Season");
         } else {
             setSelectStats("Post Season");
@@ -49,7 +48,7 @@ export default function Summary({
         setSelectSzn(e.target.value);
     }
     const handleVS = (e) => {
-        setVS(e.target.value)
+        setVS(e.target.value);
     }
       
     return (
@@ -72,11 +71,10 @@ export default function Summary({
                 foundHistory={foundHistory}
                 handleSelectStats={handleSelectStats}
                 handleSelectSzn={handleSelectSzn}
-                handleSzn={handleSzn}
                 id={id}
                 league={league}
                 lineupEfficiency={lineupEfficiency}
-                owner={owner}
+                processedRosters={processedRosters}
                 roundToHundredth={roundToHundredth}
                 selectStats={selectStats}
                 selectSzn={selectSzn}

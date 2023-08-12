@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from '@iconify/react';
-import { handleRostersBySzn } from "../../helpers";
+import { findHistoryRoster, handleRostersBySzn } from "../../helpers";
 
 const UNDERLINE_TITLE_DIV = {
     width:"205px",
@@ -16,12 +16,10 @@ const WEEK_TITLE = {
 
 export default function MatchupSlide({
     findLogo,
+    findPlayerByPts,
     findRecord,
-    findRosterByID,
     findWeeklyMatchups,
     foundHistory,
-    foundMyMatchups,
-    foundPlayer,
     foundRoster,
     id,
     idx,
@@ -54,10 +52,6 @@ export default function MatchupSlide({
             return `${playoffLabel} (${playoffWeekLabel})`;
         }
         return "";
-    };
-
-    const getRosterInfo = (id, weeklyMatch, league, processedRosters) => {
-        return findRosterByID(id, handleRostersBySzn(weeklyMatch, league, processedRosters));
     };
 
     const title = getTitle();
@@ -108,20 +102,20 @@ export default function MatchupSlide({
                                 </div>
                             </div>
                             {(playoffLabel === "Playoffs" && is18GameSeason && idx === 14) || (playoffLabel === "Playoffs" && !is18GameSeason && idx === 13) ?
-                                <p className="m-0">Clinched Division {getRosterInfo(id, weeklyMatch, league, processedRosters).settings.division} and Bye</p>            
+                                <p className="m-0">Clinched Division {findHistoryRoster(id, weeklyMatch, league, processedRosters).settings.division} and Bye</p>            
                             :  
                                 <div className="d-flex justify-content-between align-items-center">
-                                    <p className="m-0">{getRosterInfo(id, weeklyMatch, league, processedRosters)?.rank}
-                                        {getRosterInfo(id, weeklyMatch, league, processedRosters)?.rank === 1 ?
+                                    <p className="m-0">{findHistoryRoster(id, weeklyMatch, league, processedRosters)?.rank}
+                                        {findHistoryRoster(id, weeklyMatch, league, processedRosters)?.rank === 1 ?
                                             <span>st </span>
-                                        : getRosterInfo(id, weeklyMatch, league, processedRosters)?.rank === 2 ?
+                                        : findHistoryRoster(id, weeklyMatch, league, processedRosters)?.rank === 2 ?
                                             <span>nd </span>
-                                        : getRosterInfo(id, weeklyMatch, league, processedRosters)?.rank === 3 ?
+                                        : findHistoryRoster(id, weeklyMatch, league, processedRosters)?.rank === 3 ?
                                             <span>rd </span>
                                         : <span>th </span>
                                         }overall
                                     </p>                                                    
-                                    <p className="m-0">{getRosterInfo(id, weeklyMatch, league, processedRosters).settings.wins}-{getRosterInfo(id, weeklyMatch, league, processedRosters).settings.losses}</p>
+                                    <p className="m-0">{findHistoryRoster(id, weeklyMatch, league, processedRosters).settings.wins}-{findHistoryRoster(id, weeklyMatch, league, processedRosters).settings.losses}</p>
                                 </div>
                             }
                         </div>
@@ -166,15 +160,15 @@ export default function MatchupSlide({
                                         <p className="m-0" style={{color:"#c9cfd1"}}>vs</p>
                                         <div className="d-flex align-items-center mx-2">
                                             <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={
-                                                `${avatarBaseURL}${getRosterInfo(o.roster_id, weeklyMatch, league, processedRosters)?.owner?.avatar ? 
-                                                    getRosterInfo(o.roster_id, weeklyMatch, league, processedRosters).owner.avatar : dummyAvatar}`
+                                                `${avatarBaseURL}${findHistoryRoster(o.roster_id, weeklyMatch, league, processedRosters)?.owner?.avatar ? 
+                                                    findHistoryRoster(o.roster_id, weeklyMatch, league, processedRosters).owner.avatar : dummyAvatar}`
                                             }/>
                                         </div>
                                         <p className="m-0 text-truncate" style={{maxWidth:"140px"}}>
-                                        {getRosterInfo(o.roster_id, weeklyMatch, league, processedRosters)?.owner?.team_name ?
-                                            getRosterInfo(o.roster_id, weeklyMatch, league, processedRosters).owner.team_name
-                                        : getRosterInfo(o.roster_id, weeklyMatch, league, processedRosters).owner?.display_name ?
-                                            getRosterInfo(o.roster_id, weeklyMatch, league, processedRosters).owner.display_name
+                                        {findHistoryRoster(o.roster_id, weeklyMatch, league, processedRosters)?.owner?.team_name ?
+                                            findHistoryRoster(o.roster_id, weeklyMatch, league, processedRosters).owner.team_name
+                                        : findHistoryRoster(o.roster_id, weeklyMatch, league, processedRosters).owner?.display_name ?
+                                            findHistoryRoster(o.roster_id, weeklyMatch, league, processedRosters).owner.display_name
                                         : null
                                         }</p>
                                     </div>
@@ -189,13 +183,12 @@ export default function MatchupSlide({
                                     </div>
                                 : m.map((team, index) => 
                                     <div key={index} className="d-flex">
-                                        {
-                                            index === 0 ?
-                                                index === 0 && team.roster_id === Number(id) ?
-                                                    <p className="m-0 bold" style={{paddingRight:"6px", color:"#34d367"}}>W</p>
-                                                :
-                                                    <p className="m-0 bold" style={{paddingRight:"6px", color:"#cc1d00"}}>L</p>
-                                            :<></>
+                                        {index === 0 ?
+                                            index === 0 && team.roster_id === Number(id) ?
+                                                <p className="m-0 bold" style={{paddingRight:"6px", color:"#34d367"}}>W</p>
+                                            :
+                                                <p className="m-0 bold" style={{paddingRight:"6px", color:"#cc1d00"}}>L</p>
+                                        :<></>
                                         }
                                         <div className="d-flex align-items-center">
                                             { index === 1 ? <span className="mx-1" style={{color:"#698b87"}}> - </span> : <></> }
@@ -205,54 +198,54 @@ export default function MatchupSlide({
                                 )} 
                             </div>
                             <p className="m-0">
-                                {findRecord(weeklyMatch === league.season ? foundMyMatchups : findWeeklyMatchups(), idx).w}
+                                {findRecord(findWeeklyMatchups(), idx).w}
                                 <span className="" style={{color:"whitesmoke"}}>-</span>
-                                {findRecord(weeklyMatch === league.season ? foundMyMatchups : findWeeklyMatchups(), idx).l}
+                                {findRecord(findWeeklyMatchups(), idx).l}
                             </p>
                         </div>
                         <div className="pt-2">
                             {m[0].points === 0 && m[1].points === 0 ?
                                 <></>
                             : m.filter(t => t.roster_id === Number(id)).map((o, j) => 
-                                <div key={j} style={(players.length > 0) ?{background:findLogo(foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).team || "FA").bgColor}:{}}>
+                                <div key={j} style={(players.length > 0) ? {background:findLogo(findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).team || "FA").bgColor}:{}}>
                                     <div className="d-flex align-items-center" style={{borderRadius:"0px 0px 2px 2px"}}>
-                                        <div style={foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).position === "DEF" ?
-                                                {
-                                                    width:"65px", height:"50px", 
-                                                    backgroundPosition:"center",
-                                                    backgroundRepeat:"no-repeat",
-                                                    backgroundSize:"40px",
-                                                    backgroundImage:`url(${findLogo(foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).team).l})`
-                                                }
-                                            :
-                                                {
-                                                    width:"65px", height:"50px", 
-                                                    backgroundPosition:"left top",
-                                                    backgroundRepeat:"no-repeat",
-                                                    backgroundSize:"40px",
-                                                    backgroundImage:`url(${findLogo(foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).team).l})`
-                                                }
+                                        <div style={findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).position === "DEF" ?
+                                            {
+                                                width:"65px", height:"50px", 
+                                                backgroundPosition:"center",
+                                                backgroundRepeat:"no-repeat",
+                                                backgroundSize:"40px",
+                                                backgroundImage:`url(${findLogo(findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).team).l})`
+                                            }
+                                        :
+                                            {
+                                                width:"65px", height:"50px", 
+                                                backgroundPosition:"left top",
+                                                backgroundRepeat:"no-repeat",
+                                                backgroundSize:"40px",
+                                                backgroundImage:`url(${findLogo(findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).team).l})`
+                                            }
                                         }>
-                                            {foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).position === "DEF" ?
+                                            {findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).position === "DEF" ?
                                                 <></>
                                             :   // Player Image
-                                                <img src={`${playerBaseURL}${foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).player_id}.jpg`} 
+                                                <img src={`${playerBaseURL}${findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).player_id}.jpg`} 
                                                     alt="player" 
                                                     style={{width:"100%", height:"100%", objectFit:"cover"}}
                                                 />
                                             }
                                         </div>
                                         <div className="mx-1">
-                                            {foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).position === "DEF" ?
+                                            {findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).position === "DEF" ?
                                                 <div>
                                                     <p className="m-0 bold text-truncate">
-                                                        {foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).first_name} {foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).last_name} 
+                                                        {findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).first_name} {findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).last_name} 
                                                     </p>
                                                     <p className="m-0" style={{fontSize:"11.5px"}}>scored {o.starters_points.sort((a,b) => b - a)[0]}pts</p>
                                                 </div>
                                             :
                                                 <div>
-                                                    <p className="m-0 bold text-truncate">{foundPlayer(o, o.starters_points.sort((a,b) => b - a)[0]).full_name}</p>
+                                                    <p className="m-0 bold text-truncate">{findPlayerByPts(o, o.starters_points.sort((a,b) => b - a)[0]).full_name}</p>
                                                     <p className="m-0" style={{fontSize:"11.5px"}}>scored {o.starters_points.sort((a,b) => b - a)[0]}pts</p>
                                                 </div>
                                             }

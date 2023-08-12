@@ -32,27 +32,14 @@ export default function OwnerBody({
 
     const [tab, setTab] = useState("Summary")
 
-    let foundMyMatchups = matchups && matchups.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
-        if(team.filter(owner => owner.roster_id === Number(id)).length > 0){
+    const foundMyMatchups = matchups?.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
+        if (team.filter(owner => owner.roster_id === Number(id)).length > 0) {
             return team
         }  
         return acc
     })).map(match => match.sort((a,b) => b.points - a.points))
 
     let foundStats = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id)).settings
-
-    const handleSzn = (yr) => {
-        let foundSzn = league.history.filter(l => l.year === yr).map((l,) => 
-          l.rosters.sort((a,b) => {
-            if(a.settings.wins === b.settings.wins) {
-              return Number(b.settings.fpts + "." + b.settings.fpts_decimal) - Number(a.settings.fpts + "." + a.settings.fpts_decimal);
-            } else {
-              return b.settings.wins - a.settings.wins
-            }
-          }).map((roster, idx) => ({...roster, rank:idx+1}))
-        )
-        return foundSzn[0].filter(team => team.roster_id === Number(id))
-    }
 
     let totalPtsPerGame = (p ,s) => {
         if(s === "All Time"){
@@ -111,7 +98,6 @@ export default function OwnerBody({
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
                             getTotalPts={getTotalPts}
-                            handleSzn={handleSzn}
                             id={id}
                             isOdd={isOdd}
                             league={league}
@@ -157,7 +143,7 @@ export default function OwnerBody({
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
                             getTotalPts={getTotalPts}
-                            handleSzn={handleSzn}
+                            // handleSzn={handleSzn}
                             id={id}
                             isOdd={isOdd}
                             league={league}

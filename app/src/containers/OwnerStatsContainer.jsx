@@ -1,5 +1,6 @@
 import React from "react";
 import OwnerStatsUI from "../ui/OwnerStatsUI";
+import { findHistoryRoster } from "../helpers";
 
 export default function OwnerStatsContainer({
     foundHistory,
@@ -9,7 +10,7 @@ export default function OwnerStatsContainer({
     id,
     league,
     lineupEfficiency,
-    owner,
+    processedRosters,
     roundToHundredth,
     selectStats,
     selectSzn,
@@ -17,17 +18,17 @@ export default function OwnerStatsContainer({
     totalPtsPerGame,
     winPCT
 }) {
+    const foundRoster = findHistoryRoster(id, selectSzn, league, processedRosters);
 
     return (
         <OwnerStatsUI
             foundHistory={foundHistory}
+            foundRoster={foundRoster}
             handleSelectStats={handleSelectStats}
             handleSelectSzn={handleSelectSzn}
-            handleSzn={handleSzn}
             id={id}
             league={league}
             lineupEfficiency={lineupEfficiency}
-            owner={owner}
             roundToHundredth={roundToHundredth}
             selectStats={selectStats}
             selectSzn={selectSzn}

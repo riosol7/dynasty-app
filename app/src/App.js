@@ -21,8 +21,9 @@ import {
     findRosterByID,
     findPlayer,
     handleRostersBySzn,
+    processLeague,
+    processMatches,
 } from "./helpers";
-
 import { 
     useLeagueData,
     useMatches,
@@ -31,7 +32,6 @@ import {
     useRosters,
     useTransactions,
 } from "./hooks";
-import { processMatches } from "./helpers";
 
 function App() {
     const { league, loadLeague } = useLeagueData();
@@ -43,7 +43,8 @@ function App() {
 
     const [activityBar, setActivityBar] = useState(false)
 
-    let matchups = processMatches(matches);
+    const matchups = processMatches(matches);
+    const processedLeague = processLeague(league);
 
     const foundHistory = (rosterID, yr) => {
         if(rosterID !== undefined || null){
@@ -56,21 +57,25 @@ function App() {
      
             let foundStats = findRosterByID(rosterID, rosters).settings;
 
-            let findPlayoffs = league.history.map(szn => szn.league.brackets.winner.bracket.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)))
-            let findRosters = league.history.map(szn => szn.rosters.filter(roster => roster.roster_id === Number(rosterID))[0])
+            let findPlayoffs = processedLeague.history.map(szn => szn.league.brackets.winner.bracket.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)))
+            let findRosters = processedLeague.history.map(szn => szn.rosters.filter(roster => roster.roster_id === Number(rosterID))[0])
         
-            let findMyHistoryMatches = league.history.map(szn => Object.entries(szn.matchups).map(g => g[1].filter(m => m.roster_id === Number(rosterID))[0]))
+            let findMyHistoryMatches = processedLeague.history.map(szn => Object.entries(szn.matchups).map(g => g[1].filter(m => m.roster_id === Number(rosterID))[0]))
 
             // CURRENT SEASON ALL PLAY //
-            let allPlayCSzn=[]
-            let allPlayCSznWk=[]
+            let allPlayCSzn=[];
+            let allPlayCSznWk=[];
             matches.slice(0,14).map(wk => {
                 let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
                 let win = 0
                 let opWin = 0
                 let oID;
                 let t = wk.filter(t => Number(rosterID) !== t.roster_id).map(t => {
-                    if(myWk.points > t.points){
+                    if (myWk.points === 0 && t.points === 0) {
+                        win = 0;
+                        opWin = 0;
+                        oID = t.roster_id;
+                    } else if (myWk.points > t.points) {
                         win = +1
                         opWin = 0
                         oID = t.roster_id
@@ -106,7 +111,7 @@ function App() {
             // SELECT ALL PLAY // 
             let selectPlay = []
             let selectPlayWk = []
-            league.history.filter(l => l.year === yr).map(szn => {
+            processedLeague.history.filter(l => l.year === yr).map(szn => {
                 if(Number(yr) > 2020){
                     Object.entries(szn.matchups).filter(y => y[0] !== "wk15" && y[0] !=="wk16" && y[0] !== "wk17").map(g => g[1]).map(wk => {
                         let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
@@ -193,7 +198,7 @@ function App() {
             })
             // HISTORY ALL PLAY // 
             let allPlay = []
-            league.history.map(szn => {
+            processedLeague.history.map(szn => {
                 if(Number(szn.year) > 2020){
                     Object.entries(szn.matchups).filter(y => y[0] !== "wk15" && y[0] !=="wk16" && y[0] !== "wk17").map(g => g[1]).map(wk => {
                         let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
@@ -280,7 +285,7 @@ function App() {
             // HEAD 2 HEAD :: HISTORY MATCHUPS (Function for Head to Head W-L :: history seasons)
             let myHeadtoHead = []
             let games = []
-            league.history.map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
+            processedLeague.history.map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
                 acc[team.matchup_id] = acc[team.matchup_id] || [];
                 acc[team.matchup_id].push(team);
                 return acc;
@@ -350,13 +355,13 @@ function App() {
                     myHeadtoHead.push(g)
                 }
             }) :<></>
-            let yrTopScore = league.history.filter(szn => szn.year === yr).map(s => Object.entries(s.matchups).map(g => g[1].filter(m => m.roster_id === Number(rosterID))[0]).sort((a,b) => b.points - a.points)[0].points)[0]
+            let yrTopScore = processedLeague.history.filter(szn => szn.year === yr).map(s => Object.entries(s.matchups).map(g => g[1].filter(m => m.roster_id === Number(rosterID))[0]).sort((a,b) => b.points - a.points)[0].points)[0]
             let cTopScore = foundMyMatchups && foundMyMatchups.map(m => m.filter(t => t.roster_id === Number(rosterID))[0]).sort((a,b) => b.points - a.points)
             let currentTopScore = cTopScore.length > 0 ? cTopScore[0].points : 0
             let historyTopScore = findMyHistoryMatches && findMyHistoryMatches.map(m => m.sort((a, b) => b.points - a.points)[0]).sort((a,b) => b.points - a.points)[0].points
-            let currentBracket = league.brackets ? league.brackets.winner.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)) : <></>
-            let currentTBracket = league.brackets ? league.brackets.loser.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)) : <></>
-            let currentTBracketLs = league.brackets ? currentTBracket.filter(match => match.l === Number(rosterID)) : <></>
+            let currentBracket = processedLeague.brackets ? processedLeague.brackets.winner.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)) : <></>
+            let currentTBracket = processedLeague.brackets ? processedLeague.brackets.loser.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)) : <></>
+            let currentTBracketLs = processedLeague.brackets ? currentTBracket.filter(match => match.l === Number(rosterID)) : <></>
             //CURRENT PLAYOFFS
             let playoffHS;
             let playoffPF;
@@ -384,7 +389,7 @@ function App() {
                 let HS;
                 let Games;
 
-                let TB = league.history && league.history.map(s => { 
+                let TB = processedLeague?.history?.map(s => { 
                     let Bowls = 0;
                     let bracket = s.league.brackets.loser.bracket
                         .filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID) || match.t1 === rosterID || match.t2 === rosterID)
@@ -400,9 +405,9 @@ function App() {
                     return Bowls
                 }).reduce((a,b) => {return +a + +b})  
             
-                let playoffSZNs = league.history && league.history.map(s => {
+                let playoffSZNs = processedLeague?.history?.map(s => {
                     if(s.league.brackets.winner.bracket.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)).length > 0) {
-                        const template =  league.history.filter(szn => szn.year === s.year).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
+                        const template =  processedLeague?.history?.filter(szn => szn.year === s.year).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
                             acc[team.matchup_id] = acc[team.matchup_id] || [];
                             acc[team.matchup_id].push(team);
                             return acc;
@@ -503,12 +508,12 @@ function App() {
             let playoffWs = findPlayoffs.map(szn => szn.filter(match => match.w === Number(rosterID)))
             let playoffLs = findPlayoffs.map(szn => szn.filter(match => match.l === Number(rosterID)))
             
-            let currentBracketWs = league.brackets ? currentBracket.filter(match => match.w === Number(rosterID)) : <></>
-            let currentBracketLs = league.brackets ? currentBracket.filter(match => match.l === Number(rosterID)) : <></>
+            let currentBracketWs = processedLeague.brackets ? currentBracket.filter(match => match.w === Number(rosterID)) : <></>
+            let currentBracketLs = processedLeague.brackets ? currentBracket.filter(match => match.l === Number(rosterID)) : <></>
 
             // SELECT YR
-            let playoffYR = league.history.filter(szn => szn.year === yr).map(l => l.league.brackets.winner.bracket.filter(m => m.t2 === Number(rosterID) || m.t1 === Number(rosterID)))[0] || 0
-            let findHistoryMatchYR = league.history.filter(szn => szn.year === yr).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
+            let playoffYR = processedLeague.history.filter(szn => szn.year === yr).map(l => l.league.brackets.winner.bracket.filter(m => m.t2 === Number(rosterID) || m.t1 === Number(rosterID)))[0] || 0
+            let findHistoryMatchYR = processedLeague.history.filter(szn => szn.year === yr).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
                 acc[team.matchup_id] = acc[team.matchup_id] || [];
                 acc[team.matchup_id].push(team);
                 return acc;
@@ -546,7 +551,7 @@ function App() {
                     }
                 } 
             }
-            let leagueAvgPtsS=league && league.history && league.history.filter(szn => szn.year === yr).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
+            let leagueAvgPtsS=processedLeague?.history?.filter(szn => szn.year === yr).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
                 acc[team.matchup_id] = acc[team.matchup_id] || [];
                 acc[team.matchup_id].push(team);
                 return acc;
@@ -555,7 +560,7 @@ function App() {
             let bestRecord = findRosters.sort((a,b) => b.settings.wins - a.settings.wins)[0]
             let playoffApp = findPlayoffs.map(p => {if(p.length !== 0){return p}else{return null}}).filter(t=>t!==null)
             
-            const selectiveSzn = league.season === yr ? 
+            const selectiveSzn = processedLeague.season === yr ? 
                 {
                     allPlay:allPlayCSzn,
                     allPlayWk:allPlayCSznWk,
@@ -638,30 +643,6 @@ function App() {
                             l: playoffLs.map(szn => szn.length).reduce((acc, n) => acc + n, 0) || 0,
                             a: playoffApp.length || 0
                         },
-                c: {
-                    allPlay:allPlayCSzn,
-                    allPlayWk:allPlayCSznWk,
-                    allPlayRecordW:allPlayCSzn.length > 0? allPlayCSzn.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w : 0,
-                    allPlayRecordL:allPlayCSzn.length > 0? allPlayCSzn.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW: 0,
-                    highest: currentTopScore,
-                    playoff: currentBracket.length > 0 ? true : false,
-                    toilet:{
-                        l:currentTBracketLs.length || 0
-
-                    },
-                    pW:currentBracketWs.length|| 0,
-                    pL:currentBracketLs.length|| 0,
-                    playoffGames: currentBracket.length || 0,
-                    playoffPF:playoffPF || 0,
-                    // playoffMaxPF:playoffMaxPF,
-                    playoffPA:playoffPA || 0,
-                    playoffHS:playoffHS || 0,
-                    playoffMatchups:foundMyMatchups !== undefined? foundMyMatchups:[],
-                    matchups:foundMyMatchups !== undefined? foundMyMatchups.slice(0,14):[],
-                    leagueAvgPts:leagueAVGPtsC !== undefined? leagueAVGPtsC.slice(0,14):[],
-                    // w:,
-                    // l:
-                },
                 s: selectiveSzn,
                 h2h:myHeadtoHead.sort((a,b) => { if(winPCT(b.w , b.oW) === winPCT(a.w , a.oW)){ return b.w - a.w } else {return winPCT(b.w , b.oW) - winPCT(a.w , a.oW)}}).map((roster, idx) => ({...roster, rank:idx+1})),
                 g:games,
@@ -683,7 +664,7 @@ function App() {
                         foundHistory={foundHistory}
                         getTotalPts={getTotalPts}
                         handleRostersBySzn={handleRostersBySzn}
-                        league={league}
+                        league={processedLeague}
                         lineupEfficiency={lineupEfficiency}
                         loadLeague={loadLeague}
                         loadMatches={loadMatches}
@@ -706,7 +687,7 @@ function App() {
                 <ActivityBar
                     activityBar={activityBar}
                     loadLeague={loadLeague}
-                    league={league}
+                    league={processedLeague}
                     loadTransactions={loadTransactions}
                     owners={owners}
                     players={players}

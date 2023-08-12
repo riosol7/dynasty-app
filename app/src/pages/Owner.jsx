@@ -32,7 +32,7 @@ export default function Owner({
 
     const [isOpen, setIsOpen] = useState(false)
     const [match, setMatch] = useState([])
-    const [oID, setOID]=useState("")
+    const [oID, setOID] = useState("")
     const [modalTab, setModalTab] = useState("")
     const [draftClass, setDraftClass] = useState(league.season)
 
@@ -85,7 +85,7 @@ export default function Owner({
         let record;
 
         matches?.filter((m, wk) => wk <= week).forEach(team => {
-            if (team[0].matchup_id === null){
+            if (team[0].matchup_id === null || (team[0].points === 0 && team[1].points === 0)){
                 return record
             } else if (team[0].roster_id === Number(id)) {
                 w++

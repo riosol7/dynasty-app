@@ -15,7 +15,7 @@ export default function MatchupContainer({
     processedRosters,
     roundToHundredth,
 }) {
-    const [weeklyMatch, setWeeklyMatch] = useState(foundMyMatchups.length>0?league.season:(Number(league.season)-1).toString())
+    const [weeklyMatch, setWeeklyMatch] = useState(foundMyMatchups.length > 0 ? league.season : (Number(league.season) - 1).toString())
 
     function compareWeeks(weekA, weekB) {
         const numericPartA = parseInt(weekA[0].slice(2), 10);
@@ -24,21 +24,27 @@ export default function MatchupContainer({
     }
 
     const findWeeklyMatchups = () => {
-        const template = league.history.filter(l => l.year === weeklyMatch)
-            .map(szn => Object.entries(szn.matchups).slice().sort(compareWeeks).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
-                acc[team.matchup_id] = acc[team.matchup_id] || [];
-                acc[team.matchup_id].push(team);
-                return acc;
-        }, Object.create(null))).map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
-            if(team.filter(owner => owner.roster_id === Number(id)).length > 0){
-                return team
-            }  
-            return acc
-        })).map(match => match.sort((a,b) => b.points - a.points)))[0]
-        if(Number(weeklyMatch) > 2020){
-            return template
+        if (league.season === weeklyMatch) {
+            return foundMyMatchups;
+        
         } else {
-            return template.slice(0,16)
+            const template = league.history.filter(l => l.year === weeklyMatch)
+                .map(szn => Object.entries(szn.matchups).slice().sort(compareWeeks).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
+                    acc[team.matchup_id] = acc[team.matchup_id] || [];
+                    acc[team.matchup_id].push(team);
+                    return acc;
+            }, Object.create(null))).map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
+                if(team.filter(owner => owner.roster_id === Number(id)).length > 0){
+                    return team
+                }  
+                return acc
+            })).map(match => match.sort((a,b) => b.points - a.points)))[0];
+            
+            if (Number(weeklyMatch) > 2020) {
+                return template
+            } else {
+                return template.slice(0,16)
+            }
         }
     }
 
@@ -52,7 +58,6 @@ export default function MatchupContainer({
             findRosterByID={findRosterByID}
             findWeeklyMatchups={findWeeklyMatchups}
             foundHistory={foundHistory}
-            foundMyMatchups={foundMyMatchups}
             handleWeeklyMatch={handleWeeklyMatch}
             id={id}
             league={league}

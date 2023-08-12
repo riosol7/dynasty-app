@@ -11,7 +11,6 @@ export default function MatchupSlider({
     findRosterByID,
     findWeeklyMatchups,
     foundHistory,
-    foundMyMatchups,
     league,
     loadLeague,
     openModal,
@@ -22,22 +21,21 @@ export default function MatchupSlider({
 }) {
     const foundRoster = findRosterByID(id, processedRosters.totalRoster);
 
-    const foundPlayer = (m, pts) => {
+    const findPlayerByPts = (team, pts) => {
         let playerID;
-
-        if((m  !== undefined) && (pts !== undefined) ){
-            Object.keys(m.players_points).reduce((acc, elem) => {
-                if(m.players_points[elem] === pts){
+        if((team  !== undefined) && (pts !== undefined) ){
+            Object.keys(team.players_points).reduce((acc, elem) => {
+                if(team.players_points[elem] === pts){
                     playerID = elem
                     return playerID
                 } 
 
-                playerID = Object.keys(m.players_points).filter(key => m.players_points[key] === pts)[0]
+                playerID = Object.keys(team.players_points).filter(key => team.players_points[key] === pts)[0]
                 return playerID
             })
         } 
-        let findPlayer = players.filter(p => p.player_id === String(playerID))[0]
-        return findPlayer || {team:"FA"}
+        const foundPlayer = players.find(p => p.player_id === String(playerID))
+        return foundPlayer || {team:"FA"}
     }
     function MouseOver(event) {
         event.target.style.color="#a9dfd8";
@@ -46,7 +44,7 @@ export default function MatchupSlider({
         event.target.style.color="#7f7f7f";
     }
     return (
-            foundMyMatchups.length === 0 && weeklyMatch === league.season ? <LoadMatchups></LoadMatchups>:
+            loadLeague && weeklyMatch === league.season && findWeeklyMatchups()?.length === 0 ? <LoadMatchups></LoadMatchups>:
             <div className="d-flex align-items-center" style={{maxWidth:"1720px"}}>
                 <Swiper
                     breakpoints = {{
@@ -110,58 +108,29 @@ export default function MatchupSlider({
                         disableOnInteraction: false
                     }}
                 >
-                    {
-                        weeklyMatch === league.season ?
-                            foundMyMatchups && foundMyMatchups.map((m,idx) => 
-                                <SwiperSlide key={idx}>
-                                    <MatchupSlide
-                                        findLogo={findLogo}
-                                        findRecord={findRecord}
-                                        findRosterByID={findRosterByID}
-                                        findWeeklyMatchups={findWeeklyMatchups}
-                                        foundHistory={foundHistory}
-                                        foundPlayer={foundPlayer}
-                                        foundRoster={foundRoster}
-                                        id={id}
-                                        idx={idx}
-                                        league={league}
-                                        m={m}
-                                        MouseOut={MouseOut}
-                                        MouseOver={MouseOver}
-                                        openModal={openModal}
-                                        players={players}
-                                        processedRosters={processedRosters}
-                                        roundToHundredth={roundToHundredth}
-                                        weeklyMatch={weeklyMatch}
-                                    />
-                                </SwiperSlide>
-                            )
-                        :
-                            findWeeklyMatchups().map((m,idx) => 
-                                <SwiperSlide key={idx} className="">
-                                    <MatchupSlide
-                                        findLogo={findLogo}
-                                        findRecord={findRecord}
-                                        findRosterByID={findRosterByID}
-                                        findWeeklyMatchups={findWeeklyMatchups}
-                                        foundHistory={foundHistory}
-                                        foundPlayer={foundPlayer}
-                                        foundRoster={foundRoster}
-                                        id={id}
-                                        idx={idx}
-                                        league={league}
-                                        m={m}
-                                        MouseOut={MouseOut}
-                                        MouseOver={MouseOver}
-                                        openModal={openModal}
-                                        players={players}
-                                        processedRosters={processedRosters}
-                                        roundToHundredth={roundToHundredth}
-                                        weeklyMatch={weeklyMatch}
-                                    />
-                                </SwiperSlide>
-                            )
-                    }
+                    {findWeeklyMatchups().map((m,idx) => 
+                        <SwiperSlide key={idx}>
+                            <MatchupSlide
+                                findLogo={findLogo}
+                                findRecord={findRecord}
+                                findWeeklyMatchups={findWeeklyMatchups}
+                                foundHistory={foundHistory}
+                                findPlayerByPts={findPlayerByPts}
+                                foundRoster={foundRoster}
+                                id={id}
+                                idx={idx}
+                                league={league}
+                                m={m}
+                                MouseOut={MouseOut}
+                                MouseOver={MouseOver}
+                                openModal={openModal}
+                                players={players}
+                                processedRosters={processedRosters}
+                                roundToHundredth={roundToHundredth}
+                                weeklyMatch={weeklyMatch}
+                            />
+                        </SwiperSlide>
+                    )}
                 </Swiper>
             </div>
         
