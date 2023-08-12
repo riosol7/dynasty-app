@@ -554,6 +554,52 @@ function App() {
             let leagueAVGPtsC=matchups && matchups.map(m => roundToHundredth(Object.entries(m).map(t => t[1].map(s => s.points).reduce((a,b) => a +b,0)/2).reduce((a,b) => a +b,0)/6))
             let bestRecord = findRosters.sort((a,b) => b.settings.wins - a.settings.wins)[0]
             let playoffApp = findPlayoffs.map(p => {if(p.length !== 0){return p}else{return null}}).filter(t=>t!==null)
+            
+            const selectiveSzn = league.season === yr ? 
+                {
+                    allPlay:allPlayCSzn,
+                    allPlayWk:allPlayCSznWk,
+                    allPlayRecordW:allPlayCSzn.length > 0? allPlayCSzn.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w : 0,
+                    allPlayRecordL:allPlayCSzn.length > 0? allPlayCSzn.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW: 0,
+                    highest: currentTopScore,
+                    playoff: currentBracket.length > 0 ? true : false,
+                    toilet:{
+                        l:currentTBracketLs.length || 0
+
+                    },
+                    pW:currentBracketWs.length|| 0,
+                    pL:currentBracketLs.length|| 0,
+                    playoffGames: currentBracket.length || 0,
+                    playoffPF:playoffPF || 0,
+                    // playoffMaxPF:playoffMaxPF,
+                    playoffPA:playoffPA || 0,
+                    playoffHS:playoffHS || 0,
+                    playoffMatchups:foundMyMatchups !== undefined? foundMyMatchups:[],
+                    matchups:foundMyMatchups !== undefined? foundMyMatchups.slice(0,14):[],
+                    leagueAvgPts:leagueAVGPtsC !== undefined? leagueAVGPtsC.slice(0,14):[],
+                    // w:,
+                    // l:
+                }
+            :   
+                {
+                    allPlay:selectPlay,
+                    allPlayWk:selectPlayWk,
+                    allPlayRecordW: selectPlay.length > 0 ?selectPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w : 0,
+                    allPlayRecordL: selectPlay.length > 0 ? selectPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW : 0,
+                    highest: yrTopScore,
+                    playoff: playoffYR.length > 0 ? true : false,
+                    pW: playoffYR.length > 0 ? playoffYR.filter(m => m.w === Number(rosterID)).length : 0,
+                    pL: playoffYR.length > 0 ? playoffYR.filter(m => m.l === Number(rosterID)).length : 0,
+                    playoffGames: playoffYR.length || 0,
+                    playoffPF:sPlayoffPF,
+                    // playoffMaxPF:playoffMaxPF,
+                    playoffPA:sPlayoffPA,
+                    playoffHS:sPlayoffHS,
+                    playoffMatchups:findHistoryMatchYR !== undefined?findHistoryMatchYR:[],
+                    matchups:findHistoryMatchYR !== undefined? Number(yr) > Number("2020")?findHistoryMatchYR.slice(0,14):findHistoryMatchYR.slice(0,13):[],
+                    leagueAvgPts:leagueAvgPtsS[0]!==undefined?Number(yr) > Number("2020")?leagueAvgPtsS[0].slice(0,14):leagueAvgPtsS[0].slice(0,13):[]
+                }
+            
             return {
                 allTime: {    
                     allPlay: allPlay,
@@ -616,24 +662,7 @@ function App() {
                     // w:,
                     // l:
                 },
-                s:  {
-                    allPlay:selectPlay,
-                    allPlayWk:selectPlayWk,
-                    allPlayRecordW: selectPlay.length > 0 ?selectPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w : 0,
-                    allPlayRecordL: selectPlay.length > 0 ? selectPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW : 0,
-                    highest: yrTopScore,
-                    playoff: playoffYR.length > 0 ? true : false,
-                    pW: playoffYR.length > 0 ? playoffYR.filter(m => m.w === Number(rosterID)).length : 0,
-                    pL: playoffYR.length > 0 ? playoffYR.filter(m => m.l === Number(rosterID)).length : 0,
-                    playoffGames: playoffYR.length || 0,
-                    playoffPF:sPlayoffPF,
-                    // playoffMaxPF:playoffMaxPF,
-                    playoffPA:sPlayoffPA,
-                    playoffHS:sPlayoffHS,
-                    playoffMatchups:findHistoryMatchYR !== undefined?findHistoryMatchYR:[],
-                    matchups:findHistoryMatchYR !== undefined? Number(yr) > Number("2020")?findHistoryMatchYR.slice(0,14):findHistoryMatchYR.slice(0,13):[],
-                    leagueAvgPts:leagueAvgPtsS[0]!==undefined?Number(yr) > Number("2020")?leagueAvgPtsS[0].slice(0,14):leagueAvgPtsS[0].slice(0,13):[]
-                },
+                s: selectiveSzn,
                 h2h:myHeadtoHead.sort((a,b) => { if(winPCT(b.w , b.oW) === winPCT(a.w , a.oW)){ return b.w - a.w } else {return winPCT(b.w , b.oW) - winPCT(a.w , a.oW)}}).map((roster, idx) => ({...roster, rank:idx+1})),
                 g:games,
                 foundMyMatchups:foundMyMatchups
