@@ -4,7 +4,7 @@ import {
     findLogo,
     getTotalPts, 
     isOdd, 
-} from '../utils';
+} from "../utils";
 
 export default function RosterContainer({
     findPlayer,
@@ -26,100 +26,91 @@ export default function RosterContainer({
     const [teArrow, setTeArrow] = useState(false)
 
     const showMoreQBs = () => {
-        setShowQBs(!showQBs)
-        setQbArrow(!qbArrow)
-    }
+        setShowQBs(!showQBs);
+        setQbArrow(!qbArrow);
+    };
     const showMoreRBs = () => {
-        setShowRBs(!showRBs)
-        setRbArrow(!rbArrow)
-    }
+        setShowRBs(!showRBs);
+        setRbArrow(!rbArrow);
+    };
     const showMoreWRs = () => {
-        setShowWRs(!showWRs)
-        setWrArrow(!wrArrow)
-    }
+        setShowWRs(!showWRs);
+        setWrArrow(!wrArrow);
+    };
     const showMoreTEs = () => {
-        setShowTEs(!showTEs)
-        setTeArrow(!teArrow)
-    }
+        setShowTEs(!showTEs);
+        setTeArrow(!teArrow);
+    };
  
     function qbRankings (roster) {
         let rank = 0;
         if (roster !== undefined) {
-            let foundTeam = processedRosters?.qbRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name);
-            foundTeam?.rank === 1?
+            const foundTeam = processedRosters?.qbRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name);
+            foundTeam?.rank === 1 ?
                 rank = foundTeam.rank + "st"
-            : foundTeam?.rank === 2?
+            : foundTeam?.rank === 2 ?
                 rank = foundTeam.rank + "nd"
-            : foundTeam?.rank === 3?
+            : foundTeam?.rank === 3 ?
                 rank = foundTeam.rank + "rd"
             : rank = foundTeam.rank + "th"    
         }
-        return rank
+        return rank;
     }
     function rbRankings (roster) {
-        let foundTeam = processedRosters?.rbRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
+        let rank = 0;
+        const foundTeam = processedRosters?.rbRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name);
+        foundTeam.rank === 1 ?
+            rank = foundTeam.rank + "st"
+        : foundTeam.rank === 2 ?
+            rank = foundTeam.rank + "nd"
+        : foundTeam.rank === 3 ?
+            rank = foundTeam.rank + "rd"
+        : rank = foundTeam.rank + "th"
+        return rank;
     }
     function wrRankings (roster) {
-        let foundTeam = processedRosters?.wrRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
+        let rank = 0;
+        const foundTeam = processedRosters?.wrRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name);
+        foundTeam.rank === 1 ?
+            rank = foundTeam.rank + "st"
+        : foundTeam.rank === 2 ?
+            rank = foundTeam.rank + "nd"
+        : foundTeam.rank === 3 ?
+            rank = foundTeam.rank + "rd"
+        : rank = foundTeam.rank + "th"
+        return rank;
     }
     function teRankings (roster) {
-        let foundTeam = processedRosters?.teRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
-        let rank = 0
-        foundTeam.rank === 1?
-        rank = foundTeam.rank + "st"
-        :
-        foundTeam.rank === 2?
-        rank = foundTeam.rank + "nd"
-        :
-        foundTeam.rank === 3?
-        rank = foundTeam.rank + "rd"
-        :
-        rank = foundTeam.rank + "th"
-        return rank
+        let rank = 0;
+        const foundTeam = processedRosters?.teRank?.find(team => team.kct.owner.display_name === roster.kct.owner.display_name)
+        foundTeam.rank === 1 ?
+            rank = foundTeam.rank + "st"
+        : foundTeam.rank === 2 ?
+            rank = foundTeam.rank + "nd"
+        : foundTeam.rank === 3 ?
+            rank = foundTeam.rank + "rd"
+        : rank = foundTeam.rank + "th"
+        return rank;
     }
     function getTopQB(display_name){
-        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topQB = foundTeam.kct.qb.players[0]
-        return topQB
+        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
+        const topQB = foundTeam.kct.qb.players[0];
+        return topQB;
     }
     function getTopRB(display_name){
-        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topRB = foundTeam.kct.rb.players[0]
-        return topRB
+        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
+        const topRB = foundTeam.kct.rb.players[0];
+        return topRB;
     }
     function getTopWR(display_name){
-        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topWR = foundTeam.kct.wr.players[0]
-        return topWR
+        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
+        const topWR = foundTeam.kct.wr.players[0];
+        return topWR;
     }
     function getTopTE(display_name){
-        let foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        let topTE = foundTeam.kct.te.players[0]
-        return topTE
+        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
+        const topTE = foundTeam.kct.te.players[0];
+        return topTE;
     }
 
     return (
