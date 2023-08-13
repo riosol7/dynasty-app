@@ -1,11 +1,12 @@
 import React, {useState} from 'react'
-import TradeModal from './TradeModal'
+import TradeModal from './modals/TradeModal'
 import { Icon } from '@iconify/react';
 
 import Sleeper from "../assets/sleeper.png";
 // import PERSON from "../assets/person.png";
 import {logos} from "../assets/logos";
 import { processTransactions } from '../helpers';
+import { getInitials } from '../utils';
 
 export default function Transaction({
     loadTransactions,
@@ -15,7 +16,6 @@ export default function Transaction({
     transactions,
 }) {
     const processedTransactions = processTransactions(transactions, players, owners);
-    console.log("processedTransactions:", processedTransactions)
  
     const [isOpen, setIsOpen] = useState(false)
     const [transaction, setTransaction] = useState({})
@@ -47,12 +47,6 @@ export default function Transaction({
         let foundOwner = owners.filter(owner => owner.roster_id === ownerID)
         return foundOwner[0]
     }
-    var getInitials = function (name) {
-        if(name !== undefined){
-        var splitName = name.split(" ");
-        return splitName[0].charAt(0) + ". " + splitName[1]
-        }
-    };
     const transactionModal = (data) => {
         setTransaction(data)
         setIsOpen(true)
@@ -86,15 +80,16 @@ export default function Transaction({
                                             <p className="m-0 mx-4" style={{fontSize:"11px", color:"#b0b0b2"}}>{toDateTime(transaction.created)}</p>
                                         </div>
                                         <div className="d-flex align-items-center container">
-                                            { 
-                                                //ONLY TWO WAY TRADE W/ PICKS & PLAYERS & $$$
-                                                transaction.draft_picks !== [] && transaction.owners.length === 2?
+                                            {   //ONLY TWO WAY TRADE W/ PICKS & PLAYERS & $$$
+                                                transaction.draft_picks !== [] && transaction.owners.length === 2 ?
                                                     transaction.owners.map((roster, index) => 
                                                         <div key={index}>
-                                                            {
+                                                            {transaction.adds === null && transaction.drops === null && transaction.draft_picks?.length > 0 ? // Trade only picks
+                                                                <></>
+                                                            :
                                                                 // DETERMINEs whether the owner acquired player(s)
-                                                                Object.values(transaction.adds).filter(id => id === roster.roster_id).length === 1 || Object.values(transaction.adds).filter(id => id === roster.roster_id).length > 1?
-                                                                    <div className={index === 1? "mx-4 py-3": "py-3"}>
+                                                                Object.values(transaction.adds)?.filter(id => id === roster.roster_id)?.length === 1 || Object.values(transaction.adds)?.filter(id => id === roster.roster_id)?.length > 1 ?
+                                                                    <div className={index === 1 ? "mx-4 py-3" : "py-3"}>
                                                                         <div className="container">
                                                                             <div className={
                                                                                 getKeyByValue(transaction.adds ,roster.roster_id, transaction.players).position === "null" || null || undefined ?  "smallHeadShot" :

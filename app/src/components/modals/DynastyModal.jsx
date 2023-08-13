@@ -2,7 +2,7 @@ import React from 'react'
 import RadarChart from "./charts/RadarChart";
 import ColumnChart from "./charts/ColumnChart";
 import { Icon } from '@iconify/react';
-import {logos} from "../assets/logos";
+import {logos} from "../../assets/logos";
 import age from "../assets/age.png";
 export default function DynastyModal(props) {
     const roster = props.roster
