@@ -1,39 +1,36 @@
 import React, { useState } from 'react';
-import PowerBarChart from '../components/charts/PowerBarChart';
-import PowerRadarChart from '../components/charts/PowerRadarChart';
-// import LuckyChart from '../charts/LuckyChart';
-import PowerScoreStackedChart from '../components/charts/PowerScoreStackedChart';
+// import PowerBarChart from '../components/charts/PowerBarChart';
+// import PowerRadarChart from '../components/charts/PowerRadarChart';
+// // import LuckyChart from '../charts/LuckyChart';
+// import PowerScoreStackedChart from '../components/charts/PowerScoreStackedChart';
 import MatchupContainer from "../containers/MatchupContainer";
 import PowerRankingSlider from "../components/sliders/PowerRankingSlider";
 import OwnerStatsContainer from "../containers/OwnerStatsContainer";
 import RivalryRecordContainer from "../containers/RivalryRecordContainer";
+import { winPCT } from "../utils";
 
 export default function Power({
     findRecord,
     findRosterByID,
     foundHistory,
     foundMyMatchups,
-    handleSzn,
     id,
     league,
-    lineupEfficiency,
     loadLeague,
     loadRosters,
     openModal,
-    owner,
     players,
     processedRosters,
+    roster,
     tab,
     totalPtsPerGame,
-    roundToHundredth,
-    winPCT,
 }) {
 
     const [selectStats,setSelectStats] = useState("Season")
-    const [pwrRankSzn, setPwrRankSzn]=useState(foundMyMatchups.length>0?league.season:(Number(league.season)-1).toString())
+    const [pwrRankSzn, setPwrRankSzn]=useState(foundMyMatchups.length > 0 ? league.season : (Number(league.season)-1).toString())
     const [selectSzn,setSelectSzn] = useState(league.season)
     const [vs, setVS] = useState("All")
-    const [selectAllPlay, setSelectAllPlay] = useState(foundMyMatchups.length>0?league.season:(Number(league.season)-1).toString())
+    const [selectAllPlay, setSelectAllPlay] = useState(foundMyMatchups.length > 0 ? league.season : (Number(league.season)-1).toString())
     
     const handlePwrRank=(e)=>{
         setPwrRankSzn(e.target.value)
@@ -57,28 +54,32 @@ export default function Power({
     }
     const powerRankC= processedRosters?.totalRoster?.map(r => ({
         ...r,
-        apW:foundHistory(r.roster_id).c.allPlayRecordW,
-        apL:foundHistory(r.roster_id).c.allPlayRecordL,
-        apR:winPCT(foundHistory(r.roster_id).c.allPlayRecordW,foundHistory(r.roster_id).c.allPlayRecordL)
+        apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
+        apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
+        apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW, foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
 
     })).sort((a,b) => b.apR - a.apR)
-    let powerRankS=league && league.history.filter(l => l.year === pwrRankSzn)[0] !== undefined?
+
+    let powerRankS=league && league.history.filter(l => l.year === pwrRankSzn)[0] !== undefined ?
         league.history.filter(l => l.year === pwrRankSzn)[0].rosters.map(r => ({
             ...r,
-            apW:foundHistory(r.roster_id,pwrRankSzn).s.allPlayRecordW,
-            apL:foundHistory(r.roster_id,pwrRankSzn).s.allPlayRecordL,
-            apR:winPCT(foundHistory(r.roster_id,pwrRankSzn).s.allPlayRecordW,foundHistory(r.roster_id,pwrRankSzn).s.allPlayRecordL)
+            apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
+            apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
+            apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
         })).sort((a,b) => b.apR - a.apR)
     :[]
     let pwrRank=powerRankS.length>0?powerRankS:powerRankC
+
+    console.log(pwrRank)
+
     return (
         <div style={{fontSize:"14px"}}>
             <PowerRankingSlider
                 handlePwrRank={handlePwrRank}
                 league={league}
-                owner={owner}
                 pwrRank={pwrRank}
                 pwrRankSzn={pwrRankSzn}
+                roster={roster}
             />
                     {/* <div className="d-flex align-items-top flex-wrap"> 
                         <div style={{width:"420px"}}>
@@ -120,24 +121,18 @@ export default function Power({
                 openModal={openModal}
                 players={players}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
             />
             <OwnerStatsContainer
                 foundHistory={foundHistory}
                 handleSelectStats={handleSelectStats}
                 handleSelectSzn={handleSelectSzn}
-                handleSzn={handleSzn}
                 id={id}
                 league={league}
-                lineupEfficiency={lineupEfficiency}
-                owner={owner}
-                roundToHundredth={roundToHundredth}
+                processedRosters={processedRosters}
                 selectStats={selectStats}  
                 selectSzn={selectSzn}
                 tab={tab}
                 totalPtsPerGame={totalPtsPerGame}
-                winPCT={winPCT}
-
             />
             <RivalryRecordContainer
                 findRosterByID={findRosterByID}
@@ -150,7 +145,6 @@ export default function Power({
                 processedRosters={processedRosters}
                 selectAllPlay={selectAllPlay}
                 vs={vs}
-                winPCT={winPCT}
             />
         </div>
     )

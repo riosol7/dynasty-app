@@ -1,6 +1,7 @@
 import React from "react";
 import { Icon } from '@iconify/react';
 import { findHistoryRoster, handleRostersBySzn } from "../../helpers";
+import { roundToHundredth } from "../../utils";
 
 const UNDERLINE_TITLE_DIV = {
     width:"205px",
@@ -30,7 +31,6 @@ export default function MatchupSlide({
     openModal,
     players,
     processedRosters,
-    roundToHundredth,
     weeklyMatch,
 }) {
     const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";

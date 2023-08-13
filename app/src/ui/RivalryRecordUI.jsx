@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { winPCT } from "../utils";
 
 export default function RivalryRecordUI({
     findRosterByID,
@@ -14,7 +15,6 @@ export default function RivalryRecordUI({
     processedRosters,
     selectAllPlay,
     vs,
-    winPCT,
 }) {   
     const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
     const dummyAvatar = "8fcf0e0e6a75e96a591d2a4a4a400f41";

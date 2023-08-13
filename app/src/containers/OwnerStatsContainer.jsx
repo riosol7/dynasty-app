@@ -6,17 +6,13 @@ export default function OwnerStatsContainer({
     foundHistory,
     handleSelectStats,
     handleSelectSzn,
-    handleSzn,
     id,
     league,
-    lineupEfficiency,
     processedRosters,
-    roundToHundredth,
     selectStats,
     selectSzn,
     tab,
     totalPtsPerGame,
-    winPCT
 }) {
     const foundRoster = findHistoryRoster(id, selectSzn, league, processedRosters);
 
@@ -28,13 +24,10 @@ export default function OwnerStatsContainer({
             handleSelectSzn={handleSelectSzn}
             id={id}
             league={league}
-            lineupEfficiency={lineupEfficiency}
-            roundToHundredth={roundToHundredth}
             selectStats={selectStats}
             selectSzn={selectSzn}
             tab={tab}
             totalPtsPerGame={totalPtsPerGame}
-            winPCT={winPCT}
         />
     )
 }

@@ -144,18 +144,17 @@ export default function Owner({
                     />
                     {
                         processedRosters?.totalRoster && league?.history && matches ?
-                            processedRosters?.totalRoster.filter(roster => roster.roster_id === Number(id)).map((owner,i) => 
+                            processedRosters?.totalRoster.filter(roster => roster.roster_id === Number(id)).map((roster, i) => 
                                 <div key={i}>
                                     <OwnerHeader 
                                         findPlayer={findPlayer}
                                         league={league}
                                         openModal={openModal}
-                                        owner={owner}
                                         players={players}
+                                        roster={roster}
                                         topDraftPick={topDraftPick}
                                     />
                                     <OwnerBody
-                                        findPlayer={findPlayer}
                                         findRecord={findRecord}
                                         findRosterByID={findRosterByID}
                                         foundHistory={foundHistory}
@@ -166,10 +165,9 @@ export default function Owner({
                                         matches={matches}
                                         matchups={matchups}
                                         openModal={openModal}
-                                        owner={owner}
                                         players={players}
                                         processedRosters={processedRosters}
-                                        rosters={rosters}
+                                        roster={roster}
                                     />
                                 </div>
                             )

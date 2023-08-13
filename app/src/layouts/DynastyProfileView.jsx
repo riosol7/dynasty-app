@@ -5,12 +5,11 @@ import DynastyAgeBarChart from "../components/charts/DynastyAgeBarChart";
 import DynastyRadarInsights from "../components/charts/DynastyRadarInsights";
 
 export default function DynastyProfileView({
-    findPlayer,
     id,
-    owner,
-    players,
+    league,
+    matches,
     processedRosters,
-    roundToHundredth,
+    roster,
     tab,
 }) {
     return (
@@ -23,7 +22,7 @@ export default function DynastyProfileView({
                                 <DynastyAgeBarChart 
                                     id={id}
                                     processedRosters={processedRosters}
-                                    roster={owner} 
+                                    roster={roster} 
                                 />
                             </div> 
                         </div>
@@ -32,19 +31,17 @@ export default function DynastyProfileView({
                                 <DynastyRadarInsights 
                                     id={id}
                                     processedRosters={processedRosters}
-                                    roster={owner} 
-                                    roundToHundredth={roundToHundredth}
+                                    roster={roster} 
                                 />
                             </div>
                         </div>
                     </div>
                 </div>
                 <RosterContainer
-                    findPlayer={findPlayer}
-                    owner={owner}
-                    players={players}
+                    league={league}
+                    matches={matches}
                     processedRosters={processedRosters}
-                    roundToHundredth={roundToHundredth}
+                    roster={roster}
                     tab={tab}
                 />      
             </div>

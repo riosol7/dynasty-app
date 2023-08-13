@@ -1,4 +1,5 @@
 import { 
+    calculatePositionStats,
     getTotalPts, 
     isOdd,
     lineupEfficiency,
@@ -7,6 +8,7 @@ import {
 } from "./stats/pointCalculations";
 
 export {
+    calculatePositionStats,
     getTotalPts,
     isOdd,
     lineupEfficiency,
@@ -14,4 +16,5 @@ export {
     winPCT,
 }
 export { default as findLogo } from "./findLogo";
+export { default as getPrimeIndicatorColor } from "./stats/getPrimeIndicatorColor";
 export { default as toDateTime } from "./date/toDateTime";

@@ -15,7 +15,6 @@ export default function MatchupUI({
     openModal,
     players,
     processedRosters,
-    roundToHundredth,
     weeklyMatch
 }) {
     return (
@@ -41,7 +40,6 @@ export default function MatchupUI({
                 openModal={openModal}
                 players={players}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
                 weeklyMatch={weeklyMatch}
             />
             <div className="my-4">

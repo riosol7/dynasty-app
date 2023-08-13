@@ -1,10 +1,10 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { roundToHundredth } from "../../utils";
 
 export default function DynastyRankingSlide({
-    owner,
     r,
-    roundToHundredth,
+    roster,
 }) {
     return (
         <div className="py-4" style={{border:"",background:""}}>
@@ -18,14 +18,14 @@ export default function DynastyRankingSlide({
                                         r.kct.owner.avatar ? r.kct.owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                         <div className="d-flex justify-content-center align-items-center" 
                                             style={{position:"relative", left:30,bottom:15, background:"black", borderRadius:"50%", width:"20px"}}>
-                                            <p className="m-0 bold" style={owner.owner_id.display_name === r.kct.owner.display_name?
+                                            <p className="m-0 bold" style={roster.owner_id.display_name === r.kct.owner.display_name?
                                                 {color:"#a9dfd8"}:{color:"#acb6c3"}}>{r.rank}
                                             </p>
                                         </div>
                                 </div>
-                                <div style={owner.owner_id.display_name === r.kct.owner.display_name?{}:{color:"lightgrey"}}>
+                                <div style={roster.owner_id.display_name === r.kct.owner.display_name?{}:{color:"lightgrey"}}>
                                     {
-                                        owner.owner_id.display_name === r.kct.owner.display_name?
+                                        roster.owner_id.display_name === r.kct.owner.display_name?
                                             <p className="m-0 bold">{r.kct.owner.display_name}</p>
                                         :
                                             <p className="m-0">{r.kct.owner.display_name}</p>
@@ -33,7 +33,7 @@ export default function DynastyRankingSlide({
                                     <div className="d-flex align-items-center mt-1">
                                         <div className="d-flex align-items-center">
                                             {
-                                                owner.owner_id.display_name === r.kct.owner.display_name?
+                                                roster.owner_id.display_name === r.kct.owner.display_name?
                                                     <Icon icon="fluent:person-tag-20-regular" style={{fontSize:"24px", color:"#a9dfd8", marginRight:"4px"}}/>
                                                 :
                                                     <Icon icon="fluent:person-tag-20-regular" style={{fontSize:"24px", color:"#698b87", marginRight:"4px"}}/>
@@ -42,7 +42,7 @@ export default function DynastyRankingSlide({
                                         </div>
                                         <div className="d-flex align-items-center" style={{marginLeft:"1.5em"}}>
                                             {
-                                                owner.owner_id.display_name === r.kct.owner.display_name?
+                                                roster.owner_id.display_name === r.kct.owner.display_name?
                                                     <Icon icon="material-symbols:avg-pace-sharp" style={{fontSize:"24px", color:"#a9dfd8", marginRight:"4px"}}/>
                                                 :
                                                     <Icon icon="material-symbols:avg-pace-sharp" style={{fontSize:"24px", color:"#698b87", marginRight:"4px"}}/>

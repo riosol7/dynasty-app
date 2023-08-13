@@ -1,12 +1,11 @@
 import React from "react";
 import Chart from "react-apexcharts";
+import { roundToHundredth } from "../../utils";
 
 export default function DynastyRadarInsights({
     loadRosters,
     processedRosters,
-    roster,
-    roundToHundredth,
-    
+    roster,    
 }) {
     const teamRankRosters = processedRosters.teamRank;
 

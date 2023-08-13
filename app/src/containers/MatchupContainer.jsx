@@ -13,7 +13,6 @@ export default function MatchupContainer({
     openModal,
     players,
     processedRosters,
-    roundToHundredth,
 }) {
     const [weeklyMatch, setWeeklyMatch] = useState(foundMyMatchups.length > 0 ? league.season : (Number(league.season) - 1).toString())
 
@@ -65,7 +64,6 @@ export default function MatchupContainer({
             openModal={openModal}
             players={players}
             processedRosters={processedRosters}
-            roundToHundredth={roundToHundredth}
             weeklyMatch={weeklyMatch}
         />
     )

@@ -3,14 +3,9 @@ import React, { useState } from "react";
 import Summary from "./Summary";
 import Dynasty from "./Dynasty";
 import Power from "./Power";
-import { 
-    lineupEfficiency,
-    roundToHundredth,
-    winPCT 
-} from "../utils";
+import { roundToHundredth } from "../utils";
 
 export default function OwnerBody({
-    findPlayer,
     findRecord,
     findRosterByID,
     foundHistory,
@@ -21,10 +16,9 @@ export default function OwnerBody({
     matches,
     matchups,
     openModal,
-    owner,
     players,
     processedRosters,
-    rosters,
+    roster,
 }) {
 
     const [tab, setTab] = useState("Summary");
@@ -88,46 +82,35 @@ export default function OwnerBody({
                 {
                     tab === "Summary" ?
                         <Summary
-                            findPlayer={findPlayer}
                             findRecord={findRecord}
                             findRosterByID={findRosterByID}
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
                             id={id}
                             league={league}
-                            lineupEfficiency={lineupEfficiency}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
                             matches={matches}
                             openModal={openModal}
-                            owner={owner}
                             players={players}
                             processedRosters={processedRosters}
-                            rosters={rosters}
-                            roundToHundredth={roundToHundredth}
+                            roster={roster}
                             tab={tab}
                             totalPtsPerGame={totalPtsPerGame}
-                            winPCT={winPCT}
                         />
                     : tab === "Dynasty" ?
                         <Dynasty
-                            findPlayer={findPlayer}
-                            foundHistory={foundHistory}
                             id={id}
                             league={league}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
                             matches={matches}
-                            owner={owner}
-                            players={players}
                             processedRosters={processedRosters}
-                            roundToHundredth={roundToHundredth}
+                            roster={roster}
                             tab={tab}
-                            winPCT={winPCT}
                         />
                     : tab === "Power" ?
                         <Power
-                            findPlayer={findPlayer}
                             findRecord={findRecord}
                             findRosterByID={findRosterByID}
                             foundHistory={foundHistory}
@@ -135,18 +118,15 @@ export default function OwnerBody({
                             // handleSzn={handleSzn}
                             id={id}
                             league={league}
-                            lineupEfficiency={lineupEfficiency}
                             loadLeague={loadLeague}
                             loadRosters={loadRosters}
                             matches={matches}
                             openModal={openModal}
-                            owner={owner}
                             players={players}
                             processedRosters={processedRosters}
-                            roundToHundredth={roundToHundredth}
+                            roster={roster}
                             tab={tab}
                             totalPtsPerGame={totalPtsPerGame}
-                            winPCT={winPCT}
                         />
                     :<></>
                 }

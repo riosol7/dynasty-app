@@ -4,9 +4,8 @@ import { Autoplay } from "swiper";
 import DynastyRankingSlide from "../slides/DynastyRankingSlide";
 
 export default function DynastyRankingSlider({
-    owner,
     processedRosters,
-    roundToHundredth,
+    roster,
 }) {
     return (
         <div className="my-4">
@@ -77,9 +76,8 @@ export default function DynastyRankingSlider({
                         processedRosters?.teamRank?.sort((a,b) => a.rank - b.rank).map((r, i) => 
                             <SwiperSlide key={i} style={{width:"260px"}}>
                                 <DynastyRankingSlide
-                                    owner={owner}
                                     r={r}
-                                    roundToHundredth={roundToHundredth}
+                                    roster={roster}
                                 />
                             </SwiperSlide>
                         )

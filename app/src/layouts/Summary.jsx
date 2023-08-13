@@ -6,25 +6,21 @@ import RivalryRecordContainer from "../containers/RivalryRecordContainer";
 import RosterContainer from "../containers/RosterContainer";
 
 export default function Summary({
-    findPlayer,
     findRecord,
     findRosterByID,
     foundHistory,
     foundMyMatchups,
     id,
     league,
-    lineupEfficiency,
     loadLeague,
     loadRosters,
     matches,
     openModal,
-    owner,
     players,
     processedRosters,
-    roundToHundredth,
+    roster,
     tab,
     totalPtsPerGame,
-    winPCT,
 }) {
     const [selectStats, setSelectStats] = useState("Season");
     const [selectSzn, setSelectSzn] = useState("All Time");
@@ -61,7 +57,6 @@ export default function Summary({
                 openModal={openModal}
                 players={players}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
             />
             <OwnerStatsContainer
                 foundHistory={foundHistory}
@@ -69,14 +64,11 @@ export default function Summary({
                 handleSelectSzn={handleSelectSzn}
                 id={id}
                 league={league}
-                lineupEfficiency={lineupEfficiency}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
                 selectStats={selectStats}
                 selectSzn={selectSzn}
                 tab={tab}
                 totalPtsPerGame={totalPtsPerGame}
-                winPCT={winPCT}
             />
             <RivalryRecordContainer
                 findRosterByID={findRosterByID}
@@ -89,7 +81,6 @@ export default function Summary({
                 processedRosters={processedRosters}
                 selectAllPlay={selectAllPlay}
                 vs={vs}
-                winPCT={winPCT}
             />
             {/* <div className="py-4">
                 <Draft
@@ -104,13 +95,10 @@ export default function Summary({
                 />
             </div> */}
             <RosterContainer
-                findPlayer={findPlayer}
                 league={league}
                 matches={matches}
-                owner={owner}
-                players={players}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
+                roster={roster}
                 tab={tab}
             />           
         </div>

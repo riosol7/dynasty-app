@@ -6,9 +6,9 @@ import { Autoplay } from 'swiper';
 export default function PowerRankingSlider({
     handlePwrRank,
     league,
-    owner,
     pwrRank,
     pwrRankSzn,
+    roster,
 }) {
 
     return (
@@ -94,10 +94,10 @@ export default function PowerRankingSlider({
                     }}
                 >
                     {
-                        pwrRank && pwrRank.map((roster, idx) => ({...roster, rank:idx+1})).map((r,i) => 
+                        pwrRank && pwrRank.map((roster, idx) => ({...roster, rank:idx+1})).map((r, i) => 
                             <SwiperSlide key={i}>
                                 <div className="py-4" style={{border:"",background:""}}>
-                                    <a href={`/Owner/${r.kct.owner.roster_id}`} className="cellLink">
+                                    <a href={`/Owner/${r.roster_id}`} className="cellLink">
                                         <div className="d-flex align-items-center">
                                             {
                                                 r.owner?
@@ -107,14 +107,14 @@ export default function PowerRankingSlider({
                                                                 r.owner.avatar ? r.owner.avatar : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}/>
                                                                 <div className="d-flex justify-content-center align-items-center" 
                                                                     style={{position:"relative", left:30,bottom:15, background:"black", borderRadius:"50%", width:"20px"}}>
-                                                                    <p className="m-0 bold" style={owner && owner.owner.display_name === r.owner.display_name?
+                                                                    <p className="m-0 bold" style={roster?.owner?.display_name === r.owner.display_name?
                                                                         {color:"#a9dfd8"}:{color:"#acb6c3"}}>{r.rank}
                                                                     </p>
                                                                 </div>
                                                         </div>
-                                                        <div style={owner.owner.display_name === r.owner.display_name?{}:{color:"lightgrey"}}>
+                                                        <div style={roster.owner.display_name === r.owner.display_name?{}:{color:"lightgrey"}}>
                                                             {
-                                                                owner.owner.display_name === r.owner.display_name?
+                                                                roster.owner.display_name === r.owner.display_name?
                                                                     <p className="m-0 bold">{r.owner.display_name}</p>
                                                                 :
                                                                     <p className="m-0">{r.owner.display_name}</p>

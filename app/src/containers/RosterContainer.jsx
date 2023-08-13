@@ -1,19 +1,17 @@
-import React,{ useState } from "react";
+import React, { useState } from "react";
 import RosterUI from "../ui/RosterUI";
-import { 
-    findLogo,
-    getTotalPts, 
-    isOdd, 
-} from "../utils";
+import {
+    getTopQB,
+    getTopRB,
+    getTopTE,
+    getTopWR,
+} from "../helpers";
 
 export default function RosterContainer({
-    findPlayer,
     league,
     matches,
-    owner,
-    players,
     processedRosters,
-    roundToHundredth,
+    roster,
     tab,
 }) {
     const [showQBs, setShowQBs] = useState(true)
@@ -24,6 +22,11 @@ export default function RosterContainer({
     const [wrArrow, setWrArrow] = useState(false)
     const [showTEs, setShowTEs] = useState(true)
     const [teArrow, setTeArrow] = useState(false)
+
+    const topQB = getTopQB(roster.owner.display_name, processedRosters);
+    const topRB = getTopRB(roster.owner.display_name, processedRosters);
+    const topWR = getTopWR(roster.owner.display_name, processedRosters);
+    const topTE = getTopTE(roster.owner.display_name, processedRosters);
 
     const showMoreQBs = () => {
         setShowQBs(!showQBs);
@@ -92,47 +95,16 @@ export default function RosterContainer({
         : rank = foundTeam.rank + "th"
         return rank;
     }
-    function getTopQB(display_name){
-        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
-        const topQB = foundTeam.kct.qb.players[0];
-        return topQB;
-    }
-    function getTopRB(display_name){
-        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
-        const topRB = foundTeam.kct.rb.players[0];
-        return topRB;
-    }
-    function getTopWR(display_name){
-        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
-        const topWR = foundTeam.kct.wr.players[0];
-        return topWR;
-    }
-    function getTopTE(display_name){
-        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name);
-        const topTE = foundTeam.kct.te.players[0];
-        return topTE;
-    }
 
     return (
         <RosterUI
-            findLogo={findLogo}
-            findPlayer={findPlayer}
-            getTopQB={getTopQB}
-            getTopRB={getTopRB}
-            getTopTE={getTopTE}
-            getTopWR={getTopWR}
-            getTotalPts={getTotalPts}
-            isOdd={isOdd}
             league={league}
             matches={matches}
-            owner={owner}
-            players={players}
             qbArrow={qbArrow}
             qbRankings={qbRankings}
             rbArrow={rbArrow}
             rbRankings={rbRankings}
-            rosters={processedRosters}
-            roundToHundredth={roundToHundredth}
+            roster={roster}
             showMoreQBs={showMoreQBs}
             showQBs={showQBs}
             showMoreRBs={showMoreRBs}
@@ -144,6 +116,10 @@ export default function RosterContainer({
             tab={tab}
             teArrow={teArrow}
             teRankings={teRankings}
+            topQB={topQB}
+            topRB={topRB}
+            topTE={topTE}
+            topWR={topWR}
             wrArrow={wrArrow}
             wrRankings={wrRankings}
         />

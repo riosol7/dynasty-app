@@ -2,11 +2,21 @@ import {
     findHistoryRoster,
     findRosterByOwnerID,
     findRosterByID,
-} from "./roster/findRoster"
+} from "./roster/findRoster";
+import {
+    getTopQB,
+    getTopRB,
+    getTopTE,
+    getTopWR,
+} from "./player/getTopPlayer";
 export {
     findHistoryRoster,
     findRosterByOwnerID,
     findRosterByID,
+    getTopQB,
+    getTopRB,
+    getTopTE,
+    getTopWR,
 }
 export { default as findOwner } from "./owner/findOwner";
 export { default as findPlayer } from "./player/findPlayer";

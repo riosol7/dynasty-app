@@ -5,13 +5,12 @@ import LegacyComparisonContainer from "../containers/LegacyComparisonContainer";
 import DynastyProfileView from "./DynastyProfileView";
 
 export default function Dynasty({
-    findPlayer,
     id,
+    league,
     loadRosters,
-    owner,
-    players,
+    matches,
     processedRosters,
-    roundToHundredth,
+    roster,
     tab,
 }) {
 
@@ -20,9 +19,8 @@ export default function Dynasty({
             <DynastyRankingSlider
                 id={id}
                 loadRosters={loadRosters}
-                owner={owner}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
+                roster={roster}
             />
             <LegacyComparisonContainer
                 id={id}
@@ -30,12 +28,11 @@ export default function Dynasty({
                 processedRosters={processedRosters}
             />
             <DynastyProfileView
-                findPlayer={findPlayer}
                 id={id}
-                owner={owner}
-                players={players}
+                league={league}
+                matches={matches}
                 processedRosters={processedRosters}
-                roundToHundredth={roundToHundredth}
+                roster={roster}
                 tab={tab}
             />
         </div>

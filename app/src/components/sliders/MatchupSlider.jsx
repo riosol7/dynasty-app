@@ -16,7 +16,6 @@ export default function MatchupSlider({
     openModal,
     players,
     processedRosters,
-    roundToHundredth,
     weeklyMatch,
 }) {
     const foundRoster = findRosterByID(id, processedRosters.totalRoster);
@@ -126,7 +125,6 @@ export default function MatchupSlider({
                                 openModal={openModal}
                                 players={players}
                                 processedRosters={processedRosters}
-                                roundToHundredth={roundToHundredth}
                                 weeklyMatch={weeklyMatch}
                             />
                         </SwiperSlide>

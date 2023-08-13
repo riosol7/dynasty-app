@@ -12,7 +12,6 @@ export default function RivalryRecordContainer({
     processedRosters,
     selectAllPlay,
     vs,
-    winPCT,
 }) {   
     function MouseOver(event) {
         event.target.style.color="#a9dfd8";
@@ -34,7 +33,6 @@ export default function RivalryRecordContainer({
             processedRosters={processedRosters}
             selectAllPlay={selectAllPlay}
             vs={vs}
-            winPCT={winPCT}
         />
     )
 }
