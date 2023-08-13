@@ -1,4 +1,4 @@
-import { logos } from "../assets/logos";
+import { logos } from "../constants/logos";
 
 const findLogo = (team) => {
     if(team === null || team === undefined){

@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import value from "../../assets/value.png";
+import value from "../../assets/images/value.png";
 
 export default function MVPSlide ({
     findLogo,

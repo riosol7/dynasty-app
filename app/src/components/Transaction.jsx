@@ -1,12 +1,11 @@
-import React, {useState} from 'react'
-import TradeModal from './modals/TradeModal'
-import { Icon } from '@iconify/react';
+import React, { useState } from "react";
+import TradeModal from "./modals/TradeModal";
+import { Icon } from "@iconify/react";
 
-import Sleeper from "../assets/sleeper.png";
-// import PERSON from "../assets/person.png";
-import {logos} from "../assets/logos";
-import { processTransactions } from '../helpers';
-import { getInitials } from '../utils';
+import Sleeper from "../assets/images/sleeper.png";
+import { logos } from "../constants/logos";
+import { processTransactions } from "../helpers";
+import { getInitials } from "../utils";
 
 export default function Transaction({
     loadTransactions,
