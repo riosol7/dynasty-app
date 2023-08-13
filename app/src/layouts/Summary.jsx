@@ -7,7 +7,6 @@ import RosterContainer from "../containers/RosterContainer";
 
 export default function Summary({
     findRecord,
-    findRosterByID,
     foundHistory,
     foundMyMatchups,
     id,
@@ -48,7 +47,6 @@ export default function Summary({
         <div style={{fontSize:"14px"}}>
             <MatchupContainer
                 findRecord={findRecord}
-                findRosterByID={findRosterByID}
                 foundHistory={foundHistory}
                 foundMyMatchups={foundMyMatchups}
                 id={id}
@@ -71,7 +69,6 @@ export default function Summary({
                 totalPtsPerGame={totalPtsPerGame}
             />
             <RivalryRecordContainer
-                findRosterByID={findRosterByID}
                 foundHistory={foundHistory}
                 handleAllPlay={handleAllPlay}
                 handleVS={handleVS}

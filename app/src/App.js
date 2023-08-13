@@ -10,16 +10,11 @@ import AppRouter from "./router/AppRouter";
 import SidenavBar from "./layouts/SidenavBar";
 import ActivityBar from "./components/ActivityBar";
 import {
-    getTotalPts,
-    lineupEfficiency,
-    toDateTime,
     roundToHundredth,
     winPCT,
 } from "./utils";
 import {
     findRosterByID,
-    findPlayer,
-    handleRostersBySzn,
     processLeague,
     processMatches,
 } from "./helpers";
@@ -657,13 +652,8 @@ function App() {
                 <Router>
                     <AppRouter  
                         activityBar={activityBar}
-                        findPlayer={findPlayer}
-                        findRosterByID={findRosterByID}
                         foundHistory={foundHistory}
-                        getTotalPts={getTotalPts}
-                        handleRostersBySzn={handleRostersBySzn}
                         league={processedLeague}
-                        lineupEfficiency={lineupEfficiency}
                         loadLeague={loadLeague}
                         loadMatches={loadMatches}
                         loadOwners={loadOwners}
@@ -675,22 +665,18 @@ function App() {
                         owners={owners}
                         players={players}
                         rosters={rosters}
-                        roundToHundredth={roundToHundredth}
                         setActivityBar={setActivityBar}
-                        toDateTime={toDateTime}
                         transactions={transactions}
-                        winPCT={winPCT}
                     />          
                 </Router>
                 <ActivityBar
                     activityBar={activityBar}
-                    loadLeague={loadLeague}
                     league={processedLeague}
+                    loadLeague={loadLeague}
                     loadTransactions={loadTransactions}
                     owners={owners}
                     players={players}
                     setActivityBar={setActivityBar}
-                    toDateTime={toDateTime}
                     transactions={transactions}
                 />
             </div>

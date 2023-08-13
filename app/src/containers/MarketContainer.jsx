@@ -8,15 +8,12 @@ import { findLogo } from "../utils";
 //  Available players FA
 
 export default function MarketContainer({
-    // findPlayer,
     league,
     // loadOwners,
     // loadTransactions,
     owners,
     players,
-    toDateTime,
     transactions,
-    roundToHundredth,
 }) {
     const [position,setPosition]=useState("POSITION")
     const [owner,setOwner]=useState("OWNER")
@@ -174,11 +171,9 @@ export default function MarketContainer({
             records={records}
             recordsPerPage={recordsPerPage}
             rbWaiver={rbWaiver}
-            roundToHundredth={roundToHundredth}
             setAsc={setAsc}
             sort={sort}
             teWaiver={teWaiver}
-            toDateTime={toDateTime}
             waiverBids={waiverBids}
             waiverBidsDefault={waiverBidsDefault}
             wrWaiver={wrWaiver}

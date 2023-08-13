@@ -3,11 +3,11 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Autoplay } from "swiper";
 import { Icon } from "@iconify/react";
 import MVPSlide from "../components/slides/MVPSlide";
+import { getTotalPts } from "../utils";
 
 export default function MVPUI({
     findLogo,
     getMVP,
-    getTotalPts,
     league,
     loadLeague,
     loadRosters,

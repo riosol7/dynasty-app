@@ -1,17 +1,15 @@
 import React, {useState} from "react";
 import StandingsUI from "../ui/StandingsUI";
+import { handleRostersBySzn } from "../helpers";
+import { roundToHundredth } from "../utils";
 
 export default function StandingsContainer({
-  findRosterByID,
   foundHistory,
-  handleRostersBySzn,
   league,
   playoffs,
   processedRosters,
   rosters,
-  roundToHundredth,
   selectSzn,
-  winPCT,
 }){
   const [sort, setSort] = useState("RANK");
   const [asc, setAsc] = useState(false);
@@ -166,7 +164,6 @@ export default function StandingsContainer({
       divsRanks={divsRanks}
       div1Ranks={div1Ranks}
       div2Ranks={div2Ranks}
-      findRosterByID={findRosterByID}
       findRosterBySzn={findRosterBySzn}
       foundHistory={foundHistory}
       handleRank={handleRank}
@@ -184,7 +181,6 @@ export default function StandingsContainer({
       sort={sort}
       sort1={sort1}
       sort2={sort2}
-      winPCT={winPCT}
     />
   )
 }

@@ -22,11 +22,9 @@ export default function MarketUI({
     records,
     recordsPerPage,
     rbWaiver,
-    roundToHundredth,
     setAsc,
     sort,
     teWaiver,
-    toDateTime,
     waiverBids,
     waiverBidsDefault,
     wrWaiver,
@@ -45,7 +43,6 @@ export default function MarketUI({
             </div>
             <MarketPositions
                 waiverBidsDefault={waiverBidsDefault}
-                roundToHundredth={roundToHundredth}
                 qbWaiver={qbWaiver}
                 rbWaiver={rbWaiver}
                 wrWaiver={wrWaiver}
@@ -70,7 +67,6 @@ export default function MarketUI({
                 recordsPerPage={recordsPerPage}
                 setAsc={setAsc}
                 sort={sort}
-                toDateTime={toDateTime}
                 waiverBids={waiverBids}
             />
         </div>

@@ -8,32 +8,29 @@ import Modal from "../components/modals/Modal";
 
 export default function Owner({
     activityBar,
-    findPlayer,
-    findRosterByID,
     foundHistory,
-    // getTotalPts,
     league,
-    // lineupEfficiency,
     loadLeague,
     loadMatches,
+    loadPlayers,
     loadRosters,
-    owners,
     matches,
     matchups,
+    owners,
     players,
     rosters,
-    // roundToHundredth,
     setActivityBar,
-    // winPCT,
 }) {
-    const {id} = useParams()
-    const processedRosters = processRosters(rosters, players, owners);
+    const {id} = useParams();
 
     const [isOpen, setIsOpen] = useState(false)
     const [match, setMatch] = useState([])
     const [oID, setOID] = useState("")
     const [modalTab, setModalTab] = useState("")
     const [draftClass, setDraftClass] = useState(league.season)
+
+    const processedRosters = processRosters(rosters, players, owners);
+    const topDraftPick = league?.draft?.picks?.filter(p => p.roster_id === Number(id))[0]
 
     const handleDraftClass = (e) => {
         setDraftClass(e.target.value)
@@ -94,7 +91,6 @@ export default function Owner({
             l: l
         }
     }
-    const topDraftPick = league?.draft?.picks?.filter(p => p.roster_id === Number(id))[0]
     
     const findGameDate = (score1, score2, opID) => {
         let historyArray = []
@@ -132,7 +128,7 @@ export default function Owner({
         }
     }, [draftClass, league.season])
 
-    return (loadLeague && loadRosters && loadMatches ? <div style={{width:"100%", height:"100vh"}}></div> :
+    return (loadLeague && loadMatches && loadPlayers && loadRosters ? <div style={{width:"100%", height:"100vh"}}></div> :
         <>
             <div className="home">
                 <div className="pt-3 px-5">
@@ -142,37 +138,31 @@ export default function Owner({
                         loadLeague={loadLeague}
                         setActivityBar={setActivityBar}
                     />
-                    {
-                        processedRosters?.totalRoster && league?.history && matches ?
-                            processedRosters?.totalRoster.filter(roster => roster.roster_id === Number(id)).map((roster, i) => 
-                                <div key={i}>
-                                    <OwnerHeader 
-                                        findPlayer={findPlayer}
-                                        league={league}
-                                        openModal={openModal}
-                                        players={players}
-                                        roster={roster}
-                                        topDraftPick={topDraftPick}
-                                    />
-                                    <OwnerBody
-                                        findRecord={findRecord}
-                                        findRosterByID={findRosterByID}
-                                        foundHistory={foundHistory}
-                                        id={id}
-                                        league={league} 
-                                        loadLeague={loadLeague} 
-                                        loadRosters={loadRosters} 
-                                        matches={matches}
-                                        matchups={matchups}
-                                        openModal={openModal}
-                                        players={players}
-                                        processedRosters={processedRosters}
-                                        roster={roster}
-                                    />
-                                </div>
-                            )
-                        :<></>
-                    }
+                    {processedRosters?.totalRoster?.filter(roster => roster.roster_id === Number(id)).map((roster, i) => 
+                        <div key={i}>
+                            <OwnerHeader 
+                                league={league}
+                                openModal={openModal}
+                                players={players}
+                                roster={roster}
+                                topDraftPick={topDraftPick}
+                            />
+                            <OwnerBody
+                                findRecord={findRecord}
+                                foundHistory={foundHistory}
+                                id={id}
+                                league={league} 
+                                loadLeague={loadLeague} 
+                                loadRosters={loadRosters} 
+                                matches={matches}
+                                matchups={matchups}
+                                openModal={openModal}
+                                players={players}
+                                processedRosters={processedRosters}
+                                roster={roster}
+                            />
+                        </div>
+                    )}
                 </div>
             </div>
             <Modal
@@ -182,12 +172,10 @@ export default function Owner({
                 league={league} 
                 draftClass={draftClass}
                 myDraftPicks={myDraftPicks}
-                findPlayer={findPlayer}
                 closeModal={closeModal}
                 foundHistory={foundHistory}
                 modalTab={modalTab}
                 openModal={openModal}
-                findRosterByID={findRosterByID}
                 oID={oID}
                 setOID={setOID}
                 findRecord={findRecord}

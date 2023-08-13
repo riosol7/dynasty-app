@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import Transaction from './Transaction';
 import { Icon } from '@iconify/react';
+import { toDateTime } from '../utils';
 
 const TAG_STYLE = {
     borderRadius:"25px",
@@ -22,7 +23,6 @@ export default function LeagueActivity({
     owners,
     players,
     setActivityBar,
-    toDateTime,
     transactions,
 }) {
 

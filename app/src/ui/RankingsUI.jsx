@@ -5,11 +5,9 @@ import DynastyRankingsContainer from "../containers/DynastyRankingsContainer";
 import PowerRankingsContainer from "../containers/PowerRankingsContainer";
 
 export default function RankingsUI({
-    findRosterByID,
     foundHistory,
     handlePlayoffs,
     handleRankings,
-    handleRostersBySzn,
     handleSelectSzn,
     league,
     lineupEfficiency,
@@ -19,9 +17,7 @@ export default function RankingsUI({
     processedRosters,
     rankings,
     rosters,
-    roundToHundredth,
     selectSzn,
-    winPCT,
 }) {
 
   return (
@@ -75,16 +71,12 @@ export default function RankingsUI({
                     { 
                         rankings==="Standings"? 
                             <StandingsContainer
-                                findRosterByID={findRosterByID}
                                 foundHistory={foundHistory}
-                                handleRostersBySzn={handleRostersBySzn}
                                 league={league}
                                 playoffs={playoffs}
                                 processedRosters={processedRosters}
                                 rosters={rosters}
-                                roundToHundredth={roundToHundredth}
                                 selectSzn={selectSzn}
-                                winPCT={winPCT}
                             />
                         : rankings==="Dynasty"?
                             <DynastyRankingsContainer
@@ -95,12 +87,8 @@ export default function RankingsUI({
                             <PowerRankingsContainer
                                 foundHistory={foundHistory}
                                 league={league}
-                                lineupEfficiency={lineupEfficiency}
                                 processedRosters={processedRosters}
-                                roundToHundredth={roundToHundredth}
                                 selectSzn={selectSzn}
-                                winPCT={winPCT}
-
                             />
                         : <></>
                     }

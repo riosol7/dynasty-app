@@ -1,11 +1,10 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-
+import { roundToHundredth } from "../utils";
 export default function PowerRankingsUI({
     asc,
     handleSort,
     pwrRank,
-    roundToHundredth,
     setAsc,
     sort,
     winPCT,

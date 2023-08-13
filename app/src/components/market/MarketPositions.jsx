@@ -1,9 +1,9 @@
 import React from 'react';
 import PositionChart from '../charts/PositionChart';
+import { roundToHundredth } from '../../utils';
 
 export default function MarketPositions({
     rbWaiver,
-    roundToHundredth,
     qbWaiver,
     teWaiver,
     waiverBidsDefault,

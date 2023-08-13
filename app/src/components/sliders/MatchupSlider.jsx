@@ -8,9 +8,9 @@ export default function MatchupSlider({
     id,
     findLogo,
     findRecord,
-    findRosterByID,
     findWeeklyMatchups,
     foundHistory,
+    foundRoster,
     league,
     loadLeague,
     openModal,
@@ -18,7 +18,6 @@ export default function MatchupSlider({
     processedRosters,
     weeklyMatch,
 }) {
-    const foundRoster = findRosterByID(id, processedRosters.totalRoster);
 
     const findPlayerByPts = (team, pts) => {
         let playerID;

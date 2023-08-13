@@ -3,12 +3,10 @@ import Chart from "react-apexcharts";
 
 export default function WeeklyStatsChart({
     id,
-    findRosterByID,
     foundHistory,
-    processedRosters,
+    foundRoster,
     weeklyMatch,
 }) {
-    const foundRoster = findRosterByID(id, processedRosters.totalRoster);
     const series = [
         {
             name:foundRoster.owner.display_name,

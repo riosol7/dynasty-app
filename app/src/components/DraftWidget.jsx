@@ -1,9 +1,9 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { findLogo } from "../utils";
+import { findPlayer } from "../helpers";
 
 export default function DraftWidget({
-    findPlayer,
     league,
     openModal,
     players,
@@ -25,19 +25,19 @@ export default function DraftWidget({
                 <div className="" style={{background:"linear-gradient(49deg, rgba(15,15,15,1) 0%, rgba(17,17,17,1) 100%)", color:"white"}}>
                     <div className="d-flex justify-content-between">
                         <div className="pt-3" style={{paddingLeft:"1.5em"}}>
-                            <div style={{}}>
+                            <div>
                                 <p className="m-0"style={{fontSize:"1.3em"}}>{firstDraftPick.first_name}</p>
                                 <p className="m-0 bold" style={{fontSize:"1.7em"}}>{firstDraftPick.last_name}</p>
                             </div>
-                            <div className="pt-2" style={{}}> 
+                            <div className="pt-2"> 
                                 <p className="m-0 text-center bold py-1" style={{
                                     width:"85px",
                                     color:findLogo(firstDraftPick.team).color,
                                     background:findLogo(firstDraftPick.team).bgColor2
                                 }}>#{firstDraftPick.number} {firstDraftPick.position}</p>
                                 <div className="d-flex align-items-center mt-2">
-                                    <p className="m-0"style={{}}>round {topDraftPick.round}</p>
-                                    <p className="m-0"style={{paddingLeft:"1em"}}>pick {topDraftPick.pick_no}</p>
+                                    <p className="m-0">round {topDraftPick.round}</p>
+                                    <p className="m-0" style={{paddingLeft:"1em"}}>pick {topDraftPick.pick_no}</p>
                                 </div>
                             </div>
                         </div>

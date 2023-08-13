@@ -3,7 +3,6 @@ import { Icon } from "@iconify/react";
 import DraftWidget from '../components/DraftWidget';
 
 export default function OwnerHeader({
-    findPlayer,
     league,
     openModal,
     players,
@@ -23,9 +22,6 @@ export default function OwnerHeader({
                         <p className="m-0 bold" style={{fontSize:"18px"}}>{roster.owner.team_name ? roster.owner.team_name : roster.owner.display_name}</p>
                         <p style={{color:"#cbcbcb", fontWeight:"lighter", paddingLeft:"6px"}} className="m-0">@{roster.owner.display_name}</p>         
                     </div>
-                    <div className="d-flex align-items-center">
-
-                    </div>
                     <p className="m-0 d-flex align-items-center" style={{fontSize:"14.5px"}}>
                         {roster.settings.wins}
                         <span style={{color:"whitesmoke"}}>-</span>  
@@ -42,20 +38,15 @@ export default function OwnerHeader({
                             : "th"
                         } </span>
                     </p>
-                    <p className="m-0 bold" style={{fontSize:"11.5px",color:"#7d91a6"}}>
-                        <span className="">EXP</span> {roster.owner.exp}
-                    </p>
+                    <p className="m-0 bold" style={{fontSize:"11.5px",color:"#7d91a6"}}>EXP {roster.owner.exp}</p>
                 </div>
             </div>
-            <div className="">
-                <DraftWidget
-                    league={league}
-                    topDraftPick={topDraftPick}
-                    findPlayer={findPlayer}
-                    openModal={openModal}
-                    players={players}
-                />
-            </div>
+            <DraftWidget
+                league={league}
+                topDraftPick={topDraftPick}
+                openModal={openModal}
+                players={players}
+            />
         </div>
     )
 }

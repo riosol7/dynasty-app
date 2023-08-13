@@ -1,5 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
+import { toDateTime } from "../../utils";
 
 const SELECT_TAG_M={border:"none", background:"inherit",color:"#7d91a6",fontSize:".7rem",fontWeight:"bold"};
 const SHOW_TAG_M={
@@ -30,7 +31,6 @@ export default function MarketActivity ({
     recordsPerPage,
     setAsc,
     sort,
-    toDateTime,
     waiverBids,
 }) {
     const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";

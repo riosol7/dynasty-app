@@ -29,7 +29,6 @@ export default function RightSideBar({
     owners,
     players,
     setActivityBar,
-    toDateTime,
     transactions,
 }) {
 
@@ -45,7 +44,6 @@ export default function RightSideBar({
                     owners={owners}
                     players={players}
                     setActivityBar={setActivityBar}
-                    toDateTime={toDateTime}
                     transactions={transactions}
                 />
             </div>

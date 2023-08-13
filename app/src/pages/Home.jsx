@@ -3,26 +3,19 @@ import Overview from "../layouts/Overview";
 
 export default function Home ({
     activityBar,
-    findPlayer,
-    findRosterByID,
     foundHistory,
-    getTotalPts,
-    handleRostersBySzn,
     league,
-    lineupEfficiency,
     loadLeague,
     loadOwners,
+    loadPlayers,
     loadRosters,
     loadTransactions,
     matches,
     owners,
     players,
     rosters,
-    roundToHundredth,
     setActivityBar,
-    toDateTime,
     transactions,
-    winPCT,
 }) {
     
     return (
@@ -32,27 +25,19 @@ export default function Home ({
                     <div style={{height:"100vh"}}></div>
                 :
                     <Overview
-                        loadRosters={loadRosters}
-                        rosters={rosters}
-                        loadOwners={loadOwners}
-                        loadTransactions={loadTransactions}
-                        transactions={transactions}
-                        loadLeague={loadLeague}
-                        league={league}
                         activityBar={activityBar}
-                        setActivityBar={setActivityBar}
-                        findPlayer={findPlayer}
+                        foundHistory={foundHistory}
+                        league={league}
+                        loadLeague={loadLeague}
+                        loadOwners={loadOwners}
+                        loadRosters={loadRosters}
+                        loadTransactions={loadTransactions}
                         matches={matches}
                         owners={owners}
                         players={players}
-                        getTotalPts={getTotalPts}
-                        findRosterByID={findRosterByID}
-                        handleRostersBySzn={handleRostersBySzn}
-                        foundHistory={foundHistory}
-                        roundToHundredth={roundToHundredth}
-                        winPCT={winPCT}
-                        lineupEfficiency={lineupEfficiency}
-                        toDateTime={toDateTime}
+                        rosters={rosters}
+                        setActivityBar={setActivityBar}
+                        transactions={transactions}
                     />
             }
         </div>

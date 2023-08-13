@@ -2,7 +2,6 @@ import React from "react";
 import RivalryRecordUI from "../ui/RivalryRecordUI";
 
 export default function RivalryRecordContainer({
-    findRosterByID,
     foundHistory,
     handleAllPlay,
     handleVS,
@@ -21,7 +20,6 @@ export default function RivalryRecordContainer({
     }
     return (
         <RivalryRecordUI
-            findRosterByID={findRosterByID}
             foundHistory={foundHistory}
             handleAllPlay={handleAllPlay}
             handleVS={handleVS}

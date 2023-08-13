@@ -3,7 +3,6 @@ import MVPUI from "../ui/MVPUI";
 import { processRosters } from "../helpers";
 import { findLogo } from "../utils";
 export default function MVPContainer ({
-    getTotalPts,
     league,
     loadLeague,
     loadRosters,
@@ -30,7 +29,6 @@ export default function MVPContainer ({
         <MVPUI
             findLogo={findLogo}
             getMVP={getMVP}
-            getTotalPts={getTotalPts}
             league={league}
             loadLeague={loadLeague}
             loadRosters={loadRosters}

@@ -1,13 +1,11 @@
 import React, {useState} from 'react'
 import PowerRankingsUI from '../ui/PowerRankingsUI';
-
+import { winPCT } from '../utils';
 export default function PowerRankingsContainer({
     foundHistory,
     league,
     processedRosters,
-    roundToHundredth,
     selectSzn,
-    winPCT,
 }) {
 
     const [sort,setSort] = useState("")
@@ -51,7 +49,6 @@ export default function PowerRankingsContainer({
             asc={asc}
             handleSort={handleSort}
             pwrRank={pwrRank}  
-            roundToHundredth={roundToHundredth}
             setAsc={setAsc}
             sort={sort}
             winPCT={winPCT}

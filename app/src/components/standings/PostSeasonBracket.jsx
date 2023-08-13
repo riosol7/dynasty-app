@@ -1,9 +1,9 @@
 import React from "react";
 import PlayoffBracket from "./PlayoffBracket";
 import ToiletBracket from "./ToiletBracket";
+import { findRosterByID } from "../../helpers";
 
 export default function PostSeasonBracket({
-    findRosterByID,
     findRosterBySzn,
     foundHistory,
     handleRostersBySzn,

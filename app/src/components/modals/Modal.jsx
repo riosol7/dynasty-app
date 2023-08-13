@@ -3,6 +3,8 @@ import Draft from "../Draft";
 import { Icon } from "@iconify/react";
 import Matchup from "../Matchup";
 import { findLogo, isOdd } from "../../utils";
+import { findPlayer, findRosterByID } from "../../helpers";
+
 const MODAL_STYLES = {
     position: 'fixed',
     top: '50%',
@@ -32,12 +34,10 @@ export default function Modal(props) {
     const league=props.league
     const draftClass=props.draftClass
     const myDraftPicks=props.myDraftPicks
-    const findPlayer=props.findPlayer
     const closeModal=props.closeModal
     const foundHistory=props.foundHistory
     const modalTab=props.modalTab
     const openModal=props.openModal
-    const findRosterByID=props.findRosterByID
     const oID=props.oID
     const setOID=props.setOID
     const findRecord=props.findRecord

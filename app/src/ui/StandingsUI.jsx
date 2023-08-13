@@ -2,6 +2,7 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import StandingRow from "../components/standings/StandingRow";
 import PostSeasonBracket from "../components/standings/PostSeasonBracket";
+import { winPCT } from "../utils";
 // FIX VARIABLES FOR division -> roster
 export default function StandingsUI({
   all_time,
@@ -11,7 +12,6 @@ export default function StandingsUI({
   divsRanks,
   div1Ranks,
   div2Ranks,
-  findRosterByID,
   findRosterBySzn,
   foundHistory,
   handleRank,
@@ -29,7 +29,6 @@ export default function StandingsUI({
   sort,
   sort1,
   sort2,
-  winPCT,
 }){
 
   return (
@@ -38,7 +37,6 @@ export default function StandingsUI({
         selectSzn === league.season ?
           playoffs===true?
             <PostSeasonBracket
-              findRosterByID={findRosterByID}
               findRosterBySzn={findRosterBySzn}
               foundHistory={foundHistory}
               handleRostersBySzn={handleRostersBySzn}
@@ -784,7 +782,6 @@ export default function StandingsUI({
             playoffs===true?
               <PostSeasonBracket
                 key={j}
-                findRosterByID={findRosterByID}
                 findRosterBySzn={findRosterBySzn}
                 foundHistory={foundHistory}
                 handleRostersBySzn={handleRostersBySzn}

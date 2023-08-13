@@ -11,7 +11,6 @@ import { winPCT } from "../utils";
 
 export default function Power({
     findRecord,
-    findRosterByID,
     foundHistory,
     foundMyMatchups,
     id,
@@ -52,32 +51,33 @@ export default function Power({
     const handleVS = (e) => {
         setVS(e.target.value)
     }
-    const powerRankC= processedRosters?.totalRoster?.map(r => ({
-        ...r,
-        apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
-        apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
-        apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW, foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
+    const getPowerRank = () => {
+        if (pwrRankSzn === league.season) {
+            return processedRosters?.totalRoster?.map(r => ({
+                ...r,
+                apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
+                apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
+                apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW, foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
+            })).sort((a,b) => b.apR - a.apR)
+        
+        } else if (league?.history?.filter(l => l.year === pwrRankSzn)[0] !== undefined) {
+            return league.history.filter(l => l.year === pwrRankSzn)[0].rosters.map(r => ({
+                ...r,
+                apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
+                apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
+                apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
+            })).sort((a,b) => b.apR - a.apR)
+        }
+    };
 
-    })).sort((a,b) => b.apR - a.apR)
-
-    let powerRankS=league && league.history.filter(l => l.year === pwrRankSzn)[0] !== undefined ?
-        league.history.filter(l => l.year === pwrRankSzn)[0].rosters.map(r => ({
-            ...r,
-            apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
-            apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
-            apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
-        })).sort((a,b) => b.apR - a.apR)
-    :[]
-    let pwrRank=powerRankS.length>0?powerRankS:powerRankC
-
-    console.log(pwrRank)
+    const powerRank = getPowerRank();
 
     return (
         <div style={{fontSize:"14px"}}>
             <PowerRankingSlider
                 handlePwrRank={handlePwrRank}
                 league={league}
-                pwrRank={pwrRank}
+                pwrRank={powerRank}
                 pwrRankSzn={pwrRankSzn}
                 roster={roster}
             />
@@ -112,7 +112,6 @@ export default function Power({
                     </div> */}
             <MatchupContainer
                 findRecord={findRecord}
-                findRosterByID={findRosterByID}
                 foundHistory={foundHistory}
                 foundMyMatchups={foundMyMatchups}
                 id={id}
@@ -135,7 +134,6 @@ export default function Power({
                 totalPtsPerGame={totalPtsPerGame}
             />
             <RivalryRecordContainer
-                findRosterByID={findRosterByID}
                 foundHistory={foundHistory}
                 handleAllPlay={handleAllPlay}
                 handleVS={handleVS}

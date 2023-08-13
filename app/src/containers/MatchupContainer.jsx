@@ -4,7 +4,6 @@ import { findLogo } from "../utils";
 
 export default function MatchupContainer({
     findRecord,
-    findRosterByID,
     foundHistory,
     foundMyMatchups,
     id,
@@ -54,7 +53,6 @@ export default function MatchupContainer({
         <MatchupUI
             findLogo={findLogo}
             findRecord={findRecord}
-            findRosterByID={findRosterByID}
             findWeeklyMatchups={findWeeklyMatchups}
             foundHistory={foundHistory}
             handleWeeklyMatch={handleWeeklyMatch}

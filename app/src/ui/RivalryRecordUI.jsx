@@ -1,9 +1,9 @@
 import React from "react";
 import { Icon } from "@iconify/react";
 import { winPCT } from "../utils";
+import { findRosterByID } from "../helpers";
 
 export default function RivalryRecordUI({
-    findRosterByID,
     foundHistory,
     handleAllPlay,
     handleVS,

@@ -7,7 +7,6 @@ import { roundToHundredth } from "../utils";
 
 export default function OwnerBody({
     findRecord,
-    findRosterByID,
     foundHistory,
     id,
     league,
@@ -83,7 +82,6 @@ export default function OwnerBody({
                     tab === "Summary" ?
                         <Summary
                             findRecord={findRecord}
-                            findRosterByID={findRosterByID}
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
                             id={id}
@@ -112,10 +110,8 @@ export default function OwnerBody({
                     : tab === "Power" ?
                         <Power
                             findRecord={findRecord}
-                            findRosterByID={findRosterByID}
                             foundHistory={foundHistory}
                             foundMyMatchups={foundMyMatchups}
-                            // handleSzn={handleSzn}
                             id={id}
                             league={league}
                             loadLeague={loadLeague}

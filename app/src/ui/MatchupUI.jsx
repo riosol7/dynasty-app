@@ -1,11 +1,11 @@
 import React from "react";
 import MatchupSlider from "../components/sliders/MatchupSlider";
 import WeeklyStatsChart from "../components/charts/WeeklyStatsChart";
+import { findRosterByID } from "../helpers";
 
 export default function MatchupUI({
     findLogo,
     findRecord,
-    findRosterByID,
     findWeeklyMatchups,
     foundHistory,
     handleWeeklyMatch,
@@ -17,6 +17,8 @@ export default function MatchupUI({
     processedRosters,
     weeklyMatch
 }) {
+    const foundRoster = findRosterByID(id, processedRosters.totalRoster);
+
     return (
         <div className="my-4">
             <div className="d-flex justify-content-between bold" style={{marginBottom:"8px"}}>
@@ -31,9 +33,9 @@ export default function MatchupUI({
             <MatchupSlider
                 findLogo={findLogo}
                 findRecord={findRecord}
-                findRosterByID={findRosterByID}
                 findWeeklyMatchups={findWeeklyMatchups}
                 foundHistory={foundHistory}
+                foundRoster={foundRoster}
                 id={id}
                 league={league}
                 loadLeague={loadLeague}
@@ -44,10 +46,9 @@ export default function MatchupUI({
             />
             <div className="my-4">
                 <WeeklyStatsChart
-                    findRosterByID={findRosterByID}
                     foundHistory={foundHistory}
+                    foundRoster={foundRoster}
                     id={id}
-                    processedRosters={processedRosters}
                     weeklyMatch={weeklyMatch}
                 />
             </div>
