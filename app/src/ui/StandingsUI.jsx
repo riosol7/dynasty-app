@@ -883,7 +883,7 @@ export default function StandingsUI({
                   </div>
                   { 
                     (sort1 === "RANK" && asc1 === false)  || (sort1 === "RECORD" && asc1 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -893,7 +893,7 @@ export default function StandingsUI({
                         />
                       ) 
                     : (sort1 === "RANK" && asc1 === true)  || (sort1 === "RECORD" && asc1 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -903,7 +903,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort1 === "PF" && asc1 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -913,7 +913,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort1 === "PF" && asc1 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -923,7 +923,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort1 === "MAX PF" && asc1 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal))).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -933,7 +933,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort1 === "MAX PF" && asc1 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal))).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -943,7 +943,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort1 === "PA" && asc1 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal))).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -953,7 +953,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort1 === "PA" && asc1 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1).sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal))).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 1)?.sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1068,7 +1068,7 @@ export default function StandingsUI({
                   </div>
                   { 
                     (sort2 === "RANK" && asc2 === false)  || (sort2 === "RECORD" && asc2 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1078,7 +1078,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "RANK" && asc2 === true)  || (sort2 === "RECORD" && asc2 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1088,7 +1088,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "PF" && asc2 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1098,7 +1098,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "PF" && asc2 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1108,7 +1108,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "MAX PF" && asc2 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal))).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1118,7 +1118,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "MAX PF" && asc2 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal))).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1128,7 +1128,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "PA" && asc2 === true) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal))).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1138,7 +1138,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort2 === "PA" && asc2 === false) ? 
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal))).reverse().map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1148,7 +1148,7 @@ export default function StandingsUI({
                         />
                       )
                     :
-                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2).map((division, i) => 
+                      handleRank(handleRostersBySzn(selectSzn, league, processedRosters), 2)?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1252,7 +1252,7 @@ export default function StandingsUI({
                   </div>
                   { 
                     (sort === "RANK" && asc === false)  || (sort === "RECORD" && asc === true) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1262,7 +1262,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "RANK" && asc === true)  || (sort === "RECORD" && asc === false) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).reverse().map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1272,7 +1272,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "PF" && asc === true) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1282,7 +1282,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "PF" && asc === false) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal))).reverse().map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.sort((a,b) => Number(b.settings.fpts + "." + b.settings.fpts_decimal) - (Number(a.settings.fpts + "." + a.settings.fpts_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1292,7 +1292,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "MAX PF" && asc === true) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal))).map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1302,7 +1302,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "MAX PF" && asc === false) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal))).reverse().map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.sort((a,b) => Number(b.settings.ppts + "." + b.settings.ppts_decimal) - (Number(a.settings.ppts + "." + a.settings.ppts_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1312,7 +1312,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "PA" && asc === true) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal))).map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal)))?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1322,7 +1322,7 @@ export default function StandingsUI({
                         />
                       )
                     : (sort === "PA" && asc === false) ? 
-                      handleRostersBySzn(selectSzn, league, processedRosters).sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal))).reverse().map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.sort((a,b) => Number(b.settings.fpts_against + "." + b.settings.fpts_against_decimal) - (Number(a.settings.fpts_against + "." + a.settings.fpts_against_decimal)))?.reverse()?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}
@@ -1332,7 +1332,7 @@ export default function StandingsUI({
                         />
                       )
                     :
-                      handleRostersBySzn(selectSzn, league, processedRosters).map((division, i) => 
+                      handleRostersBySzn(selectSzn, league, processedRosters)?.map((division, i) => 
                         <StandingRow
                           key={i}
                           division={division}

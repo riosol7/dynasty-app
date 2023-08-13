@@ -26,7 +26,7 @@ export default function MarketUI({
     sort,
     teWaiver,
     waiverBids,
-    waiverBidsDefault,
+    waiverBidsFiltered,
     wrWaiver,
 }) {
   
@@ -42,7 +42,7 @@ export default function MarketUI({
                 </div>
             </div>
             <MarketPositions
-                waiverBidsDefault={waiverBidsDefault}
+                waiverBids={waiverBids}
                 qbWaiver={qbWaiver}
                 rbWaiver={rbWaiver}
                 wrWaiver={wrWaiver}
@@ -67,7 +67,7 @@ export default function MarketUI({
                 recordsPerPage={recordsPerPage}
                 setAsc={setAsc}
                 sort={sort}
-                waiverBids={waiverBids}
+                waiverBidsFiltered={waiverBidsFiltered}
             />
         </div>
     )

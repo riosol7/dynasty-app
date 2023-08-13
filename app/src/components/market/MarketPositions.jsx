@@ -6,7 +6,7 @@ export default function MarketPositions({
     rbWaiver,
     qbWaiver,
     teWaiver,
-    waiverBidsDefault,
+    waiverBids,
     wrWaiver,
 }) {
     const positionNames = ["QB", "RB", "WR", "TE"];
@@ -49,7 +49,7 @@ export default function MarketPositions({
 
     return (
         <div className="py-3">
-            <div className="d-flex align-item-center bold pb-3" style={{ fontSize: ".7rem", color: "#7d91a6", borderBottom: "3px solid #2a2c3e" }}>
+            <div className="d-flex align-item-center bold pb-3" style={{fontSize: ".7rem", color: "#7d91a6", borderBottom: "3px solid #2a2c3e"}}>
             <div className="col-sm-1">POSITION</div>
             <div className="col-sm-3">TREND</div>
             <div className="col-sm-1">LAST PRICE</div>
@@ -62,7 +62,7 @@ export default function MarketPositions({
         </div>
         <div>
             {positionNames.map((position, i) => (
-                <div key={i} style={{ border: "#2a2c3e", fontSize: "14px", color: "white", borderBottom: i === positionNames.length - 1 ? "" : "1px solid #2a2c3e" }} className="py-3 d-flex align-items-center">
+                <div key={i} style={{border: "#2a2c3e", fontSize: "14px", color: "white", borderBottom: i === positionNames.length - 1 ? "" : "1px solid #2a2c3e"}} className="py-3 d-flex align-items-center">
                     <div className="col-sm-1">
                         <div style={{
                             width: "40px",
@@ -71,13 +71,13 @@ export default function MarketPositions({
                             textAlign: "center",
                             alignItems: "center",
                             borderRadius: "12px",
-                        }} className={ position === "QB" ? "box1" : position === "RB" ? "box2" : position === "WR" ? "box3" : position === "TE" ? "box4" : <></>}>
-                            <p className="m-0 bold" style={{ color: "white", width: "100%" }}>{position}</p>
+                        }} className={position === "QB" ? "box1" : position === "RB" ? "box2" : position === "WR" ? "box3" : position === "TE" ? "box4" : <></>}>
+                            <p className="m-0 bold" style={{color: "white", width: "100%"}}>{position}</p>
                         </div>
                     </div>
                     {/* TREND */}
                     <div className="d-flex align-items-center col-sm-3">
-                        <PositionChart waiverBidsDefault={waiverBidsDefault} position={position} roundToHundredth={roundToHundredth} />
+                        <PositionChart waiverBids={waiverBids} position={position} roundToHundredth={roundToHundredth} />
                     </div>
                     {/* LAST PRICE */}
                     <div className="col-sm-1">

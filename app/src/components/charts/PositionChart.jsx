@@ -1,12 +1,12 @@
-import React from 'react';
-import Chart from 'react-apexcharts';
+import React from "react";
+import Chart from "react-apexcharts";
 
 export default function PositionChart({
   position,
-  waiverBidsDefault,
+  waiverBids,
 }) {
-  const filteredBids=waiverBidsDefault?.filter(b=>b.player.position===position)
-  const series=filteredBids?.length>0 ? [ { data:filteredBids.map(b=>b.settings.waiver_bid)} ]: [{data:[]}]
+  const filteredBids = waiverBids?.filter(b => b.player.position === position);
+  const series = filteredBids?.length > 0 ? [ { data: filteredBids.map(b=>b.settings.waiver_bid)} ]: [{data:[]}];
 
   const options = {
     chart: {
