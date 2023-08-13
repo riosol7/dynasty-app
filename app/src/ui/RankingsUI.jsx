@@ -10,7 +10,6 @@ export default function RankingsUI({
     handleRankings,
     handleSelectSzn,
     league,
-    lineupEfficiency,
     loadLeague,
     loadRosters,
     playoffs,

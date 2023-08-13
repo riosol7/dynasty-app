@@ -182,7 +182,8 @@ export default function Owner({
                 findGameDate={findGameDate}
                 match={match}
                 setMatch={setMatch}
-                rosters={rosters}
+                rosters={processedRosters}
+                players={players}
             />
         </>
     )

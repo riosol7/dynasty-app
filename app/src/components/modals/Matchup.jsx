@@ -16,6 +16,7 @@ export default function Matchup(props) {
     const game=props.match
     const setMatch=props.setMatch
     const rosters=props.rosters
+    const players=props.players
     // const [game, setGame] = useState([])
     const findH2HGames = () => {
         if(oID !== ""){
@@ -45,7 +46,6 @@ export default function Matchup(props) {
         }
     }
     // console.log(league.history.filter(l => l.year === "2020")[0].rosters.filter(r => r.roster_id === 7)[0])
-
     return (
        <div>
             <div className="d-flex align-items-center" style={{borderBottom:"1px solid #2a2c3e"}}>
@@ -138,13 +138,13 @@ export default function Matchup(props) {
                                                                 <div className="col" style={{fontSize:"13.5px",marginRight:".8em"}}> 
                                                                     <p className="m-0 text-end bold text-truncate" style={{}}>
                                                                         {
-                                                                            findRosterByID(t.roster_id).owner.team_name ?
-                                                                                findRosterByID(t.roster_id).owner.team_name
+                                                                            findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.team_name ?
+                                                                                findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.team_name
                                                                             :
-                                                                                findRosterByID(t.roster_id).owner.display_name
+                                                                                findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.display_name
                                                                         }
                                                                     </p>
-                                                                    <p className="m-0 text-end" style={{color:"#cbcbcb", fontWeight:"lighter",fontSize:"13px"}}>{findRosterByID(t.roster_id).owner.display_name}@</p>
+                                                                    <p className="m-0 text-end" style={{color:"#cbcbcb", fontWeight:"lighter",fontSize:"13px"}}>{findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.display_name}@</p>
                                                                     <div className="d-flex justify-content-between">
                                                                         <div className="d-flex align-items-center">
                                                                             <p className="m-0 bold" style={{paddingLeft:"1.3em"}}>{t.points}</p>
@@ -164,8 +164,8 @@ export default function Matchup(props) {
                                                                 </div>
                                                                 <div>
                                                                     <img  alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                                            findRosterByID(t.roster_id).owner.avatar ? 
-                                                                                findRosterByID(t.roster_id).owner.avatar 
+                                                                            findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.avatar ? 
+                                                                                findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.avatar 
                                                                             : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}
                                                                         style={{width:"80px"}} 
                                                                     />
@@ -183,25 +183,25 @@ export default function Matchup(props) {
                                                                     <div className="d-flex justify-content-between align-items-end">
                                                                             <p className="m-0 bold" style={{paddingLeft:"1.3em"}}>{t.starters_points[q]}</p>
                                                                             {
-                                                                                findPlayer(s) ?
+                                                                                findPlayer(s, players) ?
                                                                                     <div className="d-flex align-items-center">
                                                                                         <div className="text-end">
                                                                                             {
-                                                                                                findPlayer(s).position === "DEF"?
-                                                                                                    <p className="m-0 bold">{findPlayer(s).first_name} {findPlayer(s).last_name}</p> 
+                                                                                                findPlayer(s, players).position === "DEF"?
+                                                                                                    <p className="m-0 bold">{findPlayer(s, players).first_name} {findPlayer(s, players).last_name}</p> 
                                                                                                 :
-                                                                                                    <p className="m-0 bold">{findPlayer(s).full_name}</p> 
+                                                                                                    <p className="m-0 bold">{findPlayer(s, players).full_name}</p> 
                                                                                             }                                                                                
-                                                                                            <p className="m-0 bold" style={{fontSize:"11px", color:"lightgray"}}>{findPlayer(s).position} - {findPlayer(s).team}</p>
+                                                                                            <p className="m-0 bold" style={{fontSize:"11px", color:"lightgray"}}>{findPlayer(s, players).position} - {findPlayer(s, players).team}</p>
                                                                                             {
-                                                                                                findPlayer(s).position === "DEF"?
+                                                                                                findPlayer(s, players).position === "DEF"?
                                                                                                 <></>
                                                                                                 :
-                                                                                                    <p className="m-0" style={{color:"#718396", fontSize:"10.5px"}}>EXP {findPlayer(s).years_exp}</p>
+                                                                                                    <p className="m-0" style={{color:"#718396", fontSize:"10.5px"}}>EXP {findPlayer(s, players).years_exp}</p>
                                                                                             }
                                                                                         </div>
                                                                                         {
-                                                                                            findPlayer(s).position === "DEF" ?
+                                                                                            findPlayer(s, players).position === "DEF" ?
                                                                                                 <div className="mx-2" style={{ 
                                                                                                             background:"#a4553f",
                                                                                                             borderRadius:"50%",
@@ -209,7 +209,7 @@ export default function Matchup(props) {
                                                                                                         }}>
                                                                                                     <div className="p-1"style={isOdd(q)===1?{background:"#1b2025",borderRadius:"50%"}:{background:"#0f0f0f",borderRadius:"50%"}}>
                                                                                                         <div className="smallHeadShot"
-                                                                                                            style={{backgroundSize:"50px",backgroundImage: `url(${findLogo(findPlayer(s).team).l})`,
+                                                                                                            style={{backgroundSize:"50px",backgroundImage: `url(${findLogo(findPlayer(s, players).team).l})`,
                                                                                                         }}>
                                                                                                                         
                                                                                                         </div>
@@ -274,12 +274,12 @@ export default function Matchup(props) {
                                                                                                     <div className="p-1"style={isOdd(q)===1?{background:"#1b2025",borderRadius:"50%"}:{background:"#0f0f0f",borderRadius:"50%"}}>
                                                                                                         <div className="smallHeadShot"
                                                                                                             style={{backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                                                                                findPlayer(s).player_id}.jpg)`,
+                                                                                                                findPlayer(s, players).player_id}.jpg)`,
                                                                                                         }}>
                                                                                                             {
-                                                                                                                findLogo(findPlayer(s).team).l !=="" || findLogo("FA").l !==""?
+                                                                                                                findLogo(findPlayer(s, players).team).l !=="" || findLogo("FA").l !==""?
                                                                                                                     <div className="displayOwnerLogoSM" style={{textAlign:"left",left:"-10px"}}> 
-                                                                                                                        <img style={{width:"3em"}} alt="" src={findLogo(findPlayer(s).team).l || findLogo("FA").l}/>
+                                                                                                                        <img style={{width:"3em"}} alt="" src={findLogo(findPlayer(s, players).team).l || findLogo("FA").l}/>
                                                                                                                     </div>  
                                                                                                                 :<></>
                                                                                                             }           
@@ -314,8 +314,8 @@ export default function Matchup(props) {
                                                             <div className="d-flex align-items-center col justify-content-end">
                                                                 <div>
                                                                     <img className="" alt="avatar" src={`https://sleepercdn.com/avatars/thumbs/${
-                                                                            findRosterByID(t.roster_id).owner.avatar ? 
-                                                                                findRosterByID(t.roster_id).owner.avatar 
+                                                                            findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.avatar ? 
+                                                                                findRosterByID(t.roster_id, rosters.totalRoster).owner.avatar 
                                                                             : "8fcf0e0e6a75e96a591d2a4a4a400f41"}`}
                                                                         style={{width:"80px",}} 
                                                                     />
@@ -323,13 +323,13 @@ export default function Matchup(props) {
                                                                 <div className="col" style={{fontSize:"13.5px",marginLeft:".8em"}}>
                                                                     <p className="m-0 bold text-truncate" style={{}}>
                                                                         {
-                                                                            findRosterByID(t.roster_id).owner.team_name ?
-                                                                                findRosterByID(t.roster_id).owner.team_name
+                                                                            findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.team_name ?
+                                                                                findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.team_name
                                                                             :
-                                                                                findRosterByID(t.roster_id).owner.display_name
+                                                                                findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.display_name
                                                                         }
                                                                     </p>
-                                                                    <p className="m-0" style={{color:"#cbcbcb", fontWeight:"lighter",fontSize:"13px"}}>@{findRosterByID(t.roster_id).owner.display_name}</p>
+                                                                    <p className="m-0" style={{color:"#cbcbcb", fontWeight:"lighter",fontSize:"13px"}}>@{findRosterByID(t.roster_id, rosters.totalRoster)?.owner?.display_name}</p>
                                                                     <div className="d-flex justify-content-between">
                                                                         {
                                                                             findRecordBy(t.roster_id,findGameDate(game[0].points,game[1].points,game.filter(o => o.roster_id !== Number(id)).roster_id).year) && 
@@ -362,10 +362,10 @@ export default function Matchup(props) {
                                                                     <div key={q} className={"py-3" }style={isOdd(q) ===1?{background:"#1b2025"}:{background:"#0f0f0f"}}>
                                                                         <div className="d-flex justify-content-between align-items-end">
                                                                             {
-                                                                                findPlayer(s) ?
+                                                                                findPlayer(s, players) ?
                                                                                     <div className="d-flex align-items-center">
                                                                                         {
-                                                                                            findPlayer(s).position === "DEF" ?
+                                                                                            findPlayer(s, players).position === "DEF" ?
                                                                                                 <div className="mx-2" style={{ 
                                                                                                     background:"#a4553f",
                                                                                                     borderRadius:"50%",
@@ -373,7 +373,7 @@ export default function Matchup(props) {
                                                                                                 }}>
                                                                                                     <div className="p-1"style={isOdd(q)===1?{background:"#1b2025",borderRadius:"50%"}:{background:"#0f0f0f",borderRadius:"50%"}}>
                                                                                                         <div className="smallHeadShot"
-                                                                                                            style={{backgroundSize:"50px",backgroundImage: `url(${findLogo(findPlayer(s).team).l})`,
+                                                                                                            style={{backgroundSize:"50px",backgroundImage: `url(${findLogo(findPlayer(s, players).team).l})`,
                                                                                                         }}>            
                                                                                                         </div>
                                                                                                     </div>
@@ -437,12 +437,12 @@ export default function Matchup(props) {
                                                                                                     <div className="p-1"style={isOdd(q)===1?{background:"#1b2025",borderRadius:"50%"}:{background:"#0f0f0f",borderRadius:"50%"}}>
                                                                                                         <div className="smallHeadShot"
                                                                                                             style={{backgroundImage: `url(https://sleepercdn.com/content/nfl/players/thumb/${
-                                                                                                                findPlayer(s).player_id}.jpg)`,
+                                                                                                                findPlayer(s, players).player_id}.jpg)`,
                                                                                                         }}>
                                                                                                             {
-                                                                                                                findLogo(findPlayer(s).team).l !== "" || findLogo("FA").l !==""?
+                                                                                                                findLogo(findPlayer(s, players).team).l !== "" || findLogo("FA").l !==""?
                                                                                                                     <div className="displayOwnerLogoSM" style={{}}> 
-                                                                                                                        <img style={{width:"3em"}} alt="" src={findLogo(findPlayer(s).team).l || findLogo("FA").l}/>
+                                                                                                                        <img style={{width:"3em"}} alt="" src={findLogo(findPlayer(s, players).team).l || findLogo("FA").l}/>
                                                                                                                     </div> 
                                                                                                                 :<></>
                                                                                                             }
@@ -452,17 +452,17 @@ export default function Matchup(props) {
                                                                                         }
                                                                                         <div>
                                                                                             {
-                                                                                                findPlayer(s).position === "DEF"?
-                                                                                                    <p className="m-0 bold">{findPlayer(s).first_name} {findPlayer(s).last_name}</p> 
+                                                                                                findPlayer(s, players).position === "DEF"?
+                                                                                                    <p className="m-0 bold">{findPlayer(s, players).first_name} {findPlayer(s, players).last_name}</p> 
                                                                                                 :
-                                                                                                    <p className="m-0 bold">{findPlayer(s).full_name}</p> 
+                                                                                                    <p className="m-0 bold">{findPlayer(s, players).full_name}</p> 
                                                                                             }
-                                                                                            <p className="m-0 bold" style={{fontSize:"11px", color:"lightgray"}}>{findPlayer(s).position} - {findPlayer(s).team}</p>
+                                                                                            <p className="m-0 bold" style={{fontSize:"11px", color:"lightgray"}}>{findPlayer(s, players).position} - {findPlayer(s, players).team}</p>
                                                                                             {
-                                                                                                findPlayer(s).position === "DEF"?
+                                                                                                findPlayer(s, players).position === "DEF"?
                                                                                                 <></>
                                                                                                 :
-                                                                                                    <p className="m-0" style={{color:"#718396", fontSize:"10.5px"}}>EXP {findPlayer(s).years_exp}</p>
+                                                                                                    <p className="m-0" style={{color:"#718396", fontSize:"10.5px"}}>EXP {findPlayer(s, players).years_exp}</p>
                                                                                             }
                                                                                         </div>
                                                                                     </div>

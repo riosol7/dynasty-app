@@ -9,6 +9,7 @@ export default function Draft(props) {
     const isOdd=props.isOdd
     const findLogo=props.findLogo
     const findPlayer=props.findPlayer
+    const players=props.players
     return (
         <>
             <div className="col" id="scrollBar" style={{overflow:"auto", height:"855px", minHeight:"670px",fontSize:"14.5px"}}>
@@ -198,7 +199,7 @@ export default function Draft(props) {
                                                     <div className="mx-3">
                                                         <p className="m-0 bold" style={{fontSize:""}}>{pick.metadata.first_name} {pick.metadata.last_name}</p>
                                                         <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>#{pick.metadata.number} {pick.metadata.position} - {pick.metadata.team}</p>
-                                                        <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findPlayer(pick.player_id).college}</p>
+                                                        <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findPlayer(pick.player_id, players).college}</p>
                                                     </div>
                                                 </div>
                                                 <div className="" style={{width:"100px"}}>
@@ -236,7 +237,7 @@ export default function Draft(props) {
                                                         <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{
                                                             pick.metadata.position === "DEF" ?
                                                                 <></>
-                                                            : findPlayer(pick.player_id).college 
+                                                            : findPlayer(pick.player_id, players)?.college 
                                                         }</p>
                                                     </div>
                                                 </div>

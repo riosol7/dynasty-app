@@ -80,6 +80,7 @@ export default function StandingsContainer({
   }
   const handleRank = (standing, division) => {
     if (standing !== undefined && division !== undefined){
+      console.log(standing.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1})))
       return standing.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1}))
     }
   }; 

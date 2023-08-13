@@ -1,7 +1,7 @@
 import React from "react";
-import Draft from "../Draft";
+import Draft from "./Draft";
 import { Icon } from "@iconify/react";
-import Matchup from "../Matchup";
+import Matchup from "./Matchup";
 import { findLogo, isOdd } from "../../utils";
 import { findPlayer, findRosterByID } from "../../helpers";
 
@@ -45,6 +45,7 @@ export default function Modal(props) {
     const match=props.match
     const setMatch=props.setMatch
     const rosters=props.rosters
+    const players=props.players
     if(!props.open) return null 
     return (
         <div style={OVERLAY_STYLES}>
@@ -75,6 +76,7 @@ export default function Modal(props) {
                             isOdd={isOdd}
                             findLogo={findLogo}
                             findPlayer={findPlayer}
+                            players={players}
                         />
                     : modalTab === "Matchup" ?
                         <Matchup
@@ -90,6 +92,7 @@ export default function Modal(props) {
                             findLogo={findLogo}
                             findGameDate={findGameDate}
                             match={match}
+                            players={players}
                             setMatch={setMatch}
                             rosters={rosters}
                         />

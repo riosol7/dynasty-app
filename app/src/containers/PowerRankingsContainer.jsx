@@ -27,28 +27,32 @@ export default function PowerRankingsContainer({
           setSort("")
         }
     }
-             
-    const powerRankC=processedRosters?.totalRoster.map(r => ({
-        ...r,
-        apW:foundHistory(r.roster_id).c.allPlayRecordW,
-        apL:foundHistory(r.roster_id).c.allPlayRecordL,
-        apR:winPCT(foundHistory(r.roster_id).c.allPlayRecordW,foundHistory(r.roster_id).c.allPlayRecordL)
 
-    })).sort((a,b) => b.apR - a.apR)
-    let powerRankS=league && league.history.filter(l => l.year === selectSzn)[0] !== undefined?
-        league.history.filter(l => l.year === selectSzn)[0].rosters.map(r => ({
-            ...r,
-            apW:foundHistory(r.roster_id,selectSzn).s.allPlayRecordW,
-            apL:foundHistory(r.roster_id,selectSzn).s.allPlayRecordL,
-            apR:winPCT(foundHistory(r.roster_id,selectSzn).s.allPlayRecordW,foundHistory(r.roster_id,selectSzn).s.allPlayRecordL)
-        })).sort((a,b) => b.apR - a.apR)
-    :[]
-    let pwrRank=powerRankS.length>0?powerRankS:powerRankC
+    const getPowerRank = () => {
+      if (selectSzn === league.season) {
+          return processedRosters?.totalRoster?.map(r => ({
+              ...r,
+              apW:foundHistory(r.roster_id, selectSzn).s.allPlayRecordW,
+              apL:foundHistory(r.roster_id, selectSzn).s.allPlayRecordL,
+              apR:winPCT(foundHistory(r.roster_id, selectSzn).s.allPlayRecordW, foundHistory(r.roster_id, selectSzn).s.allPlayRecordL)
+          })).sort((a,b) => b.apR - a.apR)
+      
+      } else if (league?.history?.filter(l => l.year === selectSzn)[0] !== undefined) {
+          return league.history.filter(l => l.year === selectSzn)[0].rosters.map(r => ({
+              ...r,
+              apW:foundHistory(r.roster_id, selectSzn).s.allPlayRecordW,
+              apL:foundHistory(r.roster_id, selectSzn).s.allPlayRecordL,
+              apR:winPCT(foundHistory(r.roster_id, selectSzn).s.allPlayRecordW,foundHistory(r.roster_id, selectSzn).s.allPlayRecordL)
+          })).sort((a,b) => b.apR - a.apR)
+      }
+    };
+    const powerRank = getPowerRank();
+             
     return (
         <PowerRankingsUI
             asc={asc}
             handleSort={handleSort}
-            pwrRank={pwrRank}  
+            pwrRank={powerRank}  
             setAsc={setAsc}
             sort={sort}
             winPCT={winPCT}
