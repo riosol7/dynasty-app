@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Icon } from "@iconify/react";
+import LoadMVP from "../loading/LoadMVP";
 import value from "../../assets/images/value.png";
+import { findLogo, getTotalPts } from "../../utils";
 
 export default function MVPSlide ({
-    findLogo,
     getMVP,
-    getTotalPts,
     league,
     matches,
     roster,
@@ -13,28 +13,42 @@ export default function MVPSlide ({
     const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
     const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
 
-    const mvp = getMVP(roster.kct.owner.display_name);
-    const logo = findLogo(mvp.team);
-    const position = mvp.position.match(/^[A-Z]+/)[0];
+    const [mvp, setMVP] = useState(null);
+    const [loadMVP, setLoadMVP] = useState(true)
 
-    return (
-        <div className="" style={{border:"none", borderRadius:"4px", background:logo.bgColor}}>
+    useEffect(() => {
+        async function fetchMVP() {
+            try {
+                const mvpPlayer = await getMVP(roster.roster_id);
+                setMVP(mvpPlayer);
+                setLoadMVP(false)
+            } catch (error) {
+                console.error("Error fetching MVP:", error);
+            }
+        }
+        fetchMVP();
+    }, [getMVP, mvp, roster.roster_id]);
+
+    const logo = findLogo(mvp?.team);
+    const position = mvp?.position?.match(/^[A-Z]+/)[0];
+
+    return ( loadMVP ? <LoadMVP/> :
+        <div style={{border:"none", borderRadius:"4px", background:logo.bgColor}}>
             <div className="d-flex" style={{
                 backgroundImage: `url(${logo.l}`,
                 backgroundRepeat:"no-repeat",
                 backgroundPosition:"bottom left",
                 backgroundSize:"150px",
             }}>
-                <div className="px-1" style={{}}>
-                    <div
-                        style={{
-                            backgroundImage: `url(${playerBaseURL}${mvp.player_id}.jpg)`,
-                            backgroundRepeat:"no-repeat",
-                            backgroundPosition:"bottom",
-                            backgroundSize:"cover",
-                            minHeight:"145px",
-                            minWidth:"175px"
-                        }}>
+                <div className="px-1">
+                    <div style={{
+                        backgroundImage: `url(${playerBaseURL}${mvp.player_id}.jpg)`,
+                        backgroundRepeat:"no-repeat",
+                        backgroundPosition:"bottom",
+                        backgroundSize:"cover",
+                        minHeight:"145px",
+                        minWidth:"175px"
+                    }}>
                     </div> 
                 </div>
                 <div className="col">

@@ -31,7 +31,7 @@ import TB from "../assets/images/bucs.webp";
 import TEN from "../assets/images/titans.webp";
 import WAS from "../assets/images/commanders.webp";
 
-export const logos = [
+export const Logo = [
     {
         ATL:{
             bgColor:"linear-gradient(27deg, rgba(167,25,48,1) 0%, rgba(15,15,15,1) 100%)",
@@ -321,4 +321,3 @@ export const logos = [
         }
     },
 ]
-

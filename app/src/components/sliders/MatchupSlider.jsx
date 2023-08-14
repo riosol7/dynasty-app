@@ -2,7 +2,7 @@ import React from "react";
 import { Swiper, SwiperSlide} from "swiper/react";
 import { Autoplay } from "swiper";
 import MatchupSlide from "../slides/MatchupSlide";
-import LoadMatchups from "../temp/LoadMatchups";
+import LoadMatchups from "../loading/LoadMatchups";
 
 export default function MatchupSlider({
     id,

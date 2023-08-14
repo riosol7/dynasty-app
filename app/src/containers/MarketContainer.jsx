@@ -1,35 +1,38 @@
 import React, { useState, useEffect } from "react";
-import { processWaiverBids } from "../helpers";
 import MarketUI from "../ui/MarketUI";
-import { findLogo } from "../utils";
-// IDEAS
-//  Showcase a graph of the previous QBs, RBs, WRs, TEs that were bought at what price & by who
-//  And Trades per position; draft picks EX: Joe Burrow trade for 2 1st round picks...
-//  Available players FA
+import { processWaiverBids } from "../helpers";
+import { filterWaiverBidsByPosition, findLogo, getSortedRecords } from "../utils";
+import { Position } from "../constants";
 
 export default function MarketContainer({
     league,
-    // loadOwners,
-    // loadTransactions,
     owners,
     players,
     transactions,
 }) {
-    const [position, setPosition] = useState("POSITION");
+    const [asc, setAsc] = useState(false);
+    const [currentPage, setCurrentPage] = useState(1);
     const [owner, setOwner] = useState("OWNER");
+    const [position, setPosition] = useState("POSITION");
+    const [recordsPerPage, setRecordsPerPage] = useState(5);
+    const [sort, setSort] = useState("DATE");
 
     const currentSeasonWaiverBids = processWaiverBids(transactions, owners, players, true);
     const historicalWaiverBids = processWaiverBids(league.history, owners, players, false);
     const waiverBids = historicalWaiverBids?.concat(currentSeasonWaiverBids).filter(bid => bid.player?.position !== "DEF" && bid.player?.position !== "K").sort((a, b) => a.created - b.created);
+    const qbWaiver = filterWaiverBidsByPosition(waiverBids, Position.QB);
+    const rbWaiver = filterWaiverBidsByPosition(waiverBids, Position.RB);
+    const wrWaiver = filterWaiverBidsByPosition(waiverBids, Position.WR);
+    const teWaiver = filterWaiverBidsByPosition(waiverBids, Position.TE);
     const waiverBidsFiltered = waiverBids?.filter(b=>{
-        if (position === "QB") {
-            return b.player.position === "QB"
-        } else if (position === "RB") {
-            return b.player.position === "RB"
-        } else if (position==="WR") {
-            return b.player.position === "WR"
-        } else if (position==="TE") {
-        return b.player.position === "TE"
+        if (position === Position.QB) {
+            return b.player.position === Position.QB;
+        } else if (position === Position.RB) {
+            return b.player.position === Position.RB;
+        } else if (position === Position.WR) {
+            return b.player.position === Position.WR;
+        } else if (position === Position.TE) {
+            return b.player.position === Position.TE;
         } else {
             return [];
         };
@@ -40,14 +43,10 @@ export default function MarketContainer({
             return [];
         };
     });
-    const qbWaiver = waiverBids?.filter(bid => bid.player.position === "QB");
-    const rbWaiver = waiverBids?.filter(bid => bid.player.position === "RB");
-    const wrWaiver = waiverBids?.filter(bid => bid.player.position === "WR");
-    const teWaiver = waiverBids?.filter(bid => bid.player.position === "TE");
+    const records = getSortedRecords(waiverBidsFiltered, sort, asc, currentPage, recordsPerPage);
+    const npage = Math.ceil(waiverBidsFiltered?.length / recordsPerPage);
+    const pageNumbers = Array.from({ length: npage }, (_, i) => i + 1);
     
-    const [asc,setAsc]=useState(false);
-    const [sort,setSort]=useState("DATE");
-
     const handleSort = (s) => {
         if (s === "DATE") {
             setAsc(false)
@@ -63,55 +62,6 @@ export default function MarketContainer({
             setSort(s)
         };
     };
-
-    const [currentPage, setCurrentPage] = useState(1);
-    const [recordsPerPage,setRecordsPerPage]=useState(5);
-    const lastIdx=currentPage*recordsPerPage;
-    const firstIdx=lastIdx-recordsPerPage;
-    const records=
-        sort === "DATE" && asc === false ?
-            waiverBidsFiltered.sort((a,b) => b.created-a.created).slice(firstIdx,lastIdx)
-        : sort === "DATE" && asc === true ?
-            waiverBidsFiltered.sort((a,b) => a.created-b.created).slice(firstIdx,lastIdx)
-        : sort === "BID" && asc === false ?
-            waiverBidsFiltered.sort((a,b)=>b.settings.waiver_bid-a.settings.waiver_bid).slice(firstIdx,lastIdx)
-        : sort === "BID" && asc === true ? 
-            waiverBidsFiltered.sort((a,b)=>a.settings.waiver_bid-b.settings.waiver_bid).slice(firstIdx,lastIdx)
-        : sort === "AGE" && !asc ?
-            waiverBidsFiltered.sort((a,b)=>b.player.age-a.player.age).slice(firstIdx,lastIdx)
-        : sort === "AGE" && asc ?
-            waiverBidsFiltered.sort((a,b)=>a.player.age-b.player.age).slice(firstIdx,lastIdx)
-        : sort === "PLAYER" && asc === false ?
-            waiverBidsFiltered.sort((a, b) => {
-                const nameA = a.player.full_name.toUpperCase();
-                const nameB = b.player.full_name.toUpperCase();
-                if (nameA < nameB) {
-                  return -1;
-                }
-                if (nameA > nameB) {
-                  return 1;
-                }
-                return 0;
-              }).slice(firstIdx,lastIdx)
-        :sort==="PLAYER" && asc === true ?
-            waiverBidsFiltered.sort((a, b) => {
-                const nameA = a.player.full_name.toUpperCase();
-                const nameB = b.player.full_name.toUpperCase();
-                if (nameA < nameB) {
-                return 1;
-                }
-                if (nameA > nameB) {
-                return -1;
-                }
-                return 0;
-            }).slice(firstIdx,lastIdx)
-        :[]
-    const npage=Math.ceil(waiverBidsFiltered?.length/recordsPerPage);
-    const pageNumbers=[];
-    for(let i=1; i <= Math.ceil(waiverBidsFiltered?.length/recordsPerPage);i++){
-        pageNumbers.push(i)
-    };
-
     const handleShowPage = (e) => {
         setRecordsPerPage(e.target.value)
     };

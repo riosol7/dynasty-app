@@ -5,8 +5,8 @@ export default function PositionChart({
   position,
   waiverBids,
 }) {
-  const filteredBids = waiverBids?.filter(b => b.player.position === position);
-  const series = filteredBids?.length > 0 ? [ { data: filteredBids.map(b=>b.settings.waiver_bid)} ]: [{data:[]}];
+  const filteredBids = waiverBids?.filter(b => b?.player?.position === position);
+  const series = filteredBids?.length > 0 ? [ { data: filteredBids.map(b => b.settings.waiver_bid)} ]: [{data:[]}];
 
   const options = {
     chart: {

@@ -3,7 +3,7 @@ import TradeModal from "./modals/TradeModal";
 import { Icon } from "@iconify/react";
 
 import Sleeper from "../assets/images/sleeper.png";
-import { logos } from "../constants/logos";
+import { Logo } from "../constants";
 import { processTransactions } from "../helpers";
 import { getInitials } from "../utils";
 
@@ -22,11 +22,11 @@ export default function Transaction({
     let findLogo = (activity, players) => {
         if(activity === "adds"){
             let foundTeam = players.adds[0].team
-            let foundLogo = logos.filter(logo => logo[foundTeam])
+            let foundLogo = Logo.filter(logo => logo[foundTeam])
             return Object.values(foundLogo[0])[0]
         } else if (activity === "drops") {
             let foundTeam = players.drops[0].team
-            let foundLogo = logos.filter(logo => logo[foundTeam])
+            let foundLogo = Logo.filter(logo => logo[foundTeam])
             return Object.values(foundLogo[0])[0]
         }
     }

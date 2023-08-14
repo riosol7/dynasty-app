@@ -1,5 +1,5 @@
-import findOwner from "./owner/findOwner";
-import findPlayer from "./player/findPlayer";
+import findOwner from "../owner/findOwner";
+import findPlayer from "../player/findPlayer";
 
 const processWaiverBids = (transactions, owners, players, current) => {
     if (!owners || owners.length < 1) {

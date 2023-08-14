@@ -1,21 +1,16 @@
 import React, {useState, useEffect} from "react";
 import RankingsUI from "../ui/RankingsUI";
-import { processRosters } from "../helpers";
 
 export default function RankingsContainer({
   foundHistory,
   league,
   loadLeague,
   loadRosters,
-  owners,
-  players,
-  rosters,
+  processedRosters
 }) {
   const [rankings, setRankings] = useState("Standings");
   const [selectSzn, setSelectSzn] = useState(league.season);
   const [playoffs, setPlayoffs] = useState(false);
-
-  const processedRosters = processRosters(rosters, players, owners);
 
   const handleRankings = (e) => {
     setRankings(e.target.value);
@@ -44,7 +39,6 @@ export default function RankingsContainer({
       playoffs={playoffs}
       processedRosters={processedRosters}
       rankings={rankings}
-      rosters={rosters}
       selectSzn={selectSzn}
     />
   )

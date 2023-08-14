@@ -3,6 +3,7 @@ import LeagueNavigation from "./LeagueNavigation";
 import MarketContainer from "../containers/MarketContainer";
 import MVPContainer from "../containers/MVPContainer";
 import RankingsContainer from "../containers/RankingsContainer";
+import { processRosters } from "../helpers";
 
 export default function Overview({
     activityBar,
@@ -19,6 +20,8 @@ export default function Overview({
     setActivityBar,
     transactions,
 }) {
+    const processedRosters = processRosters(rosters, players, owners);
+
     return (
         <div className="py-3 px-5">
             <LeagueNavigation
@@ -29,17 +32,11 @@ export default function Overview({
             />
             <MVPContainer
                 league={league}
-                loadLeague={loadLeague}
-                loadRosters={loadRosters}
                 matches={matches}
-                owners={owners}
-                players={players}
-                rosters={rosters}
+                processedRosters={processedRosters}
             />
             <MarketContainer
                 league={league}
-                loadOwners={loadOwners}
-                loadTransactions={loadTransactions}
                 owners={owners}
                 players={players}
                 transactions={transactions}
@@ -49,9 +46,7 @@ export default function Overview({
                 league={league}
                 loadLeague={loadLeague}
                 loadRosters={loadRosters}
-                owners={owners}
-                players={players}
-                rosters={rosters}
+                processedRosters={processedRosters}
             />
         </div>
     )

@@ -8,7 +8,6 @@ export default function StandingsContainer({
   league,
   playoffs,
   processedRosters,
-  rosters,
   selectSzn,
 }){
   const [sort, setSort] = useState("RANK");
@@ -151,7 +150,7 @@ export default function StandingsContainer({
       if (szn===league.season){
         return handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.roster_id === id)[0]
       } else {
-        return handleRostersBySzn(selectSzn, league, rosters)[0].filter(r=>r.roster_id === id)[0]
+        return handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.roster_id === id)[0]
       }
     } 
   }

@@ -1,3 +1,6 @@
+import {
+    filterWaiverBidsByPosition,
+} from "./filteringUtils";
 import { 
     calculatePositionStats,
     getTotalPts, 
@@ -6,9 +9,14 @@ import {
     roundToHundredth, 
     winPCT 
 } from "./stats/pointCalculations";
+import {
+    getSortedRecords,
+} from "./sortingUtils";
 
 export {
     calculatePositionStats,
+    filterWaiverBidsByPosition,
+    getSortedRecords,
     getTotalPts,
     isOdd,
     lineupEfficiency,

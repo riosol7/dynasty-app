@@ -12,6 +12,30 @@ const SHOW_TAG_M={
     paddingBlock:"3px",
 };
 
+function TableHeaderCell({ label, sortKey, sort, asc, setAsc, handleSort }) {
+    const isSorting = sort === sortKey;
+    const handleClick = () => {
+        if (isSorting) {
+            setAsc(!asc);
+        } else {
+            handleSort(sortKey);
+        }
+    };
+    const icon = asc ? "bi:caret-up-fill" : "bi:caret-down-fill";
+    return (
+        <th>
+            {isSorting ? (
+                <div className="d-flex align-items-center" onClick={handleClick}>
+                    <p className="m-0 StandingCell">{label}</p>
+                    <Icon icon={icon} style={{ color: "#a9dfd8" }} />
+                </div>
+            ) : (
+                <p className="m-0 StandingCell" onClick={handleClick}>{label}</p>
+            )}
+      </th>
+    );
+  }
+
 export default function MarketActivity({
     asc,
     currentPage,
@@ -68,36 +92,22 @@ export default function MarketActivity({
                 <table className="table">
                     <thead>
                         <tr className="py-2" style={{fontSize:".7rem", color:"#7d91a6"}}>
-                            <th>
-                                {sort==="PLAYER"?
-                                    asc?
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(false)}>
-                                            <p className="m-0 StandingCell">PLAYER</p>
-                                            <Icon icon="bi:caret-up-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>  
-                                    :
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(true)}>
-                                            <p className="m-0 StandingCell">PLAYER</p>
-                                            <Icon icon="bi:caret-down-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>
-                                :   <p className="m-0 StandingCell" onClick={() => handleSort("PLAYER")}>PLAYER</p>
-                                }
-                            </th>
-                            <th>
-                                {sort==="AGE"?
-                                    asc?
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(false)}>
-                                            <p className="m-0 StandingCell">AGE</p>
-                                            <Icon icon="bi:caret-up-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>  
-                                    :
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(true)}>
-                                            <p className="m-0 StandingCell">AGE</p>
-                                            <Icon icon="bi:caret-down-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>
-                                :   <p className="m-0 StandingCell" onClick={() => handleSort("AGE")}>AGE</p>
-                                }
-                            </th>
+                            <TableHeaderCell
+                                label="PLAYER"
+                                sortKey="PLAYER"
+                                sort={sort}
+                                asc={asc}
+                                setAsc={setAsc}
+                                handleSort={handleSort}
+                            />
+                            <TableHeaderCell
+                                label="AGE"
+                                sortKey="AGE"
+                                sort={sort}
+                                asc={asc}
+                                setAsc={setAsc}
+                                handleSort={handleSort}
+                            />
                             <th>
                                 <select style={SELECT_TAG} onChange={handlePosition} value={position}>
                                     <option value={"POSITION"}>POSITION</option>
@@ -115,44 +125,29 @@ export default function MarketActivity({
                                     )}
                                 </select>
                             </th>
-                            <th>
-                                {sort === "BID" ?
-                                    asc?
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(false)}>
-                                            <p className="m-0 StandingCell">BID</p>
-                                            <Icon icon="bi:caret-up-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>  
-                                    :
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(true)}>
-                                            <p className="m-0 StandingCell">BID</p>
-                                            <Icon icon="bi:caret-down-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>
-                                :
-                                    <p className="m-0 StandingCell" onClick={() => handleSort("BID")}>BID</p>
-                                }
-                            </th>
-                            <th>
-                                {sort === "DATE" ?
-                                    asc?
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(false)}>
-                                            <p className="m-0 StandingCell">DATE</p>
-                                            <Icon icon="bi:caret-up-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>
-                                        :
-                                        <div className="d-flex align-items-center" onClick={() => setAsc(true)}>
-                                            <p className="m-0 StandingCell">DATE</p>
-                                            <Icon icon="bi:caret-down-fill" style={{color:"#a9dfd8"}}/>
-                                        </div>
-                                : <p className="m-0 StandingCell" onClick={() => handleSort("DATE")}>DATE</p>
-                                }
-                            </th>
+                            <TableHeaderCell
+                                label="BID"
+                                sortKey="BID"
+                                sort={sort}
+                                asc={asc}
+                                setAsc={setAsc}
+                                handleSort={handleSort}
+                            />
+                            <TableHeaderCell
+                                label="DATE"
+                                sortKey="DATE"
+                                sort={sort}
+                                asc={asc}
+                                setAsc={setAsc}
+                                handleSort={handleSort}
+                            />
                         </tr>
                     </thead>
                     <tbody>
                         {records?.map((r,i)=>
                             <tr key={i} className="py-2" style={{border:"#2a2c3e", fontSize:"14px",color:"white"}}>
                                 <td className="d-flex align-items-top">
-                                    <div className="smallHeadShot" style={{borderRadius:"5%", width:"40px", height:"55px", backgroundImage: `url(${playerBaseURL}${r.player.player_id}.jpg)`}}>
+                                    <div className="smallHeadShot" style={{borderRadius:"5%", width:"40px", height:"55px", backgroundImage: `url(${playerBaseURL}${r.player?.player_id}.jpg)`}}>
                                         {findLogo(r.player.team).l !== "" ?
                                             <div className="displayOwnerLogoSM">
                                                 <img style={{width:"2.8em",left:"15px"}} alt="" src={findLogo(r.player.team).l}/>

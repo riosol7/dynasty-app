@@ -1,37 +1,32 @@
 import React from "react";
 import MVPUI from "../ui/MVPUI";
-import { processRosters } from "../helpers";
-import { findLogo } from "../utils";
+import { findRosterByID } from "../helpers";
+
 export default function MVPContainer ({
     league,
-    loadLeague,
-    loadRosters,
     matches,
-    owners,
-    players,
-    rosters,
+    processedRosters
 }) {
-    const processedRosters = processRosters(rosters, players, owners); 
-    const getMVP = (display_name) => {
-        const foundTeam = processedRosters?.teamRank.find(roster => roster.kct.owner.display_name === display_name)
-        const topPlayers = [
-            foundTeam.kct.qb.players[0],
-            foundTeam.kct.rb.players[0],
-            foundTeam.kct.wr.players[0],
-            foundTeam.kct.te.players[0]
-        ]
-        const topPlayer = topPlayers.reduce((prev, current) => 
-            prev.rating > current.rating ? prev : current
-        )
-        return topPlayer
-    }
+    const getMVP = async (rID) => {
+        try {
+            const foundTeam = await findRosterByID(rID, processedRosters?.teamRank);
+            const topPlayers = [
+                foundTeam?.kct.qb.players[0],
+                foundTeam?.kct.rb.players[0],
+                foundTeam?.kct.wr.players[0],
+                foundTeam?.kct.te.players[0]
+            ];
+            const topPlayer = topPlayers.reduce((prev, current) => (prev?.rating > current?.rating ? prev : current));
+            return topPlayer;
+        } catch (error) {
+            console.error("Error:", error);
+            return null;
+        }
+    };
     return (
         <MVPUI
-            findLogo={findLogo}
             getMVP={getMVP}
             league={league}
-            loadLeague={loadLeague}
-            loadRosters={loadRosters}
             matches={matches}
             processedRosters={processedRosters}
         />

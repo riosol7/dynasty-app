@@ -15,7 +15,6 @@ export default function RankingsUI({
     playoffs,
     processedRosters,
     rankings,
-    rosters,
     selectSzn,
 }) {
 
@@ -74,7 +73,6 @@ export default function RankingsUI({
                                 league={league}
                                 playoffs={playoffs}
                                 processedRosters={processedRosters}
-                                rosters={rosters}
                                 selectSzn={selectSzn}
                             />
                         : rankings==="Dynasty"?
