@@ -3,7 +3,6 @@ import StandingTableHeader from "../components/standings/StandingTableHeader";
 import StandingRow from "../components/standings/StandingRow";
 import PostSeasonBracket from "../components/standings/PostSeasonBracket";
 
-// FIX VARIABLES FOR division -> roster
 export default function StandingsUI({
   allTimeStats,
   asc,
@@ -44,7 +43,7 @@ export default function StandingsUI({
       ));
 
   return (
-    <div style={{fontSize:"14px"}}>
+    <div>
       {selectSzn === "All Time" ?
         <div className="my-2">
           <StandingTableHeader asc={asc} handleSort={handleSort} setAsc={setAsc} sort={sort}/>
