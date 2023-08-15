@@ -11,7 +11,6 @@ export default function MatchupUI({
     handleWeeklyMatch,
     id,
     league,
-    loadLeague,
     openModal,
     players,
     processedRosters,
@@ -38,7 +37,6 @@ export default function MatchupUI({
                 foundRoster={foundRoster}
                 id={id}
                 league={league}
-                loadLeague={loadLeague}
                 openModal={openModal}
                 players={players}
                 processedRosters={processedRosters}

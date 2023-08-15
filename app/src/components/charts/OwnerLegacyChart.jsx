@@ -3,7 +3,6 @@ import Chart from 'react-apexcharts';
 
 export default function AreaChart({
     id,
-    loadRosters,
     processedRosters,
 }) {
     const foundRoster = processedRosters?.totalRoster?.filter(r => r.roster_id === Number(id));
@@ -106,19 +105,14 @@ export default function AreaChart({
     }
     
     return (
-        <>
-        {
-            loadRosters ? <p>Loading </p> :
-            <div id="chart" className="">
-                <Chart 
-                    options={options} 
-                    series={series} 
-                    type="line" 
-                    height={350}
-                    width={"100%"} 
-                />
-            </div>
-        }
-        </>
+        <div id="chart" className="">
+            <Chart 
+                options={options} 
+                series={series} 
+                type="line" 
+                height={350}
+                width={"100%"} 
+            />
+        </div>
     )
 }

@@ -8,7 +8,6 @@ export default function MatchupContainer({
     foundMyMatchups,
     id,
     league,
-    loadLeague,
     openModal,
     players,
     processedRosters,
@@ -58,7 +57,6 @@ export default function MatchupContainer({
             handleWeeklyMatch={handleWeeklyMatch}
             id={id}
             league={league}
-            loadLeague={loadLeague}
             openModal={openModal}
             players={players}
             processedRosters={processedRosters}

@@ -1,10 +1,7 @@
 import handleRostersBySzn from "./handleRostersBySzn";
 
 export const findRosterByID = (id, rosters) => {
-    if (rosters?.length > 1) {
-        return rosters.find(roster => roster.roster_id === Number(id));
-    }
-    return {}
+    return rosters?.find(roster => roster.roster_id === Number(id));
 };
 
 export const findRosterByOwnerID = (id, rosters) => {

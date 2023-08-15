@@ -9,10 +9,6 @@ export default function Overview({
     activityBar,
     foundHistory,
     league,
-    loadLeague,
-    loadOwners,
-    loadRosters,
-    loadTransactions,
     matches,
     owners,
     players,
@@ -27,7 +23,6 @@ export default function Overview({
             <LeagueNavigation
                 activityBar={activityBar}
                 league={league}
-                loadLeague={loadLeague}
                 setActivityBar={setActivityBar}
             />
             <MVPContainer
@@ -44,8 +39,7 @@ export default function Overview({
             <RankingsContainer
                 foundHistory={foundHistory}
                 league={league}
-                loadLeague={loadLeague}
-                loadRosters={loadRosters}
+                owners={owners}
                 processedRosters={processedRosters}
             />
         </div>

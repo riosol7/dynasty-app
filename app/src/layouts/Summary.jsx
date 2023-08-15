@@ -11,8 +11,6 @@ export default function Summary({
     foundMyMatchups,
     id,
     league,
-    loadLeague,
-    loadRosters,
     matches,
     openModal,
     players,
@@ -51,7 +49,6 @@ export default function Summary({
                 foundMyMatchups={foundMyMatchups}
                 id={id}
                 league={league}
-                loadLeague={loadLeague}
                 openModal={openModal}
                 players={players}
                 processedRosters={processedRosters}

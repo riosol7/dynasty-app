@@ -4,8 +4,7 @@ import RankingsUI from "../ui/RankingsUI";
 export default function RankingsContainer({
   foundHistory,
   league,
-  loadLeague,
-  loadRosters,
+  owners,
   processedRosters
 }) {
   const [rankings, setRankings] = useState("Standings");
@@ -34,8 +33,7 @@ export default function RankingsContainer({
       handleRankings={handleRankings}
       handleSelectSzn={handleSelectSzn}
       league={league}
-      loadLeague={loadLeague}
-      loadRosters={loadRosters}
+      owners={owners}
       playoffs={playoffs}
       processedRosters={processedRosters}
       rankings={rankings}

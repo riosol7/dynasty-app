@@ -2,7 +2,6 @@ import React, {useState} from 'react';
 import DynastyRankingsUI from '../ui/DynastyRankingsUI';
 
 export default function DynastyRankingsContainer({
-  loadRosters,
   processedRosters,
 }) {
     const [sort, setSort] = useState("")
@@ -47,7 +46,6 @@ export default function DynastyRankingsContainer({
             findEXP={findEXP}
             handleRank={handleRank}
             handleSort={handleSort}
-            loadRosters={loadRosters}
             processedRosters={processedRosters}
             setAsc={setAsc}
             sort={sort}

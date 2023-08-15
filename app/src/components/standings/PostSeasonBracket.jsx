@@ -4,7 +4,6 @@ import ToiletBracket from "./ToiletBracket";
 import { findRosterByID } from "../../helpers";
 
 export default function PostSeasonBracket({
-    findRosterBySzn,
     foundHistory,
     handleRostersBySzn,
     league,
@@ -31,7 +30,6 @@ export default function PostSeasonBracket({
                     <div className="" style={{}}>
                         <PlayoffBracket
                             findRosterByID={findRosterByID}
-                            findRosterBySzn={findRosterBySzn}
                             foundHistory={foundHistory}
                             handleRostersBySzn={handleRostersBySzn}
                             league={league}
@@ -56,7 +54,6 @@ export default function PostSeasonBracket({
                     <div className="" style={{}}>
                         <ToiletBracket
                             findRosterByID={findRosterByID}
-                            findRosterBySzn={findRosterBySzn}
                             foundHistory={foundHistory}
                             handleRostersBySzn={handleRostersBySzn}
                             league={league}

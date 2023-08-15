@@ -10,8 +10,6 @@ export default function OwnerBody({
     foundHistory,
     id,
     league,
-    loadLeague,
-    loadRosters,
     matches,
     matchups,
     openModal,
@@ -86,8 +84,6 @@ export default function OwnerBody({
                             foundMyMatchups={foundMyMatchups}
                             id={id}
                             league={league}
-                            loadLeague={loadLeague}
-                            loadRosters={loadRosters}
                             matches={matches}
                             openModal={openModal}
                             players={players}
@@ -100,8 +96,6 @@ export default function OwnerBody({
                         <Dynasty
                             id={id}
                             league={league}
-                            loadLeague={loadLeague}
-                            loadRosters={loadRosters}
                             matches={matches}
                             processedRosters={processedRosters}
                             roster={roster}
@@ -114,8 +108,6 @@ export default function OwnerBody({
                             foundMyMatchups={foundMyMatchups}
                             id={id}
                             league={league}
-                            loadLeague={loadLeague}
-                            loadRosters={loadRosters}
                             matches={matches}
                             openModal={openModal}
                             players={players}

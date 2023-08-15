@@ -148,20 +148,20 @@ export default function MarketActivity({
                             <tr key={i} className="py-2" style={{border:"#2a2c3e", fontSize:"14px",color:"white"}}>
                                 <td className="d-flex align-items-top">
                                     <div className="smallHeadShot" style={{borderRadius:"5%", width:"40px", height:"55px", backgroundImage: `url(${playerBaseURL}${r.player?.player_id}.jpg)`}}>
-                                        {findLogo(r.player.team).l !== "" ?
+                                        {findLogo(r.player?.team).l !== "" ?
                                             <div className="displayOwnerLogoSM">
-                                                <img style={{width:"2.8em",left:"15px"}} alt="" src={findLogo(r.player.team).l}/>
+                                                <img style={{width:"2.8em",left:"15px"}} alt="" src={findLogo(r.player?.team).l}/>
                                             </div>
                                         :<></>
                                         }
                                     </div> 
                                     <div className="mx-2" style={{paddingLeft: ".5em"}}>
-                                        <p className="m-0" style={{color:sort === "PLAYER" ? "#a9dfd8" : ""}}>{r.player.first_name} {r.player.last_name}</p>
-                                        <p className="m-0 bold" style={{fontSize:"10px", color:"grey"}}>{r.player.years_exp === 0 ? "ROOKIE" : <span>EXP {r.player.years_exp}</span>}</p>
+                                        <p className="m-0" style={{color:sort === "PLAYER" ? "#a9dfd8" : ""}}>{r.player?.first_name} {r.player?.last_name}</p>
+                                        <p className="m-0 bold" style={{fontSize:"10px", color:"grey"}}>{r.player?.years_exp === 0 ? "ROOKIE" : <span>EXP {r.player?.years_exp}</span>}</p>
                                     </div>
                                 </td>
-                                <td style={{color:sort === "AGE" ? "#a9dfd8" : ""}}>{r.player.age}</td>
-                                <td style={{color:sort === "POSITION" ? "#a9dfd8" : ""}}>{r.player.position}</td>
+                                <td style={{color:sort === "AGE" ? "#a9dfd8" : ""}}>{r.player?.age}</td>
+                                <td style={{color:sort === "POSITION" ? "#a9dfd8" : ""}}>{r.player?.position}</td>
                                 <td style={{color:sort === "OWNER" ? "#a9dfd8" : ""}}>{r.creator}</td>
                                 <td style={{color:sort === "BID" ? "#a9dfd8" : ""}}>${r.settings.waiver_bid}</td>
                                 <td><p className="m-0" style={{color: sort === "DATE" ? "#a9dfd8" : ""}}>{toDateTime(r.created)}</p></td>

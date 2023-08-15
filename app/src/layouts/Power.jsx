@@ -15,8 +15,6 @@ export default function Power({
     foundMyMatchups,
     id,
     league,
-    loadLeague,
-    loadRosters,
     openModal,
     players,
     processedRosters,
@@ -116,7 +114,6 @@ export default function Power({
                 foundMyMatchups={foundMyMatchups}
                 id={id}
                 league={league}
-                loadLeague={loadLeague}
                 openModal={openModal}
                 players={players}
                 processedRosters={processedRosters}

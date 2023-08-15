@@ -12,7 +12,6 @@ export default function MatchupSlider({
     foundHistory,
     foundRoster,
     league,
-    loadLeague,
     openModal,
     players,
     processedRosters,
@@ -42,7 +41,7 @@ export default function MatchupSlider({
         event.target.style.color="#7f7f7f";
     }
     return (
-            loadLeague && weeklyMatch === league.season && findWeeklyMatchups()?.length === 0 ? <LoadMatchups></LoadMatchups>:
+            weeklyMatch === league.season && findWeeklyMatchups()?.length === 0 ? <LoadMatchups></LoadMatchups>:
             <div className="d-flex align-items-center" style={{maxWidth:"1720px"}}>
                 <Swiper
                     breakpoints = {{

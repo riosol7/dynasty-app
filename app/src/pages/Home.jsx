@@ -20,16 +20,12 @@ export default function Home ({
     
     return (
         <div className="home">
-            {loadPlayers && loadOwners && loadRosters && loadLeague ? <div style={{height:"100vh"}}></div>
+            {loadPlayers && loadOwners && loadRosters && loadLeague && loadTransactions ? <div style={{height:"100vh"}}></div>
             :
                 <Overview
                     activityBar={activityBar}
                     foundHistory={foundHistory}
                     league={league}
-                    loadLeague={loadLeague}
-                    loadOwners={loadOwners}
-                    loadRosters={loadRosters}
-                    loadTransactions={loadTransactions}
                     matches={matches}
                     owners={owners}
                     players={players}

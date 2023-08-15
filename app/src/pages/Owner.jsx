@@ -135,7 +135,6 @@ export default function Owner({
                     <LeagueNavigation
                         activityBar={activityBar}
                         league={league}
-                        loadLeague={loadLeague}
                         setActivityBar={setActivityBar}
                     />
                     {processedRosters?.totalRoster?.filter(roster => roster.roster_id === Number(id)).map((roster, i) => 
@@ -151,9 +150,7 @@ export default function Owner({
                                 findRecord={findRecord}
                                 foundHistory={foundHistory}
                                 id={id}
-                                league={league} 
-                                loadLeague={loadLeague} 
-                                loadRosters={loadRosters} 
+                                league={league}
                                 matches={matches}
                                 matchups={matchups}
                                 openModal={openModal}

@@ -6,6 +6,7 @@ import { roundToHundredth } from "../utils";
 export default function StandingsContainer({
   foundHistory,
   league,
+  owners,
   playoffs,
   processedRosters,
   selectSzn,
@@ -79,92 +80,65 @@ export default function StandingsContainer({
   }
   const handleRank = (standing, division) => {
     if (standing !== undefined && division !== undefined){
-      console.log(standing.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1})))
-      return standing.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1}))
+      return standing?.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1}))
     }
   }; 
-  let divsRanks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.sort((a,b) => { 
-    if (a.settings.wins === b.settings.wins) {
-      return (b.settings.fpts) - (a.settings.fpts);
-    } else {
-      return b.settings.wins - a.settings.wins
-    }
-  }).map((team, i) => ({...team, rank:i+1})) : []
+  // const getSortedRanks = (rosters, division) => {
+  //   return rosters
+  //     ?.filter((roster) => roster.settings.division === division).sort((a, b) => {
+  //       if (a.settings.wins === b.settings.wins) {
+  //         return b.settings.fpts - a.settings.fpts;
+  //       } else {
+  //         return b.settings.wins - a.settings.wins;
+  //       }
+  //     })
+  //     .map((team, i) => ({ ...team, rank: i + 1 }));
+  // };
 
-  let div1Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 1).sort((a,b) => { 
-    if (a.settings.wins === b.settings.wins) {
-      return (b.settings.fpts) - (a.settings.fpts);
-    } else {
-      return b.settings.wins - a.settings.wins
-    }
-  }).map((team, i) => ({...team, rank:i+1})) : []
-
-  let div2Ranks = processedRosters?.totalRoster?.length > 1 ? processedRosters?.totalRoster.filter(roster => roster.settings.division === 2).sort((a,b) => { 
-    if (a.settings.wins === b.settings.wins) {
-      return (b.settings.fpts) - (a.settings.fpts);
-    } else {
-      return b.settings.wins - a.settings.wins
-    }
-  }).map((team, i) => ({...team, rank:i+1})) : []
-
-  const all_time = league.owners && league.owners.map(owner => {
-    let id = owner.roster_id;
-
-    let currentYR = processedRosters?.totalRoster?.length > 1 && processedRosters?.totalRoster.find(roster => roster.roster_id === id).settings;
-
-    let foundHistory = league.history.map(szn => szn.rosters.filter(roster => roster.roster_id === id)[0]);
-    let historyWs = foundHistory.reduce((acc, item) =>  acc + item.settings.wins, 0);
-    let historyLs = foundHistory.reduce((acc, item) =>  acc + item.settings.losses, 0);
-    let historyFPTS = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.fpts + "." + item.settings.fpts_decimal), 0);
-    let historyPPTS = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.ppts + "." + item.settings.ppts_decimal), 0);
-    let historyPA = foundHistory.reduce((acc, item) =>  acc + Number(item.settings.fpts_against + "." + item.settings.fpts_against_decimal), 0);
-
-    let fptsCurrentYR = 0;
-    let pptsCurrentYR = 0;
-    let fpts_againstCurrentYR = 0;
-
-    if (currentYR.fpts!==0 && currentYR.ppts!==undefined && currentYR.fpts_against!==undefined) {
-      fptsCurrentYR = currentYR ? Number(currentYR.fpts + "." + currentYR.fpts_decimal) : 0
-      pptsCurrentYR = Number(currentYR.ppts + "." + currentYR.ppts_decimal);
-      fpts_againstCurrentYR = Number(currentYR.fpts_against + "." + currentYR.fpts_against_decimal);
-    }
+  const allTimeStats = owners?.map(owner => {
+    const id = owner.roster_id;
+    const currentRoster = processedRosters?.totalRoster?.find(roster => roster.roster_id === id)?.settings;
+  
+    const legacyRosters = league.history.flatMap(szn => szn.rosters.filter(roster => roster.roster_id === id));
+  
+    const historyWs = legacyRosters.reduce((acc, item) => acc + item.settings.wins, 0);
+    const historyLs = legacyRosters.reduce((acc, item) => acc + item.settings.losses, 0);
+    const historyFPTS = legacyRosters.reduce((acc, item) => acc + parseFloat(`${item.settings.fpts}.${item.settings.fpts_decimal}`), 0);
+    const historyPPTS = legacyRosters.reduce((acc, item) => acc + parseFloat(`${item.settings.ppts}.${item.settings.ppts_decimal}`), 0);
+    const historyPA = legacyRosters.reduce((acc, item) => acc + parseFloat(`${item.settings.fpts_against}.${item.settings.fpts_against_decimal}`), 0);
+  
+    const fptsCurrentYR = currentRoster?.ppts ? parseFloat(`${currentRoster.fpts}.${currentRoster.fpts_decimal}`) : 0;
+    const pptsCurrentYR = currentRoster?.ppts ? parseFloat(`${currentRoster.ppts}.${currentRoster.ppts_decimal}`) : 0;
+    const fptsAgainstCurrentYR = currentRoster?.ppts ? parseFloat(`${currentRoster.fpts_against}.${currentRoster.fpts_against_decimal}`) : 0;
+  
+    const percentage = ((currentRoster?.wins + historyWs) / (currentRoster?.wins + historyWs + currentRoster?.losses + historyLs)) * 100;
+    const record = `${currentRoster?.wins + historyWs}-${currentRoster?.losses + historyLs}`;
+    const fptsTotal = fptsCurrentYR + historyFPTS;
+    const pptsTotal = pptsCurrentYR + historyPPTS;
+    const fptsAgainstTotal = fptsAgainstCurrentYR + historyPA;
 
     return {
-      ...owner, 
-      percentage:roundToHundredth(((currentYR.wins + historyWs)/(currentYR.wins + historyWs + currentYR.losses + historyLs))*100),
-      record:(currentYR.wins + historyWs) + "-" + (currentYR.losses + historyLs),
-      fpts:roundToHundredth(fptsCurrentYR + historyFPTS),
-      ppts:roundToHundredth(pptsCurrentYR + historyPPTS),
-      fpts_against:roundToHundredth(fpts_againstCurrentYR + historyPA)
-    }
-  }).sort((a,b) => {
+      ...owner,
+      percentage: roundToHundredth(percentage),
+      record,
+      fpts: roundToHundredth(fptsTotal),
+      ppts: roundToHundredth(pptsTotal),
+      fpts_against: roundToHundredth(fptsAgainstTotal)
+    };
+  }).sort((a, b) => {
     if (b.percentage === a.percentage) {
-      return b.fpts - a.fpts
+      return b.fpts - a.fpts;
     } else {
-      return parseFloat(b.percentage) - parseFloat(a.percentage)
+      return b.percentage - a.percentage;
     }
-  }).map((roster, idx) => ({...roster, rank:idx +1}))
-
-  const findRosterBySzn=(szn, id) => {
-    if (szn !== undefined && id !== undefined) {
-      if (szn===league.season){
-        return handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.roster_id === id)[0]
-      } else {
-        return handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.roster_id === id)[0]
-      }
-    } 
-  }
+  }).map((roster, idx) => ({...roster, rank: idx + 1}));
   
   return (
     <StandingsUI
-      all_time={all_time}
+      allTimeStats={allTimeStats}
       asc={asc}
       asc1={asc1}
       asc2={asc2}
-      divsRanks={divsRanks}
-      div1Ranks={div1Ranks}
-      div2Ranks={div2Ranks}
-      findRosterBySzn={findRosterBySzn}
       foundHistory={foundHistory}
       handleRank={handleRank}
       handleRostersBySzn={handleRostersBySzn}

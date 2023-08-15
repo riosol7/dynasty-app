@@ -4,7 +4,6 @@ import OwnerLegacyChart from "../components/charts/OwnerLegacyChart";
 
 export default function LegacyComparisonUI({
     id,
-    loadRosters,
     processedRosters
 }) {
     return (
@@ -35,7 +34,6 @@ export default function LegacyComparisonUI({
             <div className="" style={{background:"", borderRadius:"6px", minWidth:"320px", width:"100%"}}>
                 <OwnerLegacyChart
                     id={id}
-                    loadRosters={loadRosters}
                     processedRosters={processedRosters}
                 />
             </div>

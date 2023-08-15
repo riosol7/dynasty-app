@@ -1,8 +1,7 @@
 const handleRostersBySzn = (year, league, rosters) => {
-  let foundSzn=[];
+  let foundSzn = [];
 
   if (year === league.season){
-    
     foundSzn = rosters?.totalRoster?.sort((a,b) => {
       if(a.settings.wins === b.settings.wins) {
         return Number(b.settings.fpts + "." + b.settings.fpts_decimal) - Number(a.settings.fpts + "." + a.settings.fpts_decimal);
@@ -24,7 +23,6 @@ const handleRostersBySzn = (year, league, rosters) => {
         }
       }).map((roster, idx) => ({...roster, rank:idx+1}))
     )
-
   }
 
   return foundSzn[0];
