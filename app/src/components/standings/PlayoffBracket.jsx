@@ -2,136 +2,75 @@ import React from "react";
 import { Icon } from "@iconify/react";
 import { findHistoryRoster } from "../../helpers";
 
-function QuarterfinalByeWeek({avatarBaseURL, roster}) {
-    return (
-        <div className="my-3" style={{background:"#111111", borderRadius:"4px", width:"250px"}}>
-            <p className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", color:"", borderRadius:"4px 4px 0px 0px"}}>Quarterfinal</p>
-            <div className="p-3">
-                <div className="d-flex align-items-center justify-content-between">
-                    <div className="d-flex align-items-center">
-                        <p className="m-0 bold" style={{color:"#acb6c3", fontSize:"1em"}}>{roster.rank}</p>
-                        <div className="mx-2">
-                            <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={`${avatarBaseURL}${roster.owner.avatar}`}/>
-                        </div>
-                        <p className="m-0 bold">{roster.owner.display_name}</p>
-                    </div>
-                    <p className="m-0" style={{fontWeight:"lighter"}}>BYE</p>
-                </div>
-            </div>
-        </div>
-    )
-}
-
 function Roster({avatarBaseURL, roster, type}) {
+    const isWinner = type === "w";
+    const ownerDisplayName = isWinner ? roster.owner.display_name : <s>{roster.owner.display_name}</s>;
     return (
         <div className="d-flex align-items-center">
             <p className="m-0 bold" style={{color:"#acb6c3", fontSize:"1em"}}>{roster.rank}</p>
             <div className="mx-2">
                 <img className="ownerLogo" style={{width:"24px"}} alt="avatar" src={`${avatarBaseURL}${roster.owner.avatar}`}/>
             </div>
-            {type === "w" ?
-                <p className="m-0 bold text-truncate">{roster.owner.display_name}</p>
-            :  <p className="m-0"><s>{roster.owner.display_name}</s></p>
-            }
+            <p className={`m-0 bold${isWinner ? "" : " text-truncate"}`}>{ownerDisplayName}</p>
         </div>
     )
 }
-
-function RoundOneMatchup({avatarBaseURL, foundHistory, g, league, processedRosters, selectSzn,}) {
+function QuarterfinalByeWeek({avatarBaseURL, roster}) {
     return (
         <div className="my-3" style={{background:"#111111", borderRadius:"4px", width:"250px"}}>
-            <div>
-                <p className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>Quarterfinal</p>
-                {findHistoryRoster(g.l, selectSzn, league, processedRosters)?.owner && findHistoryRoster(g.w, selectSzn, league, processedRosters)?.owner ?
-                    <div className="p-3">
-                        <div className="d-flex align-items-center justify-content-between">
-                            <Roster avatarBaseURL={avatarBaseURL} roster={findHistoryRoster(g.w, selectSzn, league, processedRosters)} type={"w"}/>
-                            {Number(selectSzn) > 2020 ?
-                                <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                            :
-                                <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                            }
-                        </div>
-                        <div className="d-flex align-items-center justify-content-between pt-3">
-                            <Roster avatarBaseURL={avatarBaseURL} roster={findHistoryRoster(g.l, selectSzn, league, processedRosters)} type={"l"}/>
-                            {Number(selectSzn) > 2020 ?
-                                <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[14]?.filter(t=> t.roster_id === g.l)[0].points}</p>
-                            :
-                                <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[13]?.filter(t=> t.roster_id === g.l)[0].points}</p>
-                            }
-                        </div>
-                    </div>
-                :<></>
-                }
-            </div>
-        </div>
-    )
-}
-
-function RoundTwoMatchup({avatarBaseURL, foundHistory, g, handleRostersBySzn, league, matchKey, processedRosters, selectSzn,}) {
-    return (
-        <div className="my-3" style={{background:"#111111", borderRadius:"4px", width:"250px"}}>
-            <p className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>{matchKey === 2 ? "5th Place Match" : "Semifinal"}</p>
-            {findHistoryRoster(g.l, selectSzn, league, processedRosters)?.owner && findHistoryRoster(g.w, selectSzn, league, processedRosters)?.owner ?
-                <div className="p-3">
-                    <div className="d-flex align-items-center justify-content-between">
-                        <Roster avatarBaseURL={avatarBaseURL} roster={findHistoryRoster(g.w, selectSzn, league, processedRosters)} type={"w"}/>
-                        {Number(selectSzn) <= 2020 ?
-                            handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === g.w || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === g.w ?
-                                <p className="m-0 bold">{foundHistory(g.w,selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                            :
-                                <p className="m-0 bold">{foundHistory(g.w,selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                        : <p className="m-0 bold">{foundHistory(g.w,selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                        }
-                    </div>
-                    <div className="d-flex align-items-center justify-content-between pt-3">
-                        <Roster avatarBaseURL={avatarBaseURL} roster={findHistoryRoster(g.l, selectSzn, league, processedRosters)} type={"l"}/>
-                        {Number(selectSzn) <= 2020 ?
-                            handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === g.l || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === g.l ?
-                                <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === g.l)[0].points}</p>
-                            :
-                                <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.l)[0].points}</p>
-                        : <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.l)[0].points}</p>
-                        }
-                    </div>
+            <p className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>Quarterfinal</p>
+            <div className="p-3">
+                <div className="d-flex align-items-center justify-content-between">
+                    <Roster avatarBaseURL={avatarBaseURL} roster={roster} type={"w"}/>
+                    <p className="m-0" style={{fontWeight:"lighter"}}>BYE</p>
                 </div>
-            :<></>
-            }
+            </div>
         </div>
     )
 }
+function PlayoffMatch({avatarBaseURL, foundHistory, g, handleRostersBySzn, league, matchKey, processedRosters, round, selectSzn,}) {
+    const playoffTitle = round === 1 ? "Quarterfinal" : round === 2 && matchKey === 2 ? "5th Place Match" : round === 2 ? "Semifinal" : round === 3 && matchKey === 1 ?                     
+        <p className="m-0 d-flex align-items-center justify-content-center">3rd Place Match <Icon icon="noto-v1:3rd-place-medal" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
+    :
+        <p className="m-0 d-flex align-items-center justify-content-center">Final <Icon icon="noto-v1:trophy" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
 
-function RoundThreeMatchup({avatarBaseURL, foundHistory, g, handleRostersBySzn, league, matchKey, processedRosters, selectSzn,}) {
+    function score(id) {
+        if(round === 1) {
+            if(Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p> 
+            } else {
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
+            }
+        } else if(round === 2) {
+            if(Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else {
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p>
+            }
+        } else if(round === 3) {
+            if(Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
+                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.w)[0].points}</p>
+            } else {
+                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.w)[0].points}</p>
+            }
+        }
+    }    
     return (
         <div className="my-3" style={{background:"#111111", borderRadius:"4px", width:"250px"}}>
-            <div className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", color:"", borderRadius:"4px 4px 0px 0px"}}>
-                {matchKey === 1 ?
-                    <p className="m-0 d-flex align-items-center justify-content-center">3rd Place Match <Icon icon="noto-v1:3rd-place-medal" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
-                :
-                    <p className="m-0 d-flex align-items-center justify-content-center">Final <Icon icon="noto-v1:trophy" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
-                }
-            </div>
+            <div className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>{playoffTitle}</div>
             {findHistoryRoster(g.l, selectSzn, league, processedRosters)?.owner && findHistoryRoster(g.w, selectSzn, league, processedRosters)?.owner ?
                 <div className="p-3">
                     <div className="d-flex align-items-center justify-content-between">
                         <Roster avatarBaseURL={avatarBaseURL} roster={findHistoryRoster(g.w, selectSzn, league, processedRosters)} type={"w"}/>
-                        {Number(selectSzn) <= 2020 ?
-                            handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === g.w || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === g.w ?
-                                <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                            :
-                                <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                        : <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === g.w)[0].points}</p>
-                        }
+                        {score(g.w)}
                     </div>
                     <div className="d-flex align-items-center justify-content-between pt-3">
                         <Roster avatarBaseURL={avatarBaseURL} roster={findHistoryRoster(g.l, selectSzn, league, processedRosters)} type={"l"}/>
-                        {Number(selectSzn) <= 2020 ?
-                            handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === g.l || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === g.l ?
-                                <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id ===g.l)[0].points}</p>
-                            :
-                                <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.l)[0].points}</p>
-                        : <p className="m-0">{foundHistory(g.l, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === g.l)[0].points}</p>
-                        }
+                        {score(g.l)}
                     </div>
                 </div>
             :<></>
@@ -162,14 +101,15 @@ export default function PlayoffBracket({
                     avatarBaseURL={avatarBaseURL} 
                     roster={handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.settings.division === 2)[0]}
                 />
-                {matchups(1).map((match, i) => (
-                    <RoundOneMatchup
+                {matchups(1).slice().map((match, i) => (
+                    <PlayoffMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
                         key={i}
                         league={league}
                         processedRosters={processedRosters}
+                        round={1}
                         selectSzn={selectSzn}
                     />
                 ))}
@@ -179,8 +119,8 @@ export default function PlayoffBracket({
                 />
             </div>
             <div className="mx-4">
-                {matchups(2).map((match, idx) => (
-                    <RoundTwoMatchup 
+                {matchups(2).slice().map((match, idx) => (
+                    <PlayoffMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
@@ -189,13 +129,14 @@ export default function PlayoffBracket({
                         league={league}
                         matchKey={idx}
                         processedRosters={processedRosters}
+                        round={2}
                         selectSzn={selectSzn}
                     />
                 ))}
             </div>
             <div className="">
-                {matchups(3).map((match, x) => (
-                    <RoundThreeMatchup 
+                {matchups(3).slice().map((match, x) => (
+                    <PlayoffMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
@@ -204,6 +145,7 @@ export default function PlayoffBracket({
                         league={league}
                         matchKey={x}
                         processedRosters={processedRosters}
+                        round={3}
                         selectSzn={selectSzn}
                     />
                 ))}
