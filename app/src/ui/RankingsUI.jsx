@@ -23,9 +23,9 @@ export default function RankingsUI({
             <div className="d-flex align-items-center">
                 <Icon icon="icon-park-outline:ranking" style={{color:"#a9dfd8",fontSize:"1.1rem"}}/>
                 <select className="m-0 mx-1 bold" onChange={handleRankings} value={rankings} style={{background:"black", color:"white", border:"none"}}>
+                    <option value={"Standings"}>Standings</option>
                     <option value={"Dynasty"}>Dynasty</option>
                     <option value={"Power"}>Power</option>
-                    <option value={"Standings"}>Standings</option>
                 </select>
             </div>
             {rankings === "Standings" || rankings === "Power" ?
@@ -39,7 +39,7 @@ export default function RankingsUI({
                     <div className="d-flex align-items-center">
                         <select className="p-2" onChange={handleSelectSzn} value={selectSzn} style={{fontSize:".8em", borderRadius:"25px", border:"2px solid #3bdbba", background:"black", color:"white"}}>
                             <option value={league.season}>{league.season}</option>
-                            {league?.history?.map((l, i) => 
+                            {league?.history?.slice().reverse().map((l, i) => 
                                 <option key={i} value={l.year}>{l.year}</option>
                             )}
                             {rankings ==="Standings" && playoffs === false ?

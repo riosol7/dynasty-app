@@ -78,23 +78,11 @@ export default function StandingsContainer({
       setSort2("")
     }
   }
-  const handleRank = (standing, division) => {
+  const handleDivisionRank = (standing, division) => {
     if (standing !== undefined && division !== undefined){
       return standing?.filter(team => team.settings.division === division).map((roster, idx) => ({...roster, rank:idx +1}))
     }
   }; 
-  // const getSortedRanks = (rosters, division) => {
-  //   return rosters
-  //     ?.filter((roster) => roster.settings.division === division).sort((a, b) => {
-  //       if (a.settings.wins === b.settings.wins) {
-  //         return b.settings.fpts - a.settings.fpts;
-  //       } else {
-  //         return b.settings.wins - a.settings.wins;
-  //       }
-  //     })
-  //     .map((team, i) => ({ ...team, rank: i + 1 }));
-  // };
-
   const allTimeStats = owners?.map(owner => {
     const id = owner.roster_id;
     const currentRoster = processedRosters?.totalRoster?.find(roster => roster.roster_id === id)?.settings;
@@ -140,7 +128,7 @@ export default function StandingsContainer({
       asc1={asc1}
       asc2={asc2}
       foundHistory={foundHistory}
-      handleRank={handleRank}
+      handleDivisionRank={handleDivisionRank}
       handleRostersBySzn={handleRostersBySzn}
       handleSort={handleSort}
       handleSort1={handleSort1}
