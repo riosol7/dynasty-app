@@ -1,7 +1,7 @@
 import React from "react";
-import StandingTableHeader from "../components/standings/StandingTableHeader";
-import StandingRow from "../components/standings/StandingRow";
-import PostSeasonBracket from "../components/standings/PostSeasonBracket";
+import StandingTableHeader from "../components/rankings/standings/StandingTableHeader";
+import StandingRow from "../components/rankings/standings/StandingRow";
+import PostSeasonBracket from "../components/rankings/standings/PostSeasonBracket";
 
 export default function StandingsUI({
   allTimeStats,

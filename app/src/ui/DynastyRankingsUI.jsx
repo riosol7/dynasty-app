@@ -32,11 +32,7 @@ export default function DynastyRankingsUI({
     return (
         <div className="">
             <div className="mt-2">
-                <div className="d-flex py-3" style={{
-                    borderBottom: ".5px solid #2a2c3e",
-                    fontSize: ".7rem",
-                    color: "#7d91a6",
-                }}>
+                <div className="d-flex py-3" style={{borderBottom: ".5px solid #2a2c3e", fontSize: ".7rem", color: "#7d91a6"}}>
                 <div className="col-sm-7 d-flex align-items-center">
                     <div className="col-sm-1 d-flex align-items-center">
                         <p className="m-0">RANK</p>

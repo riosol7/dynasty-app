@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { findHistoryRoster } from "../../helpers";
+import { findHistoryRoster } from "../../../helpers";
 
 function Roster({avatarBaseURL, roster, type}) {
     const isWinner = type === "w";
@@ -15,10 +15,10 @@ function Roster({avatarBaseURL, roster, type}) {
         </div>
     )
 }
-function QuarterfinalByeWeek({avatarBaseURL, roster}) {
+function Bottom6ByeWeek({avatarBaseURL, roster}) {
     return (
         <div className="my-3" style={{background:"#111111", borderRadius:"4px", width:"250px"}}>
-            <p className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>Quarterfinal</p>
+            <p className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>Bottom 6</p>
             <div className="p-3">
                 <div className="d-flex align-items-center justify-content-between">
                     <Roster avatarBaseURL={avatarBaseURL} roster={roster} type={"w"}/>
@@ -28,40 +28,40 @@ function QuarterfinalByeWeek({avatarBaseURL, roster}) {
         </div>
     )
 }
-function PlayoffMatch({avatarBaseURL, foundHistory, g, handleRostersBySzn, league, matchKey, processedRosters, round, selectSzn,}) {
-    const playoffTitle = round === 1 ? "Quarterfinal" : round === 2 && matchKey === 2 ? "5th Place Match" : round === 2 ? "Semifinal" : round === 3 && matchKey === 1 ?                     
-        <p className="m-0 d-flex align-items-center justify-content-center">3rd Place Match <Icon icon="noto-v1:3rd-place-medal" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
+function ToiletMatch({avatarBaseURL, foundHistory, g, handleRostersBySzn, league, matchKey, processedRosters, round, selectSzn,}) {
+    const title = round === 1 ? "Bottom 6" : round === 2 && matchKey === 2 ? "7th Place Match" : round === 2 ? "Bottom 4" : round === 3 && matchKey === 1 ?                     
+        <p className="m-0">9th Place Match</p>
     :
-        <p className="m-0 d-flex align-items-center justify-content-center">Final <Icon icon="noto-v1:trophy" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
+        <p className="m-0">Toilet Bowl <Icon icon="noto:toilet" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
 
     function score(id) {
         if(round === 1) {
             if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p> 
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === Number(id))[0]?.points}</p> 
             } else {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             }
         } else if(round === 2) {
             if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             } else {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             }
         } else if(round === 3) {
             if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
-                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.w)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             } else {
-                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.w)[0].points}</p>
+                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
             }
         }
     }    
     return (
         <div className="my-3" style={{background:"#111111", borderRadius:"4px", width:"250px"}}>
-            <div className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>{playoffTitle}</div>
+            <div className="m-0 py-2 text-center bold" style={{background:"#1c1c1c", borderRadius:"4px 4px 0px 0px"}}>{title}</div>
             {findHistoryRoster(g.l, selectSzn, league, processedRosters)?.owner && findHistoryRoster(g.w, selectSzn, league, processedRosters)?.owner ?
                 <div className="p-3">
                     <div className="d-flex align-items-center justify-content-between">
@@ -79,7 +79,7 @@ function PlayoffMatch({avatarBaseURL, foundHistory, g, handleRostersBySzn, leagu
     )
 }
 
-export default function PlayoffBracket({
+export default function ToiletBracket({
     foundHistory,
     handleRostersBySzn,
     league,
@@ -89,20 +89,20 @@ export default function PlayoffBracket({
     const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
     const matchups = (round) => {
         if (selectSzn === league.season) {
-            return league?.brackets?.winner?.filter(g => g.r === round);
+            return league?.brackets?.loser?.filter(g => g.r === round);
         } else {
-            return league.history.filter(l => l.year === selectSzn)[0].league.brackets.winner.bracket.filter(g => g.r === round);
+            return league.history.filter(l => l.year === selectSzn)[0].league.brackets.loser.bracket.filter(g => Number(g.r) === round);
         }
     };
     return (
         <div className="d-flex align-items-center">
             <div className="">
-                <QuarterfinalByeWeek 
+                <Bottom6ByeWeek 
                     avatarBaseURL={avatarBaseURL} 
-                    roster={handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.settings.division === 2)[0]}
+                    roster={handleRostersBySzn(selectSzn, league, processedRosters).reverse()[0]}
                 />
                 {matchups(1).slice().map((match, i) => (
-                    <PlayoffMatch
+                    <ToiletMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
@@ -113,14 +113,14 @@ export default function PlayoffBracket({
                         selectSzn={selectSzn}
                     />
                 ))}
-                <QuarterfinalByeWeek 
+                <Bottom6ByeWeek
                     avatarBaseURL={avatarBaseURL} 
-                    roster={handleRostersBySzn(selectSzn, league, processedRosters).filter(r => r.settings.division === 1)[0]}
+                    roster={handleRostersBySzn(selectSzn, league, processedRosters).reverse()[1]}
                 />
             </div>
             <div className="mx-4">
                 {matchups(2).slice().map((match, idx) => (
-                    <PlayoffMatch
+                    <ToiletMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
@@ -136,7 +136,7 @@ export default function PlayoffBracket({
             </div>
             <div className="">
                 {matchups(3).slice().map((match, x) => (
-                    <PlayoffMatch
+                    <ToiletMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 

@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import { winPCT } from "../../utils";
+import { winPCT } from "../../../utils";
 
 export default function StandingRow({owner, selectSzn,}) { 
     const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
