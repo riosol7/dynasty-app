@@ -6,9 +6,9 @@ import "swiper/css";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
 
+import AppLayout from "./layouts/AppLayout";
 import AppRouter from "./router/AppRouter";
-import SidenavBar from "./layouts/SidenavBar";
-import ActivityBar from "./components/ActivityBar";
+import SidenavBar from "./components/navigation/SidenavBar";
 import {
     roundToHundredth,
     winPCT,
@@ -646,41 +646,29 @@ function App() {
     }
 
     return (
-        <div className="app">
-            <div className="appContainer">
-                <SidenavBar/>
-                <Router>
-                    <AppRouter  
-                        activityBar={activityBar}
-                        foundHistory={foundHistory}
-                        league={processedLeague}
-                        loadLeague={loadLeague}
-                        loadMatches={loadMatches}
-                        loadOwners={loadOwners}
-                        loadPlayers={loadPlayers}
-                        loadRosters={loadRosters}
-                        loadTransactions={loadTransactions}
-                        matches={matches}
-                        matchups={matchups}
-                        owners={owners}
-                        players={players}
-                        rosters={rosters}
-                        setActivityBar={setActivityBar}
-                        transactions={transactions}
-                    />          
-                </Router>
-                <ActivityBar
+        <AppLayout>
+            <SidenavBar/>
+            <Router>
+                <AppRouter  
                     activityBar={activityBar}
+                    foundHistory={foundHistory}
                     league={processedLeague}
                     loadLeague={loadLeague}
+                    loadMatches={loadMatches}
+                    loadOwners={loadOwners}
+                    loadPlayers={loadPlayers}
+                    loadRosters={loadRosters}
                     loadTransactions={loadTransactions}
+                    matches={matches}
+                    matchups={matchups}
                     owners={owners}
                     players={players}
+                    rosters={rosters}
                     setActivityBar={setActivityBar}
                     transactions={transactions}
-                />
-            </div>
-        </div>
+                />          
+            </Router>
+        </AppLayout>
     );
 }
 

@@ -1,11 +1,10 @@
 import React from "react";
-import { Routes ,Route } from "react-router-dom";
+import { Routes, Route } from "react-router-dom";
 
-import Home from "../pages/Home";
-import Owner from "../pages/Owner";
+import MainDashboard from "../pages/Dashboard/MainDashboard";
+import OwnerDashboard from "../pages/Dashboard/OwnerDashboard";
 
 const AppRouter = ({ 
-    activityBar, 
     foundHistory,
     league, 
     loadLeague, 
@@ -19,15 +18,13 @@ const AppRouter = ({
     owners, 
     players, 
     rosters, 
-    setActivityBar, 
     transactions,
 }) => {
     return (
         <Routes>
             <Route
-                exact path={`/Home`}
-                element={<Home {...{
-                    activityBar,
+                exact path={`/`}
+                element={<MainDashboard {...{
                     foundHistory,
                     league,
                     loadLeague,
@@ -40,18 +37,17 @@ const AppRouter = ({
                     owners,
                     players,
                     rosters,
-                    setActivityBar,
                     transactions,
                 }} />}
             />
             <Route
                 exact path={`/Owner/:id`}
-                element={<Owner {...{
-                    activityBar,
+                element={<OwnerDashboard {...{
                     foundHistory,
                     league,
                     loadLeague,
                     loadMatches,
+                    loadOwners,
                     loadPlayers,
                     loadRosters,
                     matches,
@@ -59,7 +55,6 @@ const AppRouter = ({
                     owners,
                     players,
                     rosters,
-                    setActivityBar,
                 }} />}
             />
         </Routes>

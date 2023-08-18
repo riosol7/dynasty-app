@@ -1,8 +1,8 @@
 import React from "react";
 
-import RosterContainer from "../containers/RosterContainer";
-import DynastyAgeBarChart from "../components/charts/DynastyAgeBarChart";
-import DynastyRadarInsights from "../components/charts/DynastyRadarInsights";
+import RosterContainer from "../../containers/RosterContainer";
+import DynastyAgeBarChart from "../charts/DynastyAgeBarChart";
+import DynastyRadarInsights from "../charts/DynastyRadarInsights";
 
 export default function DynastyProfileView({
     id,

@@ -1,7 +1,7 @@
 import React from "react";
 
-import DynastyRankingSlider from "../components/sliders/DynastyRankingSlider";
-import LegacyComparisonContainer from "../containers/LegacyComparisonContainer";
+import DynastyRankingSlider from "../sliders/DynastyRankingSlider";
+import LegacyComparisonContainer from "../../containers/LegacyComparisonContainer";
 import DynastyProfileView from "./DynastyProfileView";
 
 export default function Dynasty({

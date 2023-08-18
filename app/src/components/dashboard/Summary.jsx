@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-import MatchupContainer from "../containers/MatchupContainer";
-import OwnerStatsContainer from "../containers/OwnerStatsContainer";
-import RivalryRecordContainer from "../containers/RivalryRecordContainer";
-import RosterContainer from "../containers/RosterContainer";
+import MatchupContainer from "../../containers/MatchupContainer";
+import OwnerStatsContainer from "../../containers/OwnerStatsContainer";
+import RivalryRecordContainer from "../../containers/RivalryRecordContainer";
+import RosterContainer from "../../containers/RosterContainer";
 
 export default function Summary({
     findRecord,
@@ -76,18 +76,6 @@ export default function Summary({
                 selectAllPlay={selectAllPlay}
                 vs={vs}
             />
-            {/* <div className="py-4">
-                <Draft
-                    id={id}
-                    handleDraftClass={handleDraftClass}
-                    league={league}
-                    draftClass={draftClass}
-                    myDraftPicks={myDraftPicks}
-                    isOdd={isOdd}
-                    findLogo={findLogo}
-                    findPlayer={findPlayer}
-                />
-            </div> */}
             <RosterContainer
                 league={league}
                 matches={matches}

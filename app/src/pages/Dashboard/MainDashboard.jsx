@@ -1,30 +1,31 @@
 import React from "react";
-import LeagueNavigation from "./LeagueNavigation";
-import MarketContainer from "../containers/MarketContainer";
-import MVPContainer from "../containers/MVPContainer";
-import RankingsContainer from "../containers/RankingsContainer";
-import { processRosters } from "../helpers";
+import LoadDashboard from "../../components/loading/LoadDashboard";
+import DashboardLayout from "../../layouts/DashboardLayout";
+import MarketContainer from "../../containers/MarketContainer";
+import MVPContainer from "../../containers/MVPContainer";
+import RankingsContainer from "../../containers/RankingsContainer";
+import { processRosters } from "../../helpers";
 
-export default function Overview({
-    activityBar,
+function MainDashboard({
     foundHistory,
     league,
+    loadLeague,
+    loadOwners,
+    loadPlayers,
+    loadRosters,
+    loadTransactions,
     matches,
     owners,
     players,
     rosters,
-    setActivityBar,
     transactions,
 }) {
     const processedRosters = processRosters(rosters, players, owners);
+    const loading = loadPlayers && loadOwners && loadRosters && loadLeague && loadTransactions;
 
     return (
-        <div className="py-3 px-5">
-            <LeagueNavigation
-                activityBar={activityBar}
-                league={league}
-                setActivityBar={setActivityBar}
-            />
+        loading ? <LoadDashboard/> :
+        <DashboardLayout league={league}>
             <MVPContainer
                 league={league}
                 matches={matches}
@@ -42,6 +43,8 @@ export default function Overview({
                 owners={owners}
                 processedRosters={processedRosters}
             />
-        </div>
+        </DashboardLayout>
     )
 }
+
+export default MainDashboard;

@@ -30,17 +30,13 @@ function LeagueSettings({ league }) {
     return null;
 }
 
-export default function LeagueNavigation({
-    activityBar,
-    league,
-    setActivityBar,
-}) {
+export default function LeagueNavigation({ league }) {
     const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
 
     return (
         <div className="d-flex align-items-top justify-content-between my-2">
             <div className="d-flex align-items-center flex-wrap">
-                <a href={`/Home`} className="cellLink" style={{width: "270px"}}>
+                <a href={`/`} className="cellLink" style={{width: "270px"}}>
                     <div className="d-flex align-items-center">
                         <div className="d-flex justify-content-center" style={{marginRight: "1em"}}>
                             <img className="leagueLogo rounded" style={{width: "36px"}} alt="avatar" src={`${avatarBaseURL}${league.avatar}`}/>
@@ -57,7 +53,7 @@ export default function LeagueNavigation({
                 <Icon icon="ion:search-outline" style={{fontSize: "18px"}}/>
             </div>
             <div id="LA" className="p-2">
-                <Icon onClick={() => setActivityBar(!activityBar)} icon="fe:activity" style={{color: "#a9dfd8", fontSize: "1.5em"}}/>
+                <Icon icon="fe:activity" style={{color: "#a9dfd8", fontSize: "1.5em"}}/>
             </div>
         </div>
     );

@@ -1,6 +1,6 @@
 import React from "react";
 import { Icon } from "@iconify/react";
-import DraftWidget from '../components/DraftWidget';
+import DraftWidget from '../DraftWidget';
 
 export default function OwnerHeader({
     league,
@@ -27,8 +27,8 @@ export default function OwnerHeader({
                         <span style={{color:"whitesmoke"}}>-</span>  
                         {roster.settings.losses}
                         <Icon icon="ic:round-circle" className="mx-2" style={{fontSize:".35em", color:"#698b87"}}/>
-                        <span className=""style={{color:"whitesmoke"}}>{roster.rank}</span>
-                        <span style={{}}>{
+                        <span style={{color:"whitesmoke"}}>{roster.rank}</span>
+                        <span>{
                             roster.rank === 1?
                                 "st"
                             : roster.rank === 2?

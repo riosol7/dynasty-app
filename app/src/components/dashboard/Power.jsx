@@ -3,11 +3,11 @@ import React, { useState } from 'react';
 // import PowerRadarChart from '../components/charts/PowerRadarChart';
 // // import LuckyChart from '../charts/LuckyChart';
 // import PowerScoreStackedChart from '../components/charts/PowerScoreStackedChart';
-import MatchupContainer from "../containers/MatchupContainer";
-import PowerRankingSlider from "../components/sliders/PowerRankingSlider";
-import OwnerStatsContainer from "../containers/OwnerStatsContainer";
-import RivalryRecordContainer from "../containers/RivalryRecordContainer";
-import { winPCT } from "../utils";
+import MatchupContainer from "../../containers/MatchupContainer";
+import PowerRankingSlider from "../sliders/PowerRankingSlider";
+import OwnerStatsContainer from "../../containers/OwnerStatsContainer";
+import RivalryRecordContainer from "../../containers/RivalryRecordContainer";
+import { winPCT } from "../../utils";
 
 export default function Power({
     findRecord,
@@ -79,35 +79,6 @@ export default function Power({
                 pwrRankSzn={pwrRankSzn}
                 roster={roster}
             />
-                    {/* <div className="d-flex align-items-top flex-wrap"> 
-                        <div style={{width:"420px"}}>
-                            <PowerBarChart
-                                pwrRank={pwrRank}
-                                lineupEfficiency={lineupEfficiency}
-                            />
-                        </div>
-                        <div>
-                            <PowerRadarChart
-                                foundHistory={foundHistory}
-                                league={league}
-                                owner={owner}
-                                pwrRank={pwrRank}
-                                roundToHundredth={roundToHundredth}
-                                selectSzn={pwrRankSzn}
-                            />
-                        </div>
-                        <div>
-                            <PowerScoreStackedChart
-                                foundHistory={foundHistory}
-                                league={league}
-                                pwrRank={pwrRank}
-                                roundToHundredth={roundToHundredth}
-                                selectSzn={pwrRankSzn}
-                                winPCT={winPCT}
-
-                            />
-                        </div>
-                    </div> */}
             <MatchupContainer
                 findRecord={findRecord}
                 foundHistory={foundHistory}
