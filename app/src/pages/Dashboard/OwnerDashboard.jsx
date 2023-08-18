@@ -18,7 +18,7 @@ function OwnerDashboard({
     loadPlayers,
     loadRosters,
     matches,
-    matchups,
+    // matchups,
     owners,
     players,
     rosters,
@@ -30,6 +30,7 @@ function OwnerDashboard({
     const roster = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id));
     const loading = (roster === undefined || loadLeague || loadMatches || loadOwners || loadPlayers || loadRosters) ? true : false;
     const topDraftPick = league?.draft?.picks?.filter(p => p.roster_id === Number(id))[0];
+    const foundMyMatchups = foundHistory(id)?.foundMyMatchups;
 
     const findRecord = (matches, week) => {
         let w = 0;
@@ -56,14 +57,6 @@ function OwnerDashboard({
             l: l
         }
     };
-    const foundMyMatchups = matchups?.map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
-        if (team.filter(owner => owner.roster_id === Number(id)).length > 0) {
-            return team;
-        };
-        return acc;
-    })).map(match => match.sort((a,b) => b.points - a.points));
-
-    const foundStats = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id)).settings;
 
     const totalPtsPerGame = (pts ,season) => {
         if (season === "All Time") {
@@ -73,7 +66,7 @@ function OwnerDashboard({
         } else if(Number(season) > 2020){
             return roundToHundredth(Number(pts/14));
         } else if(season === league.season){
-            return roundToHundredth(Number(pts/(foundStats.losses + foundStats.wins + foundStats.ties)));
+            return roundToHundredth(Number(pts/(roster.settings.losses + roster.settings.wins + roster.settings.ties)));
         };
     };
     

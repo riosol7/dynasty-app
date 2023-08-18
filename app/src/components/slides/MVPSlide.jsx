@@ -21,7 +21,7 @@ export default function MVPSlide ({
             try {
                 const mvpPlayer = await getMVP(roster.roster_id);
                 setMVP(mvpPlayer);
-                setLoadMVP(false)
+                setLoadMVP(false);
             } catch (error) {
                 console.error("Error fetching MVP:", error);
             }

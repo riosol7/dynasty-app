@@ -23,11 +23,9 @@ export default function OwnerStatsUI({
                     <Icon className="mx-3" icon="mdi:bracket" onClick={() => handleSelectStats()} style={ selectStats === "Post Season" ? {fontSize:"1.4em", color:"#a9dfd8"} : {fontSize:"1.4em", color:"#cbcbcb"}}/>
                     <select className="p-2"value={selectSzn} onChange={handleSelectSzn} style={{fontSize:".8em", borderRadius:"25px", border:"2px solid #3bdbba", background:"black", color:"white"}}>
                         {tab === "Summary" ? <option value={"All Time"}>All Time</option> : <></> }
-                        {league.history ? 
-                            league.history.map((season, i) => 
-                                <option key={i} value={season.year}>{season.year}</option>
-                            ) :<></>
-                        }
+                        {league.history?.slice().reverse().map((season, i) => 
+                            <option key={i} value={season.year}>{season.year}</option>
+                        )}
                         <option value={league.season}>{league.season}</option>
                     </select>
                 </div>

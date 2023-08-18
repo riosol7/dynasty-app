@@ -18,6 +18,7 @@ export {
     getTopTE,
     getTopWR,
 }
+export { default as findMatchups } from "./findMatchups";
 export { default as findOwner } from "./owner/findOwner";
 export { default as findPlayer } from "./player/findPlayer";
 export { default as handleRostersBySzn } from "./roster/handleRostersBySzn";
