@@ -45,7 +45,7 @@ export default function OwnerStatsUI({
                                 {selectStats === "Season" && selectSzn === "All Time" ?
                                     <div className="d-flex align-items-center">
                                         <p className="m-0" style={{width:"70px"}}>
-                                            {foundHistory(id).allTime.w}-{foundHistory(id).allTime.l} 
+                                            {foundHistory(id).allTime.w}-{foundHistory(id).allTime.l}
                                         </p>
                                         <p className="d-flex align-items-center m-0" style={{width:"50px"}}>
                                             {winPCT(foundHistory(id).allTime.w, foundHistory(id).allTime.l)}

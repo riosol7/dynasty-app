@@ -211,7 +211,7 @@ function App() {
                 }
                 return null
             })
-            // HISTORY ALL PLAY // 
+            // HISTORY ALL PLAY // ### NEEDS TO UPDATE w/ in season stats wins and losses
             let allPlay = []
             processedLeague.history?.map(szn => {
                 if(Number(szn.year) > 2020){
@@ -296,6 +296,8 @@ function App() {
                 }
                 return null
             })
+            console.log("allPlay:", allPlay);
+            console.log("allPlayCSzn:", allPlayCSzn);
 
             // HEAD 2 HEAD :: HISTORY MATCHUPS (Function for Head to Head W-L :: history seasons)
             let myHeadtoHead = []
