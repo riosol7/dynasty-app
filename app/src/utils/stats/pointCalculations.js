@@ -14,6 +14,21 @@ export const calculatePositionStats = (players, playerType, league, matches, rID
     };
 };
 
+export const getLeagueAveragePts = (league, matchups, year) => {
+    if(league.season === year) {
+        return matchups?.map(m => roundToHundredth(Object.entries(m).map(t => t[1].map(s => s.points).reduce((a,b) => a +b,0)/2).reduce((a,b) => a +b,0)/6)).slice(0, 14) || 0;
+    } else {
+        const sliceEnd = year > 2020 ? 14 : 13;
+        const weeklyLeagueAvgPts = league?.history?.filter(szn => szn.year === year).map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
+            acc[team.matchup_id] = acc[team.matchup_id] || [];
+            acc[team.matchup_id].push(team);
+            return acc;
+        }, Object.create(null))).map(match => Object.entries(match).map(game => game[1])).map(match => match.sort((a,b) => b.points - a.points))
+        .map(m => roundToHundredth(Object.entries(m).map(t => t[1].map(s => s.points).reduce((a,b) => a +b,0)/2).reduce((a,b) => a +b,0)/6)));
+        return weeklyLeagueAvgPts[0]?.slice(0 , sliceEnd)
+    };
+};
+
 export const getTotalPts = (league, matches, rID, pID) => {
     let historyMaxPts = 0;
     let currentMaxPts = 0;

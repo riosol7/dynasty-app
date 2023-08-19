@@ -3,6 +3,7 @@ import {
 } from "./filteringUtils";
 import { 
     calculatePositionStats,
+    getLeagueAveragePts,
     getTotalPts, 
     isOdd,
     lineupEfficiency,
@@ -16,6 +17,7 @@ import {
 export {
     calculatePositionStats,
     filterWaiverBidsByPosition,
+    getLeagueAveragePts,
     getSortedRecords,
     getTotalPts,
     isOdd,
