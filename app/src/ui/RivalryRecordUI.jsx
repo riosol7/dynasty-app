@@ -36,7 +36,7 @@ export default function RivalryRecordUI({
                             <p className="m-0">{findRosterByID(team.oID, processedRosters.totalRoster).owner.display_name}</p>
                             <p className="m-0" style={{fontSize:"10px", color:"#cbcbcb"}}>{findRosterByID(team.oID, processedRosters.totalRoster).owner.team_name}</p>
                         </div>
-                    : <p className="m-0">{findRosterByID(team.oID, processedRosters.totalRoster).owner.display_name}</p>
+                    : <p className="m-0">{findRosterByID(team.oID, processedRosters.totalRoster)?.owner.display_name}</p>
                     }
                 </div>
             </div>
@@ -44,14 +44,14 @@ export default function RivalryRecordUI({
                 <p className="m-0">{team.w}</p>
             </div>
             <div className="" style={{minWidth:"50px"}}>
-                <p className="m-0">{team.oW}</p>
+                <p className="m-0">{team.l}</p>
             </div>
             <div className="" style={{minWidth:"50px"}}>
-                <p className="m-0">{winPCT(team.w, team.oW)}</p>
+                <p className="m-0">{winPCT(team.w, team.l)}</p>
             </div>
             {vs === "Head" ?
                 <div className="d-flex align-items-center justify-content-between" style={{minWidth:"50px"}}>
-                    <p className="m-0">{team.w + team.oW}</p>
+                    <p className="m-0">{team.w + team.l}</p>
                     <div className="d-flex justify-content-center align-items-center">
                         <Icon onClick={() => openModal("Matchup", team.oID)}onMouseOver={MouseOver} onMouseOut={MouseOut} icon="ic:outline-more-vert" style={{fontSize:"1.5em",background:"none", color:"#7f7f7f"}}/>
                     </div>

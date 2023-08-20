@@ -4,7 +4,7 @@ const findMatchups = (id, matchups) => {
             return team;
         };
         return acc;
-    })).map(match => match.sort((a,b) => b.points - a.points));
+    })).map(match => match.sort((a,b) => b.points - a.points)).filter(game => game.length === 2);
 };
 
 export default findMatchups;

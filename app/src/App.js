@@ -10,6 +10,8 @@ import AppLayout from "./layouts/AppLayout";
 import AppRouter from "./router/AppRouter";
 import SidenavBar from "./components/navigation/SidenavBar";
 import {
+    getAllPlayStats,
+    getHeadToHeadStats,
     getLeagueAveragePts,
     roundToHundredth,
     winPCT,
@@ -50,6 +52,7 @@ function App() {
             const legacyPlayoffs = processedLeague.history?.map(szn => szn.league.brackets.winner.bracket.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID)));
             const historicalMatchData = processedLeague.history?.map(szn => Object.entries(szn.matchups).map(g => g[1].filter(m => m.roster_id === Number(rosterID))[0]));
             const seasonTopScore = processedLeague.history?.filter(szn => szn.year === yr).map(s => Object.entries(s.matchups).map(g => g[1].filter(m => m.roster_id === Number(rosterID))[0]).sort((a,b) => b.points - a.points)[0].points)[0];
+            const myHeadtoHead = getHeadToHeadStats(rosterID, processedLeague, myMatchups);
 
             const inSeasonStats = findRosterByID(rosterID, rosters)?.settings;
             const inSeasonPlayoffs = processedLeague.brackets?.winner?.filter(match => match.t1 === Number(rosterID) || match.t2 === Number(rosterID));
@@ -76,303 +79,8 @@ function App() {
             const totalPA = roundToHundredth(legacyRosters?.reduce((acc, item) =>  acc + Number(item.settings.fpts_against + "." + item.settings.fpts_against_decimal), 0) + inSeasonPA);
             const totalPlayoffWins = (legacyPlayoffs?.map(szn => szn.filter(match => match.w === Number(rosterID)))?.map(szn => szn.length).reduce((acc, n) => acc + n, 0) || 0) + inSeasonPlayoffWins; 
             const totalPlayoffLosses = (legacyPlayoffs?.map(szn => szn.filter(match => match.l === Number(rosterID)))?.map(szn => szn.length).reduce((acc, n) => acc + n, 0) || 0) + inSeasonPlayoffLosses;
-            
-            // CURRENT SEASON ALL PLAY //
-            let allPlayCSzn=[];
-            let allPlayCSznWk=[];
-            matches.slice(0,14).map(wk => {
-                let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
-                let win = 0
-                let opWin = 0
-                let oID;
-                let t = wk.filter(t => Number(rosterID) !== t.roster_id).map(t => {
-                    if (myWk.points === 0 && t.points === 0) {
-                        win = 0;
-                        opWin = 0;
-                        oID = t.roster_id;
-                    } else if (myWk.points > t.points) {
-                        win = +1
-                        opWin = 0
-                        oID = t.roster_id
-                    } else {
-                        opWin = +1
-                        win = 0
-                        oID = t.roster_id
-                    }
-                    let obj = allPlayCSzn.find(w => w.oID === oID) || false;
-                    if(obj){
-                        obj.w = obj.w + win
-                        obj.oW = obj.oW + opWin
-                    } else {
-                        allPlayCSzn.push({
-                            w: win,
-                            oW: opWin,
-                            oID: oID
-                        })
-                    }
-                    return {
-                        w: win,
-                        oW: opWin,
-                        oID: oID
-                    }
-                })
-                allPlayCSznWk.push(t)
-                return {
-                    w: win,
-                    oW: opWin,
-                    oID: oID
-                }
-            })
-            // SELECT ALL PLAY // 
-            let selectPlay = []
-            let selectPlayWk = []
-            processedLeague.history?.filter(l => l.year === yr)?.map(szn => {
-                if(Number(yr) > 2020){
-                    Object.entries(szn.matchups).filter(y => y[0] !== "wk15" && y[0] !=="wk16" && y[0] !== "wk17").map(g => g[1]).map(wk => {
-                        let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
-                        let win = 0
-                        let opWin = 0
-                        let oID;
-                        let t = wk.filter(t => Number(rosterID) !== t.roster_id).map(t => {
-                            if(myWk.points > t.points){
-                                win = +1
-                                opWin = 0
-                                oID = t.roster_id
-                            } else {
-                                opWin = +1
-                                win = 0
-                                oID = t.roster_id
-                            }
-                            let obj = selectPlay.find(w => w.oID === oID) || false;
-                            if(obj){
-                                obj.w = obj.w + win
-                                obj.oW = obj.oW + opWin
-                            } else {
-                                selectPlay.push({
-                                    w: win,
-                                    oW: opWin,
-                                    oID: oID
-                                })
-                            }
-                            return {
-                                w: win,
-                                oW: opWin,
-                                oID: oID
-                            }
-                        })
-                        selectPlayWk.push(t)
-                        return {
-                            w: win,
-                            oW: opWin,
-                            oID: oID
-                        }
-                    })
-                } else {
-                    // 13 GAME SZN //
-                    Object.entries(szn.matchups).filter(y => y[0] !== "wk14" && y[0] !== "wk15" && y[0] !=="wk16" && y[0] !== "wk17").map(g => g[1]).map(wk => {
-                        let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
-                        let win = 0
-                        let opWin = 0
-                        let oID;
-                        let t = wk.filter(t => Number(rosterID) !== t.roster_id).map(t => {
-                            if(myWk.points > t.points){
-                                win = +1
-                                opWin = 0
-                                oID = t.roster_id
-                            } else {
-                                opWin = +1
-                                win = 0
-                                oID = t.roster_id
-                            }
-                            let obj = selectPlay.find(w => w.oID === oID) || false;
-                            if(obj){
-                                obj.w = obj.w + win
-                                obj.oW = obj.oW + opWin
-                            } else {
-                                selectPlay.push({
-                                    w: win,
-                                    oW: opWin,
-                                    oID: oID
-                                })
-                            }
-                            return {
-                                w: win,
-                                oW: opWin,
-                                oID: oID
-                            }
-                        })
-                        selectPlayWk.push(t)
-                        return {
-                            w: win,
-                            oW: opWin,
-                            oID: oID
-                        }
-                    })
-                }
-                return null
-            })
-            // HISTORY ALL PLAY // ### NEEDS TO UPDATE w/ in season stats wins and losses
-            let allPlay = []
-            processedLeague.history?.map(szn => {
-                if(Number(szn.year) > 2020){
-                    Object.entries(szn.matchups).filter(y => y[0] !== "wk15" && y[0] !=="wk16" && y[0] !== "wk17").map(g => g[1]).map(wk => {
-                        let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
-                        let win = 0
-                        let opWin = 0
-                        let oID;
-                        wk.filter(t => Number(rosterID) !== t.roster_id).map(t => {
-                            if(myWk.points > t.points){
-                                win = +1
-                                opWin = 0
-                                oID = t.roster_id
-                            } else {
-                                opWin = +1
-                                win = 0
-                                oID = t.roster_id
-                            }
-                            let obj = allPlay.find(w => w.oID === oID) || false;
-                            if(obj){
-                                obj.w = obj.w + win
-                                obj.oW = obj.oW + opWin
-                            } else {
-                                allPlay.push({
-                                    w: win,
-                                    oW: opWin,
-                                    oID: oID
-                                })
-                            }
-                            return {
-                                w: win,
-                                oW: opWin,
-                                oID: oID
-                            }
-                        })
-                        return {
-                            w: win,
-                            oW: opWin,
-                            oID: oID
-                        }
-                    })
-                } else {
-                    // 13 GAME SZN
-                    Object.entries(szn.matchups).filter(y => y[0] !== "wk14" && y[0] !== "wk15" && y[0] !=="wk16" && y[0] !== "wk17").map(g => g[1]).map(wk => {
-                        let myWk = wk.filter(t => t.roster_id === Number(rosterID))[0]
-                        let win = 0
-                        let opWin = 0
-                        let oID;
-                        wk.filter(t => Number(rosterID) !== t.roster_id).map(t => {
-                            if(myWk.points > t.points){
-                                win = +1
-                                opWin = 0
-                                oID = t.roster_id
-                            } else {
-                                opWin = +1
-                                win = 0
-                                oID = t.roster_id
-                            }
-                            let obj = allPlay.find(w => w.oID === oID) || false;
-                            if(obj){
-                                obj.w = obj.w + win
-                                obj.oW = obj.oW + opWin
-                            } else {
-                                allPlay.push({
-                                    w: win,
-                                    oW: opWin,
-                                    oID: oID
-                                })
-                            }
-                            return {
-                                w: win,
-                                oW: opWin,
-                                oID: oID
-                            }
-                        })
-                        return {
-                            w: win,
-                            oW: opWin,
-                            oID: oID
-                        }
-                    })
-                }
-                return null
-            })
-            console.log("allPlay:", allPlay);
-            console.log("allPlayCSzn:", allPlayCSzn);
 
-            // HEAD 2 HEAD :: HISTORY MATCHUPS (Function for Head to Head W-L :: history seasons)
-            let myHeadtoHead = []
-            let games = []
-            processedLeague.history?.map(szn => Object.entries(szn.matchups).map(g => g[1]).map(wk => wk.reduce((acc,team) => {
-                acc[team.matchup_id] = acc[team.matchup_id] || [];
-                acc[team.matchup_id].push(team);
-                return acc;
-            }, Object.create(null))).map(match => Object.entries(match).map(game => game[1])).map(matchup => matchup.reduce((acc,team) => {
-                if(team.filter(owner => owner.roster_id === Number(rosterID)).length > 0){
-                    return team
-                }  
-                return acc
-            })).map(match => match.sort((a,b) => b.points - a.points)).map(m => {
-                let win = 0
-                let opWin = 0
-                let oID = m.filter(t => t.roster_id !== Number(rosterID))[0].roster_id
-                if(
-                    m &&
-                    m.filter(t => t.roster_id === Number(rosterID))[0] && 
-                    m.filter(t => t.roster_id === Number(rosterID))[0].matchup_id !== undefined && 
-                    m.filter(t => t.roster_id === Number(rosterID))[0].matchup_id !== null){
-                    games.push(m)
-                    if(m[0].roster_id === Number(rosterID)){
-                        win++
-                    } else {
-                        opWin++
-                    }
-                    return {
-                        w: win,
-                        oW: opWin,
-                        oID:oID,
-                    }
-                } return null              
-            }).filter(aaa => aaa !== null).forEach(g => {
-                let obj = myHeadtoHead.find(w => w.oID === g.oID) || false;
-                if(obj){
-                    obj.w = obj.w + g.w
-                    obj.oW = obj.oW + g.oW
-                } else {
-                    myHeadtoHead.push(g)
-                }
-            })) 
-            // CURRENT MATCHUPS (Function for Head to Head W-L :: current season)
-            myMatchups.length > 0 ? myMatchups.map(m => {
-                let win = 0
-                let opWin = 0
-
-                if(
-                    m &&
-                    m.filter(t => t.roster_id === Number(rosterID))[0] && 
-                    m.filter(t => t.roster_id === Number(rosterID))[0].matchup_id !== undefined && 
-                    m.filter(t => t.roster_id === Number(rosterID))[0].matchup_id !== null){
-                    games.push(m)
-                    if(m[0].roster_id === Number(rosterID)){
-                        win++
-                    } else {
-                        opWin++
-                    }
-                    return {
-                        w: win,
-                        oW: opWin,
-                        oID:m.filter(t => t.roster_id !== Number(rosterID))[0].roster_id
-                    }
-                } return null              
-            }).filter(aaa => aaa !== null).forEach(g => {
-                let obj = myHeadtoHead.find(w => w.oID === g.oID) || false;
-                if(obj){
-                    obj.w = Number(obj.w) + Number(g.w)
-                    obj.oW = Number(obj.oW) + Number(g.oW)
-                } else {
-                    myHeadtoHead.push(g)
-                }
-            }) :<></>
-            
+    
             //CURRENT PLAYOFFS
             let playoffHS;
             let playoffPF;
@@ -546,13 +254,14 @@ function App() {
                     }
                 } 
             };
+
             
             const selectiveSzn = processedLeague.season === yr ? 
                 {
-                    allPlay:allPlayCSzn,
-                    allPlayWk:allPlayCSznWk,
-                    allPlayRecordW:allPlayCSzn.length > 0? allPlayCSzn.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w : 0,
-                    allPlayRecordL:allPlayCSzn.length > 0? allPlayCSzn.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW: 0,
+                    allPlay: getAllPlayStats(rosterID, yr, processedLeague, matches).seasonalRecord,
+                    allPlayWk: getAllPlayStats(rosterID, yr, processedLeague, matches).weeklyRecord,
+                    allPlayRecordW: (getAllPlayStats(rosterID, yr, processedLeague, matches)?.seasonalRecord || []).reduce((prev, current) => {return { w: prev.w + current.w, l: prev.l + current.l };}, { w: 0, l: 0 }).w || 0,
+                    allPlayRecordL: (getAllPlayStats(rosterID, yr, processedLeague, matches)?.seasonalRecord || []).reduce((prev, current) => {return { w: prev.w + current.w, l: prev.l + current.l };}, { w: 0, l: 0 }).l || 0,
                     highest: inSeasonHighestScore,
                     playoff: inSeasonPlayoffAppearance,
                     toilet:{
@@ -574,10 +283,10 @@ function App() {
                 }
             :   
                 {
-                    allPlay:selectPlay,
-                    allPlayWk:selectPlayWk,
-                    allPlayRecordW: selectPlay.length > 0 ?selectPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).w : 0,
-                    allPlayRecordL: selectPlay.length > 0 ? selectPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}}).oW : 0,
+                    allPlay: getAllPlayStats(rosterID, yr, processedLeague, matches).seasonalRecord,
+                    allPlayWk: getAllPlayStats(rosterID, yr, processedLeague, matches).weeklyRecord,
+                    allPlayRecordW: (getAllPlayStats(rosterID, yr, processedLeague, matches)?.seasonalRecord || []).reduce((prev, current) => {return { w: prev.w + current.w, l: prev.l + current.l };}, { w: 0, l: 0 }).w || 0,
+                    allPlayRecordL: (getAllPlayStats(rosterID, yr, processedLeague, matches)?.seasonalRecord || []).reduce((prev, current) => {return { w: prev.w + current.w, l: prev.l + current.l };}, { w: 0, l: 0 }).l || 0,
                     highest: seasonTopScore,
                     playoff: playoffYR.length > 0 ? true : false,
                     pW: playoffYR.length > 0 ? playoffYR.filter(m => m.w === Number(rosterID)).length : 0,
@@ -594,9 +303,9 @@ function App() {
             
             return {
                 allTime: {    
-                    allPlay: allPlay,
-                    allPlayRecordW:allPlay?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW};},{w:0, oW:0}).w,
-                    allPlayRecordL:allPlay.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW};},{w:0, oW:0}).oW,
+                    allPlay: getAllPlayStats(rosterID, "All Time", processedLeague, matches).historicalRecord,
+                    allPlayRecordW: (getAllPlayStats(rosterID, "All Time", processedLeague, matches)?.seasonalRecord || []).reduce((prev, current) => {return { w: prev.w + current.w, l: prev.l + current.l };}, { w: 0, l: 0 }).w || 0,
+                    allPlayRecordL: (getAllPlayStats(rosterID, "All Time", processedLeague, matches)?.seasonalRecord || []).reduce((prev, current) => {return { w: prev.w + current.w, l: prev.l + current.l };}, { w: 0, l: 0 }).l || 0,
                     percentage: roundToHundredth(((totalWins)/(totalWins + totalLosses))*100),
                     w: totalWins,
                     l: totalLosses,
@@ -623,8 +332,8 @@ function App() {
                     a: playoffAppearances
                 },
                 s: selectiveSzn,
-                h2h:myHeadtoHead.sort((a,b) => { if(winPCT(b.w , b.oW) === winPCT(a.w , a.oW)){ return b.w - a.w } else {return winPCT(b.w , b.oW) - winPCT(a.w , a.oW)}}).map((roster, idx) => ({...roster, rank:idx+1})),
-                g:games,
+                h2h: myHeadtoHead.h2h.sort((a,b) => winPCT(b.w , b.l) - winPCT(a.w , a.l)).map((roster, idx) => ({...roster, rank:idx+1})),
+                g: myHeadtoHead.games,
                 foundMyMatchups:myMatchups
             } 
         }

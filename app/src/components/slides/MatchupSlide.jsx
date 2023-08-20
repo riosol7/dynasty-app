@@ -43,7 +43,8 @@ export default function MatchupSlide({
     const weekLabel = is18GameSeason ? "Wk. 1 - 14" : "Wk. 1 - 13";
     const playoffWeekLabel = is18GameSeason ? "Wk. 15 - 17" : "Wk. 14 - 16";
 
-    const foundAllPlayRecord = history?.s?.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, oW:prev.oW + current.oW}});
+    const foundAllPlayRecord = history?.s?.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, l:prev.l + current.l}});
+    // console.log(foundAllPlayRecord);
 
     const getTitle = () => {
         if (idx === 0) {
@@ -266,7 +267,7 @@ export default function MatchupSlide({
                                         </div>
                                         <div className="d-flex align-items-center">
                                             <Icon icon="material-symbols:arrow-drop-down-rounded" style={{color:"#f85012",fontSize:"2.5em"}}/>
-                                            <p className="m-0">{foundAllPlayRecord?.oW}</p>
+                                            <p className="m-0">{foundAllPlayRecord?.l}</p>
                                         </div>
                                     </div>
                                     <div className="">
@@ -281,7 +282,7 @@ export default function MatchupSlide({
                                                             </div>
                                                         : <Icon icon="fluent-emoji-flat:crown" style={{fontSize:"16px"}}/>
                                                     :
-                                                        foundAllPlayRecord?.oW === exceptionCurrentOwnerAllPlayTotalRosters ?
+                                                        foundAllPlayRecord?.l === exceptionCurrentOwnerAllPlayTotalRosters ?
                                                             <Icon icon="emojione-v1:pile-of-poo" style={{fontSize:"16px", color:"#724b21"}}/>
                                                         :
                                                             <div className="d-flex align-items-center">
