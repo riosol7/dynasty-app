@@ -1,6 +1,10 @@
 import {
     filterWaiverBidsByPosition,
 } from "./filteringUtils";
+import {
+    getHeadToHeadStats,
+    getMatchups,
+} from "./stats/headToHeadStats";
 import { 
     calculatePositionStats,
     getLeagueAveragePts,
@@ -17,6 +21,8 @@ import {
 export {
     calculatePositionStats,
     filterWaiverBidsByPosition,
+    getHeadToHeadStats,
+    getMatchups,
     getLeagueAveragePts,
     getSortedRecords,
     getTotalPts,
@@ -28,6 +34,5 @@ export {
 export { default as findLogo } from "./findLogo";
 export { default as getAllPlayStats } from "./stats/allPlayStats";
 export { default as getInitials } from "./getInitials";
-export { default as getHeadToHeadStats } from "./stats/headToHeadStats";
 export { default as getPrimeIndicatorColor } from "./stats/getPrimeIndicatorColor";
 export { default as toDateTime } from "./date/toDateTime";

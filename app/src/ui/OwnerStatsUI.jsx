@@ -100,7 +100,7 @@ export default function OwnerStatsUI({
                                     <div className="d-flex align-items-center justify-content-between py-3 fontHover" style={{borderBottom:"1px dashed #0f0f0f"}}>
                                         <p className="m-0">Best</p>
                                         <div className="d-flex align-items-center">
-                                            <p className="m-0" style={{width:"70px"}}>{foundHistory(id).allTime.bestRecord}</p>
+                                            <p className="m-0" style={{width:"70px"}}>{foundHistory(id).allTime.bestRecordW}-{foundHistory(id).allTime.bestRecordL}</p>
                                             <p style={{width:"50px"}} className="m-0 d-flex align-items-center">
                                                 {winPCT(foundHistory(id).allTime.bestRecordW, foundHistory(id).allTime.bestRecordL)}
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
