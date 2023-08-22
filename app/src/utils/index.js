@@ -34,5 +34,6 @@ export {
 export { default as findLogo } from "./findLogo";
 export { default as getAllPlayStats } from "./stats/allPlayStats";
 export { default as getInitials } from "./getInitials";
+export { default as getPostSeasonStats } from "./stats/postSeasonStats"; 
 export { default as getPrimeIndicatorColor } from "./stats/getPrimeIndicatorColor";
 export { default as toDateTime } from "./date/toDateTime";

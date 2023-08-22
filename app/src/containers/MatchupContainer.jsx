@@ -5,14 +5,16 @@ import { findLogo } from "../utils";
 export default function MatchupContainer({
     findRecord,
     foundHistory,
-    foundMyMatchups,
     id,
     league,
     openModal,
     players,
     processedRosters,
 }) {
-    const [weeklyMatch, setWeeklyMatch] = useState(foundMyMatchups.length > 0 ? league.season : (Number(league.season) - 1).toString())
+    const thisSeasonSchedule = foundHistory(id, league.season)?.myMatchups;
+    const season = thisSeasonSchedule.length > 0 ? league.season : (Number(league.season) - 1).toString();
+
+    const [weeklyMatch, setWeeklyMatch] = useState(season)
 
     function compareWeeks(weekA, weekB) {
         const numericPartA = parseInt(weekA[0].slice(2), 10);
@@ -20,9 +22,10 @@ export default function MatchupContainer({
         return numericPartA - numericPartB;
     }
 
+    // NEEDS TO BE UPDATED **
     const findWeeklyMatchups = () => {
         if (league.season === weeklyMatch) {
-            return foundMyMatchups;
+            return thisSeasonSchedule;
         
         } else {
             const template = league.history.filter(l => l.year === weeklyMatch)

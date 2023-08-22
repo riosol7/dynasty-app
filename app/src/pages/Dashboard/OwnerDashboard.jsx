@@ -30,7 +30,6 @@ function OwnerDashboard({
     const roster = processedRosters?.totalRoster?.find(roster => roster.roster_id === Number(id));
     const loading = (roster === undefined || loadLeague || loadMatches || loadOwners || loadPlayers || loadRosters) ? true : false;
     const topDraftPick = league?.draft?.picks?.filter(p => p.roster_id === Number(id))[0];
-    const foundMyMatchups = foundHistory(id)?.foundMyMatchups;
 
     const findRecord = (matches, week) => {
         let w = 0;
@@ -85,7 +84,6 @@ function OwnerDashboard({
                     <Summary
                         findRecord={findRecord}
                         foundHistory={foundHistory}
-                        foundMyMatchups={foundMyMatchups}
                         id={id}
                         league={league}
                         matches={matches}
@@ -108,7 +106,6 @@ function OwnerDashboard({
                     <Power
                         findRecord={findRecord}
                         foundHistory={foundHistory}
-                        foundMyMatchups={foundMyMatchups}
                         id={id}
                         league={league}
                         matches={matches}

@@ -8,7 +8,6 @@ import RosterContainer from "../../containers/RosterContainer";
 export default function Summary({
     findRecord,
     foundHistory,
-    foundMyMatchups,
     id,
     league,
     matches,
@@ -46,7 +45,6 @@ export default function Summary({
             <MatchupContainer
                 findRecord={findRecord}
                 foundHistory={foundHistory}
-                foundMyMatchups={foundMyMatchups}
                 id={id}
                 league={league}
                 openModal={openModal}

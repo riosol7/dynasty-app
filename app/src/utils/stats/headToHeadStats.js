@@ -19,7 +19,7 @@ export const getHeadToHeadStats = (id, league, matchups) => {
 
     legacyMatchups?.push(matchups);
 
-    legacyMatchups?.map(season => season.map(game => {
+    legacyMatchups?.map(season => season?.map(game => {
         const myMatchupInfo = game?.find(t => t.roster_id === Number(id));
         let wins = 0;
         let losses = 0;

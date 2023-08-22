@@ -105,7 +105,7 @@ export default function MatchupSlider({
                         disableOnInteraction: false
                     }}
                 >
-                    {findWeeklyMatchups().map((m,idx) => 
+                    {findWeeklyMatchups()?.map((m,idx) => 
                         <SwiperSlide key={idx}>
                             <MatchupSlide
                                 findLogo={findLogo}
