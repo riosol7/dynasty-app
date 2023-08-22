@@ -1,3 +1,6 @@
+export { default as useDynastyProcessData } from "./fantasyMarket/useDynastyProcessData";
+export { default as useFantasyProData } from "./fantasyMarket/useFantasyProData";
+// SLEEPER
 export { default as useLeagueData } from "./useLeagueData";
 export { default as useMatches } from "./useMatches";
 export { default as useOwners } from "./useOwners";

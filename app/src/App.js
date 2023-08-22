@@ -1,5 +1,5 @@
 import "./styles/App.css";
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter as Router } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "swiper/css";
@@ -25,6 +25,8 @@ import {
     processMatches,
 } from "./helpers";
 import { 
+    // useDynastyProcessData,
+    // useFantasyProData,
     useLeagueData,
     useMatches,
     useOwners,
@@ -40,8 +42,8 @@ function App() {
     const { players, loadPlayers } = usePlayers();
     const { rosters, loadRosters } = useRosters();
     const { transactions, loadTransactions } = useTransactions();
-
-    const [activityBar, setActivityBar] = useState(false)
+    // const { dpData } = useDynastyProcessData();
+    // const { fpData } = useFantasyProData();
 
     const matchups = processMatches(matches);
     const processedLeague = processLeague(league);
@@ -145,7 +147,6 @@ function App() {
             <SidenavBar/>
             <Router>
                 <AppRouter  
-                    activityBar={activityBar}
                     foundHistory={foundHistory}
                     league={processedLeague}
                     loadLeague={loadLeague}
@@ -159,7 +160,6 @@ function App() {
                     owners={owners}
                     players={players}
                     rosters={rosters}
-                    setActivityBar={setActivityBar}
                     transactions={transactions}
                 />          
             </Router>
