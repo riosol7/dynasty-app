@@ -27,21 +27,21 @@ import {
 import { 
     // useDynastyProcessData,
     // useFantasyProData,
-    useLeagueData,
-    useMatches,
-    useOwners,
-    usePlayers,
-    useRosters,
-    useTransactions,
+    useFetchLeague,
+    useFetchMatches,
+    useFetchOwners,
+    useFetchPlayers,
+    useFetchRosters,
+    useFetchTransactions,
 } from "./hooks";
 
 function App() {
-    const { league, loadLeague } = useLeagueData();
-    const { matches, loadMatches } = useMatches();
-    const { owners, loadOwners } = useOwners();
-    const { players, loadPlayers } = usePlayers();
-    const { rosters, loadRosters } = useRosters();
-    const { transactions, loadTransactions } = useTransactions();
+    const { league, loadLeague } = useFetchLeague();
+    const { matches, loadMatches } = useFetchMatches();
+    const { owners, loadOwners } = useFetchOwners();
+    const { players, loadPlayers } = useFetchPlayers();
+    const { rosters, loadRosters } = useFetchRosters();
+    const { transactions, loadTransactions } = useFetchTransactions();
     // const { dpData } = useDynastyProcessData();
     // const { fpData } = useFantasyProData();
 

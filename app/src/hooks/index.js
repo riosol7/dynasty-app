@@ -1,9 +1,9 @@
-export { default as useDynastyProcessData } from "./fantasyMarket/useDynastyProcessData";
-export { default as useFantasyProData } from "./fantasyMarket/useFantasyProData";
+export { default as useFetchDynastyProcess } from "./fantasyMarket/useFetchDynastyProcess";
+export { default as useFetchFantasyPro } from "./fantasyMarket/useFetchFantasyPro";
 // SLEEPER
-export { default as useLeagueData } from "./useLeagueData";
-export { default as useMatches } from "./useMatches";
-export { default as useOwners } from "./useOwners";
-export { default as usePlayers } from "./usePlayers";
-export { default as useRosters } from "./useRosters";
-export { default as useTransactions } from "./useTransactions";
+export { default as useFetchLeague } from "./sleeper/useFetchLeague";
+export { default as useFetchMatches } from "./sleeper/useFetchMatches";
+export { default as useFetchOwners } from "./sleeper/useFetchOwners";
+export { default as useFetchPlayers } from "./sleeper/useFetchPlayers";
+export { default as useFetchRosters } from "./sleeper/useFetchRosters";
+export { default as useFetchTransactions } from "./sleeper/useFetchTransactions";
