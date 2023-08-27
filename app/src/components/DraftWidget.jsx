@@ -17,7 +17,7 @@ export default function DraftWidget({
     function MouseOut(event){
         event.target.style.color="#7f7f7f";
     }
-    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL;
 
     return (
         <div className=""style={{fontSize:"14px", minWidth:"420px",height:"166px"}}>

@@ -7,11 +7,11 @@ const useFetchMatches = () => {
     useEffect(() => {
         (async () => {
             try {
-                const call = await fetch(`http://localhost:5000/league/matches`);
-                const parsedMatches = await call.json();
-                setMatches(parsedMatches);
+                const call = await fetch(`${process.env.REACT_APP_DEV_URL}league/matches`);
+                const parsedData = await call.json();
+                setMatches(parsedData);
                 setLoadMatches(false);
-                console.log("fetchMatches:", parsedMatches);
+                console.log("fetchMatches:", parsedData);
             } catch (err) {
                 console.log(err);
             }

@@ -33,29 +33,36 @@ function PlayoffMatch({avatarBaseURL, foundHistory, g, handleRostersBySzn, leagu
         <p className="m-0 d-flex align-items-center justify-content-center">3rd Place Match <Icon icon="noto-v1:3rd-place-medal" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
     :
         <p className="m-0 d-flex align-items-center justify-content-center">Final <Icon icon="noto-v1:trophy" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
-
     function score(id) {
+        const rostersBySzn = handleRostersBySzn(selectSzn, league, processedRosters);
+        const byeWeek = rostersBySzn?.filter(r => r.settings.division === 2)[0].roster_id === id || rostersBySzn?.filter(r => r.settings.division === 1)[0].roster_id === id ? true : false
+        const myMatchups = foundHistory(id, selectSzn)?.matchups;
+
         if(round === 1) {
             if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p> 
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p> 
             } else {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{myMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
             }
         } else if(round === 2) {
-            if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === id)[0].points}</p>
-            } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
+            if (Number(selectSzn) > 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else if (Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{myMatchups[15]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else if(Number(selectSzn) <= 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[13]?.filter(t => t.roster_id === id)[0].points}</p>
             } else {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p>
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p>
             }
         } else if(round === 3) {
-            if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === id)[0].points}</p>
-            } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
-                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === g.w)[0].points}</p>
+            if (Number(selectSzn) > 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[15]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else if (Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{myMatchups[16]?.filter(t => t.roster_id === id)[0].points}</p>
+            } else if(Number(selectSzn) <= 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => t.roster_id === id)[0].points}</p>
             } else {
-                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === g.w)[0].points}</p>
+                return <p className="m-0 bold">{myMatchups[15]?.filter(t => t.roster_id === id)[0].points}</p>
             }
         }
     }    
@@ -86,7 +93,7 @@ export default function PlayoffBracket({
     processedRosters,
     selectSzn,
 }) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
     const matchups = (round) => {
         if (selectSzn === league.season) {
             return league?.brackets?.winner?.filter(g => g.r === round);
@@ -94,6 +101,7 @@ export default function PlayoffBracket({
             return league.history.filter(l => l.year === selectSzn)[0].league.brackets.winner.bracket.filter(g => g.r === round);
         }
     };
+
     return (
         <div className="d-flex align-items-center">
             <div className="">
@@ -106,6 +114,7 @@ export default function PlayoffBracket({
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
+                        handleRostersBySzn={handleRostersBySzn}
                         key={i}
                         league={league}
                         processedRosters={processedRosters}

@@ -11,8 +11,8 @@ export default function MatchupContainer({
     players,
     processedRosters,
 }) {
-    const thisSeasonSchedule = foundHistory(id, league.season)?.myMatchups;
-    const season = thisSeasonSchedule.length > 0 ? league.season : (Number(league.season) - 1).toString();
+    const thisSeasonSchedule = foundHistory(id, league.season)?.matchups;
+    const season = thisSeasonSchedule?.length > 0 ? league.season : (Number(league.season) - 1).toString();
 
     const [weeklyMatch, setWeeklyMatch] = useState(season)
 

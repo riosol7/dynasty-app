@@ -31,7 +31,7 @@ function LeagueSettings({ league }) {
 }
 
 export default function LeagueNavigation({ league }) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
 
     return (
         <div className="d-flex align-items-top justify-content-between my-2">

@@ -54,18 +54,18 @@ function OwnerDashboard({
             record: record,
             w: w,
             l: l
-        }
+        };
     };
 
-    const totalPtsPerGame = (pts ,season) => {
-        if (season === "All Time") {
-            return roundToHundredth(Number(pts/(foundHistory(id).allTime.w + foundHistory(id).allTime.l)));
-        } else if(Number(season) <= 2020){
-            return roundToHundredth(Number(pts/13));
-        } else if(Number(season) > 2020){
-            return roundToHundredth(Number(pts/14));
-        } else if(season === league.season){
+    const totalPtsPerGame = (pts, season) => {
+        if (season === league.season) {
             return roundToHundredth(Number(pts/(roster.settings.losses + roster.settings.wins + roster.settings.ties)));
+        } else if (season === "All Time") {
+            return roundToHundredth(Number(pts/(foundHistory(id).allTime.wins + foundHistory(id).allTime.losses)));
+        } else if(Number(season) <= 2020) {
+            return roundToHundredth(Number(pts/13));
+        } else if(Number(season) > 2020) {
+            return roundToHundredth(Number(pts/14));
         };
     };
     

@@ -8,7 +8,7 @@ const getPostSeasonStats = (id, year, league, matchup) => {
     let inSeasonPlayoffPA;
     const inSeasonPlayoffBracket = league.brackets?.winner?.filter(match => match.t1 === Number(id) || match.t2 === Number(id));
     const inSeasonToiletBracket = league.brackets?.loser?.filter(match => Number(match.t1) === Number(id) || Number(match.t2) === Number(id)); 
-    const inSeasonPlayoffAppearance = inSeasonPlayoffBracket?.length > 0 ? true : false;
+    const inSeasonPlayoffAppearance = inSeasonPlayoffBracket?.length > 0 && inSeasonPlayoffBracket[0]?.l !== null && inSeasonPlayoffBracket[0]?.w !== null  ? true : false;
     const inSeasonPlayoffWins = inSeasonPlayoffBracket?.filter(match => match.w === Number(id))?.length || 0;
     const inSeasonPlayoffLosses = inSeasonPlayoffBracket?.filter(match => match.l === Number(id))?.length || 0;
     const playoffWeeks = inSeasonPlayoffBracket?.length;
@@ -45,16 +45,20 @@ const getPostSeasonStats = (id, year, league, matchup) => {
             .map(m => m.filter(t => t.roster_id !== Number(id))[0])
             .map(a => a && a.points);
 
-        if (Array.isArray(userScores) && userScores.length > 0) {
+        if (playoffBracket?.length === 0) {
+            playoffHighestScore = 0;
+            playoffPF = 0;
+            playoffPA = 0;
+        } else if (Array.isArray(userScores) && userScores.length > 0) {
             playoffHighestScore = roundToHundredth(Math.max(...userScores));
+            playoffPF = roundToHundredth(userScores?.reduce((a, b) => +a + +b));
+            playoffPA = roundToHundredth(opponentScores?.reduce((a, b) => +a + +b));
+            playoffAppearance = playoffBracket?.length > 0 ? true : false;
+            playoffWins = playoffBracket?.filter(m => m.w === Number(id))?.length;
+            playoffLosses = playoffBracket?.filter(m => m.l === Number(id))?.length;
         }
-        playoffPF = roundToHundredth(userScores?.reduce((a, b) => +a + +b));
-        playoffPA = roundToHundredth(opponentScores?.reduce((a, b) => +a + +b));
-        playoffAppearance = playoffBracket?.length > 0 ? true : false;
-        playoffWins = playoffBracket?.filter(m => m.w === Number(id))?.length;
-        playoffLosses = playoffBracket?.filter(m => m.l === Number(id))?.length;
     };
-
+    // ALL TIME
     const allTimeStats = () => {
         const toiletBowls = league?.history?.map(season => { 
             let toiletBowl = 0;
@@ -80,16 +84,10 @@ const getPostSeasonStats = (id, year, league, matchup) => {
                 return {
                     bracket: playoffBracket,
                     yr: season.year,
-                    games: playoffBracket.length === 3 ?
-                        Number(season.year) > 2020 ?
-                            weeklyScore.slice(14,17)
-                        :
-                            weeklyScore.slice(13,16) 
-                    : // Team had BYE Week
-                        Number(season.year) > 2020 ?
-                            weeklyScore.slice(15,17)
-                        :
-                            weeklyScore.slice(14,16) 
+                    games: Number(season.year) > 2020 ?
+                        weeklyScore.slice(14,17)
+                    :
+                        weeklyScore.slice(13,16) 
                 };
             };
             return null;
@@ -136,14 +134,16 @@ const getPostSeasonStats = (id, year, league, matchup) => {
 
             return legacyFinalsRecord;
         };
-
+        const playoffAppearances = (playoffRuns?.length + (inSeasonPlayoffAppearance ? 1 : 0));            
         const totalPlayoffPF = roundToHundredth(playoffRuns?.length > 0 ? playoffRuns.map(m => m.games.map(g => g.filter(t => t.roster_id === Number(id))[0]).map(a => a && a.points).reduce((a,b) => {return +a + +b})).reduce((a,b) => {return +a + +b}): 0 + inSeasonPlayoffPF)
         const totalPlayoffPA = roundToHundredth(playoffRuns?.length > 0 ? playoffRuns.map(m => m.games.map(g => g.filter(t => t.roster_id !== Number(id))[0]).map(a => a && a.points).reduce((a,b) => {return +a + +b})).reduce((a,b) => {return +a + +b}): 0 + inSeasonPlayoffPA)
         const highestPlayoffScore = roundToHundredth(playoffRuns?.length > 0 ? playoffRuns.map(m => m.games.map(g => g.filter(t => t.roster_id === Number(id))[0]).map(a => a && a.points).sort((a,b) => b - a)[0]).sort((a,b) => b - a)[0] : 0) > inSeasonPlayoffHighestScore ?
         playoffRuns.map(m => m.games.map(g => g.filter(t => t.roster_id === Number(id))[0]).map(a => a && a.points).sort((a,b) => b - a)[0]).sort((a,b) => b - a)[0] : inSeasonPlayoffHighestScore
         const totalPlayoffGames = playoffRuns?.length > 0 ? playoffRuns?.map(s => s.bracket.length).reduce((a,b) => {return +a + +b}) : 0 + inSeasonPlayoffBracket?.length;
-        
+        const allTimePlayoffWins = (playoffRuns?.map(szn => szn.bracket.filter(match => match.w === Number(id)))?.map(szn => szn.length).reduce((acc, n) => acc + n, 0) || 0) + inSeasonPlayoffWins; 
+        const allTimePlayoffLosses = (playoffRuns?.map(szn => szn.bracket.filter(match => match.l === Number(id)))?.map(szn => szn.length).reduce((acc, n) => acc + n, 0) || 0) + inSeasonPlayoffLosses;
         return {
+            appearances: playoffAppearances,
             pf: totalPlayoffPF,
             pa: totalPlayoffPA,
             highestScore: highestPlayoffScore,
@@ -152,6 +152,8 @@ const getPostSeasonStats = (id, year, league, matchup) => {
                 w: finalsRecord()?.w,
                 l: finalsRecord()?.l,
             },
+            wins: allTimePlayoffWins,
+            losses: allTimePlayoffLosses,
             toiletBowls: toiletBowls,
         };
     }
@@ -159,18 +161,18 @@ const getPostSeasonStats = (id, year, league, matchup) => {
         year === "All Time" ? allTimeStats() 
         : year === league.season ? {
             appearance: inSeasonPlayoffAppearance,
+            bracket: inSeasonPlayoffBracket,
             pf: inSeasonPlayoffPF,
             pa: inSeasonPlayoffPA,
-            // games: inSeasonPlayoffBracket?.length || 0,
             highestScore: inSeasonPlayoffHighestScore,
             losses: inSeasonPlayoffLosses,
             totalGames: inSeasonPlayoffBracket?.length || 0,
             wins: inSeasonPlayoffWins,
         } : {
             appearance: playoffAppearance,
+            bracket: playoffBracket,
             pf: playoffPF,
             pa: playoffPA,
-            // games: playoffBracket?.length || 0,
             highestScore: playoffHighestScore,
             losses: playoffLosses,
             totalGames: playoffBracket?.length || 0,

@@ -7,11 +7,11 @@ const useFetchLeague = () => {
     useEffect(() => {
         (async () => {
             try {
-                const call = await fetch(`http://localhost:5000/league`);
-                const parsedLeague = await call.json();
-                setLeague(parsedLeague);
+                const call = await fetch(`${process.env.REACT_APP_DEV_URL}league`);
+                const parsedData = await call.json();
+                setLeague(parsedData);
                 setLoadLeague(false);
-                console.log("fetchLeague:", parsedLeague);
+                console.log("fetchLeague:", parsedData);
             } catch(err) {
                 console.log(err);
             }

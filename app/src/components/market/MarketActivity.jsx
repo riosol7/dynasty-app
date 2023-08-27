@@ -57,7 +57,7 @@ export default function MarketActivity({
     sort,
     waiverBidsFiltered,
 }) {
-    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL;
 
     return (
         <div className="pt-4">

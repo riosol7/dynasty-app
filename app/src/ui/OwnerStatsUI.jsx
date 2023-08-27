@@ -14,6 +14,11 @@ export default function OwnerStatsUI({
     tab,
     totalPtsPerGame,
 }) {
+    const allPlayStats = foundHistory(id, selectSzn).allPlay;
+    const allTimeStats = foundHistory(id).allTime;
+    const allTimeTotalWins = allTimeStats.wins + allTimeStats.playoffs.wins;
+    const allTimeTotalLosses = allTimeStats.losses + allTimeStats.playoffs.losses;
+    const playoffStats = foundHistory(id, selectSzn).playoffs;
 
     return (
         <div className="py-4" style={{minWidth:"300px"}}>
@@ -44,11 +49,9 @@ export default function OwnerStatsUI({
                                 <p className={selectStats === "Season" ? "m-0 bold" : "m-0"}>Record</p>
                                 {selectStats === "Season" && selectSzn === "All Time" ?
                                     <div className="d-flex align-items-center">
-                                        <p className="m-0" style={{width:"70px"}}>
-                                            {foundHistory(id).allTime.w}-{foundHistory(id).allTime.l}
-                                        </p>
+                                        <p className="m-0" style={{width:"70px"}}>{allTimeStats.wins}-{allTimeStats.losses}</p>
                                         <p className="d-flex align-items-center m-0" style={{width:"50px"}}>
-                                            {winPCT(foundHistory(id).allTime.w, foundHistory(id).allTime.l)}
+                                            {winPCT(allTimeStats.wins, allTimeStats.losses)}
                                             <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                         </p>
                                     </div>
@@ -61,48 +64,46 @@ export default function OwnerStatsUI({
                                         </p>
                                     </div>
                                 : selectStats === "Post Season" && selectSzn === "All Time" ?
-                                    <p className="m-0">{foundHistory(id).playoffs.w}-{foundHistory(id).playoffs.l}</p>
+                                    <p className="m-0">{allTimeStats.playoffs.wins}-{allTimeStats.playoffs.losses}</p>
                                 : selectStats === "Post Season" ?
-                                    <p className="m-0">{foundHistory(id, selectSzn).s.pW}-{foundHistory(id, selectSzn).s.pL}</p> 
+                                    <p className="m-0">{playoffStats.wins}-{playoffStats.losses}</p> 
                                 :<></>
                                 }
                             </div>
                             <div style={{fontWeight:"lighter"}}>
                                 <div className="d-flex align-items-center justify-content-between fontHover" style={{borderBottom:"1px dashed #0f0f0f"}}>
-                                    {(selectStats === "Season" && selectSzn === "All Time" && foundHistory(id).playoffs.a > 0) || (selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true) ?
+                                    {(selectStats === "Season" && selectSzn === "All Time" && allTimeStats.playoffs.appearances > 0) || (selectStats === "Season" && playoffStats.appearance === true) ?
                                         <p className="m-0 py-3">w/ Playoffs</p>   
                                     :<></>
                                     }
-                                    {selectStats === "Season" && selectSzn === "All Time" && foundHistory(id).playoffs.a > 0 ? 
+                                    {selectStats === "Season" && selectSzn === "All Time" && allTimeStats.playoffs.appearances > 0 ? 
                                         <div className="d-flex align-items-center py-3">
-                                            <p className="m-0" style={{width:"70px"}}>
-                                                {foundHistory(id).allTime.w + foundHistory(id).playoffs.w}-{foundHistory(id).allTime.l + foundHistory(id).playoffs.l}
-                                            </p>
+                                            <p className="m-0" style={{width:"70px"}}>{allTimeTotalWins}-{allTimeTotalLosses}</p>
                                             <p className="m-0 d-flex align-items-center" style={{width:"50px"}}> 
-                                                {winPCT(foundHistory(id).allTime.w + foundHistory(id).playoffs.w,foundHistory(id).allTime.l + foundHistory(id).playoffs.l)}
-                                                {winPCT(foundHistory(id).allTime.w + foundHistory(id).playoffs.w,foundHistory(id).allTime.l + foundHistory(id).playoffs.l).toString().length === 2 ? ".00" : ""}
+                                                {winPCT(allTimeTotalWins, allTimeTotalLosses)}
+                                                {winPCT(allTimeTotalWins, allTimeTotalLosses).toString().length === 2 ? ".00" : ""}
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </p>
                                         </div>
-                                    : (selectStats === "Season" && foundHistory(id, selectSzn).s.playoff === true) ?
+                                    : (selectStats === "Season" && playoffStats.appearance === true) ?
                                         <div className="d-flex align-items-center py-3">
-                                            <p className="m-0" style={{width:"70px"}}>{foundRoster.settings.wins + foundHistory(id, selectSzn).s.pW}-{foundRoster.settings.losses + foundHistory(id, selectSzn).s.pL}</p>
+                                            <p className="m-0" style={{width:"70px"}}>{foundRoster.settings.wins + playoffStats.wins}-{foundRoster.settings.losses + playoffStats.losses}</p>
                                             <p className="m-0 d-flex align-items-center justify-content-end" style={{width:"50px"}}> 
-                                                {winPCT(foundRoster.settings.wins + foundHistory(id, selectSzn).s.pW, foundRoster.settings.losses + foundHistory(id, selectSzn).s.pL)}
-                                                {winPCT(foundRoster.settings.wins + foundHistory(id, selectSzn).s.pW, foundRoster.settings.losses + foundHistory(id, selectSzn).s.pL).toString().length === 2 ? ".00" : ""}
+                                                {winPCT(foundRoster.settings.wins + playoffStats.wins, foundRoster.settings.losses + playoffStats.losses)}
+                                                {winPCT(foundRoster.settings.wins + playoffStats.wins, foundRoster.settings.losses + playoffStats.losses).toString().length === 2 ? ".00" : ""}
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </p>
                                         </div>
                                     :<></>
                                     }
                                 </div>
-                                {selectSzn === "All Time" && selectStats !=="Post Season" ?
+                                {selectSzn === "All Time" && selectStats !== "Post Season" ?
                                     <div className="d-flex align-items-center justify-content-between py-3 fontHover" style={{borderBottom:"1px dashed #0f0f0f"}}>
                                         <p className="m-0">Best</p>
                                         <div className="d-flex align-items-center">
-                                            <p className="m-0" style={{width:"70px"}}>{foundHistory(id).allTime.bestRecordW}-{foundHistory(id).allTime.bestRecordL}</p>
+                                            <p className="m-0" style={{width:"70px"}}>{allTimeStats.best.record}</p>
                                             <p style={{width:"50px"}} className="m-0 d-flex align-items-center">
-                                                {winPCT(foundHistory(id).allTime.bestRecordW, foundHistory(id).allTime.bestRecordL)}
+                                                {allTimeStats.best.rate}
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </p>
                                         </div>
@@ -118,16 +119,16 @@ export default function OwnerStatsUI({
                                             {selectStats === "Season" && selectSzn === "All Time" ?
                                                 <div className="mt-3">
                                                     <div className="d-flex align-items-center">
-                                                        <p className="m-0" style={{width:"70px"}}>{foundHistory(id).allTime.allPlayRecordW}-{foundHistory(id).allTime.allPlayRecordL}</p>
-                                                        <p className="m-0 d-flex align-items-center" style={{width:"50px"}}>{winPCT(foundHistory(id).allTime.allPlayRecordW, foundHistory(id).allTime.allPlayRecordL)}   
+                                                        <p className="m-0" style={{width:"70px"}}>{allTimeStats.allPlay.wins}-{allTimeStats.allPlay.losses}</p>
+                                                        <p className="m-0 d-flex align-items-center" style={{width:"50px"}}>{winPCT(allTimeStats.allPlay.wins, allTimeStats.allPlay.losses)}   
                                                             <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                                         </p>
                                                     </div>
                                                 </div>
                                             : selectStats === "Season" ?
                                                 <div className="d-flex align-items-center mt-3">
-                                                    <p className="m-0" style={{width:"70px"}}>{foundHistory(id, selectSzn).s.allPlayRecordW}-{foundHistory(id, selectSzn).s.allPlayRecordL}</p>
-                                                    <p className="m-0 d-flex align-items-center justify-content-end" style={{width:"50px"}}>{winPCT(foundHistory(id, selectSzn).s.allPlayRecordW, foundHistory(id, selectSzn).s.allPlayRecordL)}   
+                                                    <p className="m-0" style={{width:"70px"}}>{allPlayStats.wins}-{allPlayStats.losses}</p>
+                                                    <p className="m-0 d-flex align-items-center justify-content-end" style={{width:"50px"}}>{winPCT(allPlayStats.wins, allPlayStats.losses)}   
                                                         <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                                     </p>
                                                 </div>
@@ -145,13 +146,13 @@ export default function OwnerStatsUI({
                                     <p className="m-0">Win Rate</p> 
                                     {selectSzn==="All Time" ?
                                         <p className="d-flex align-items-center justify-content-end m-0" style={{width:"50px"}}>
-                                            {winPCT(foundHistory(id).playoffs.w, foundHistory(id).playoffs.l) || 0}
+                                            {winPCT(allTimeStats.playoffs.wins, allTimeStats.playoffs.losses) || 0}
                                             <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                         </p>
                                     : selectStats === "Post Season" ?
                                         foundHistory(id, selectSzn).s.playoff === true ?
                                             <p className="d-flex align-items-center m-0">
-                                                {winPCT(foundHistory(id, selectSzn).s.pW, foundHistory(id, selectSzn).s.pL)}
+                                                {winPCT(playoffStats.wins, playoffStats.losses)}
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </p> 
                                         : <p className="m-0 d-flex align-items-center">0<Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/></p>
@@ -170,7 +171,7 @@ export default function OwnerStatsUI({
                                     <div>
                                         {selectStats === "Season" && selectSzn === "All Time" ?
                                             <div className="d-flex align-items-center">
-                                                <p className="m-0 text-end">{lineupEfficiency(foundHistory(id).allTime.fpts, foundHistory(id).allTime.ppts)}</p>
+                                                <p className="m-0 text-end">{lineupEfficiency(allTimeStats.fpts, allTimeStats.ppts)}</p>
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </div>
                                         : selectStats === "Season" ?   
@@ -189,14 +190,14 @@ export default function OwnerStatsUI({
                                         {selectStats==="Season" && selectSzn==="All Time" ?
                                             <div className="d-flex align-items-center">
                                                 <p className="m-0">
-                                                    {roundToHundredth(winPCT(foundHistory(id).allTime.w, foundHistory(id).allTime.l)-winPCT(foundHistory(id).allTime.allPlayRecordW, foundHistory(id).allTime.allPlayRecordL))}
+                                                    {roundToHundredth(winPCT(allTimeStats.wins, allTimeStats.losses)-winPCT(allTimeStats.allPlay.wins, allTimeStats.allPlay.losses))}
                                                 </p>
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </div>
                                         : selectStats==="Season"?   
                                             <div className="d-flex align-items-center">
                                                 <p className="m-0">
-                                                    {roundToHundredth(winPCT(foundRoster.settings.wins, foundRoster.settings.losses)-winPCT(foundHistory(id,selectSzn).s.allPlayRecordW, foundHistory(id,selectSzn).s.allPlayRecordL))}
+                                                    {roundToHundredth(winPCT(foundRoster.settings.wins, foundRoster.settings.losses)-winPCT(allPlayStats.wins, allPlayStats.losses))}
                                                 </p>
                                                 <Icon icon="material-symbols:percent" style={{color:"#a9dfd8", fontSize:"1em"}}/>
                                             </div>
@@ -217,7 +218,7 @@ export default function OwnerStatsUI({
                                         <p className="m-0">Toilet Bowl</p>
                                     </div>
                                     <div>
-                                        <p className="m-0" style={{color:"whitesmoke"}}>{foundHistory(id).allTime.TB}</p>
+                                        <p className="m-0" style={{color:"whitesmoke"}}>{allTimeStats.toiletBowls}</p>
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center justify-content-between mt-3 pb-3" style={{borderBottom:"2px solid #2a2c3e"}}>
@@ -225,7 +226,7 @@ export default function OwnerStatsUI({
                                         <p className="m-0">Playoff Appearances</p>
                                     </div>
                                     <div>
-                                        <p className="d-flex align-items-center m-0" style={{color:"whitesmoke"}}>{foundHistory(id).playoffs.a}</p>
+                                        <p className="d-flex align-items-center m-0" style={{color:"whitesmoke"}}>{allTimeStats.playoffs.appearances}</p>
                                     </div>
                                 </div>
                                 <div className="d-flex align-items-center justify-content-between mt-3 pb-3">
@@ -233,7 +234,7 @@ export default function OwnerStatsUI({
                                         <p className="m-0">Finals</p>
                                     </div>
                                     <div>
-                                        <p className="d-flex align-items-center m-0" style={{color:"whitesmoke"}}>{foundHistory(id).allTime.finals}</p>
+                                        <p className="d-flex align-items-center m-0" style={{color:"whitesmoke"}}>{allTimeStats.playoffs.finals}</p>
                                     </div>
                                 </div>
                             </div>
@@ -253,17 +254,17 @@ export default function OwnerStatsUI({
                             </div>
                             <div>
                                 {selectStats === "Season" && selectSzn === "All Time" ?
-                                    <p className="m-0">{totalPtsPerGame(foundHistory(id).allTime.fpts, "All Time")}</p>
+                                    <p className="m-0">{totalPtsPerGame(allTimeStats.fpts, "All Time")}</p>
                                 : selectStats === "Season" ?
-                                    <p className="m-0">{totalPtsPerGame(Number(foundRoster.settings.fpts+"."+foundRoster.settings.fpts_decimal), selectSzn)}</p>
+                                    <p className="m-0">{totalPtsPerGame(Number(foundRoster.settings.fpts + "." + foundRoster.settings.fpts_decimal), selectSzn)}</p>
                                 : selectStats === "Post Season" && selectSzn === "All Time" ? 
-                                    foundHistory(id).allTime.playoffGames > 0 ?
-                                        <p className="m-0">{roundToHundredth(foundHistory(id).allTime.playoffPF / foundHistory(id).allTime.playoffGames)}</p>
+                                    allTimeStats.playoffs.games > 0 ?
+                                        <p className="m-0">{roundToHundredth(allTimeStats.playoffs.fpts / allTimeStats.playoffs.games)}</p>
                                     : 
                                         <p className="m-0">0</p>
                                 : selectStats === "Post Season" ?
                                     foundHistory(id, selectSzn).s.playoff === true ?
-                                        <p className="m-0">{roundToHundredth(foundHistory(id, selectSzn).s.playoffPF / foundHistory(id, selectSzn).s.playoffGames)}</p>
+                                        <p className="m-0">{roundToHundredth(playoffStats.fpts / playoffStats.games)}</p>
                                     : 
                                         <p className="m-0">0</p>
                                 :<></>
@@ -276,13 +277,13 @@ export default function OwnerStatsUI({
                             </div>
                             <div>
                                 {selectStats === "Season" && selectSzn === "All Time" ?
-                                    <p className="m-0">{foundHistory(id).allTime.highest}</p>
+                                    <p className="m-0">{allTimeStats.best.score}</p>
                                 : selectStats === "Season" ?
-                                    <p className="m-0">{foundHistory(id, selectSzn).s.highest}</p>
+                                    <p className="m-0">{foundHistory(id, selectSzn).regularSeason.highestScore}</p>
                                 : selectStats === "Post Season" && selectSzn === "All Time" ?
-                                    <p className="m-0">{foundHistory(id).allTime.playoffHS}</p>
+                                    <p className="m-0">{allTimeStats.playoffs.highestScore}</p>
                                 : selectStats === "Post Season" ?
-                                    <p className="m-0">{foundHistory(id,selectSzn).s.playoffHS || 0}</p>
+                                    <p className="m-0">{playoffStats.highestScore}</p>
                                 :<></>
                                 }  
                             </div>
@@ -293,13 +294,13 @@ export default function OwnerStatsUI({
                             </div>
                             <div>
                                 {selectStats === "Season" && selectSzn === "All Time" ? 
-                                    <p className="m-0">{foundHistory(id).allTime.fpts}</p>
+                                    <p className="m-0">{allTimeStats.fpts}</p>
                                 : selectStats === "Season" ?
                                     <p className="m-0">{foundRoster.settings.fpts}.{foundRoster.settings.fpts_decimal}</p>
                                 : selectStats === "Post Season" && selectSzn === "All Time" ?
-                                    <p className="m-0">{foundHistory(id).allTime.playoffPF}</p>
+                                    <p className="m-0">{allTimeStats.playoffs.fpts}</p>
                                 : selectStats === "Post Season" ?
-                                    <p className="m-0">{foundHistory(id,selectSzn).s.playoffPF || 0}</p>
+                                    <p className="m-0">{playoffStats.fpts}</p>
                                 :<></>
                                 }
                             </div>
@@ -311,7 +312,7 @@ export default function OwnerStatsUI({
                                 </div>
                                 <div>
                                     { selectStats === "Season" && selectSzn === "All Time" ? 
-                                        <p className="m-0">{foundHistory(id).allTime.ppts}</p>
+                                        <p className="m-0">{allTimeStats.ppts}</p>
                                     : selectStats === "Season" ?
                                         <p className="m-0">{foundRoster.settings.ppts}.{foundRoster.settings.ppts_decimal}</p>  
                                     :<></>
@@ -326,13 +327,13 @@ export default function OwnerStatsUI({
                             </div>
                             <div>
                                 {selectStats === "Season" && selectSzn === "All Time" ? 
-                                    <p className="m-0">{foundHistory(id).allTime.fpts_against}</p>
+                                    <p className="m-0">{allTimeStats.pa}</p>
                                 : selectStats === "Season" ?
                                     <p className="m-0">{foundRoster.settings.fpts_against}.{foundRoster.settings.fpts_against_decimal}</p>   
                                 : selectStats === "Post Season" && selectSzn === "All Time" ?
-                                    <p className="m-0">{roundToHundredth(foundHistory(id).allTime.playoffPA)}</p>
+                                    <p className="m-0">{allTimeStats.playoffs.pa}</p>
                                 : selectStats === "Post Season" ?
-                                    <p className="m-0">{foundHistory(id, selectSzn).s.playoffPA || 0}</p>
+                                    <p className="m-0">{playoffStats.pa || 0}</p>
                                 :<></>
                                 }
                             </div>

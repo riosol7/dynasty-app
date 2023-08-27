@@ -8,7 +8,7 @@ const useFetchDynastyProcess = () => {
     useEffect(() => {
         (async () => {
             try {
-                const response = await fetch('https://raw.githubusercontent.com/dynastyprocess/data/master/files/values.csv');
+                const response = await fetch(process.env.REACT_APP_DYNASTY_PROCESS_CSV);
                 if (!response.ok) {
                     throw new Error('Network response was not ok');
                 }

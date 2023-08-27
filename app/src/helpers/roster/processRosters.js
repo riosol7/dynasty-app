@@ -4,32 +4,32 @@ const processRosters = (rosters, players, owners) => {
       const foundOwner = owners.find(owner => owner.roster_id === roster.roster_id);
       const foundPlayers = players.filter(player => roster.players.includes(player.player_id));
       const qbFiltered = foundPlayers.filter(player => player.position === "QB").sort((a, b) => {
-        return (isNaN(b.rating) ? 0 : parseInt(b.rating)) - (isNaN(a.rating) ? 0 : parseInt(a.rating));
+        return (isNaN(b.value) ? 0 : parseInt(b.value)) - (isNaN(a.value) ? 0 : parseInt(a.value));
       });
 
       const qbTotal = qbFiltered.reduce((total, player) => {
-        return total + (isNaN(player.rating) ? 0 : parseInt(player.rating));
+        return total + (isNaN(player.value) ? 0 : parseInt(player.value));
       }, 0);
 
       const rbFiltered = foundPlayers.filter(player => player.position === "RB").sort((a, b) => {
-          return (isNaN(b.rating) ? 0 : parseInt(b.rating)) - (isNaN(a.rating) ? 0 : parseInt(a.rating));
+          return (isNaN(b.value) ? 0 : parseInt(b.value)) - (isNaN(a.value) ? 0 : parseInt(a.value));
       });
       const rbTotal = rbFiltered.reduce((total, player) => {
-        return total + (isNaN(player.rating) ? 0 : parseInt(player.rating));
+        return total + (isNaN(player.value) ? 0 : parseInt(player.value));
       }, 0);
 
       const wrFiltered = foundPlayers.filter(player => player.position === "WR").sort((a, b) => {
-        return (isNaN(b.rating) ? 0 : parseInt(b.rating)) - (isNaN(a.rating) ? 0 : parseInt(a.rating));
+        return (isNaN(b.value) ? 0 : parseInt(b.value)) - (isNaN(a.value) ? 0 : parseInt(a.value));
       });
       const wrTotal = wrFiltered.reduce((total, player) => {
-        return total + (isNaN(player.rating) ? 0 : parseInt(player.rating));
+        return total + (isNaN(player.value) ? 0 : parseInt(player.value));
       }, 0);
 
       const teFiltered = foundPlayers.filter(player => player.position === "TE").sort((a, b) => {
-        return (isNaN(b.rating) ? 0 : parseInt(b.rating)) - (isNaN(a.rating) ? 0 : parseInt(a.rating));
+        return (isNaN(b.value) ? 0 : parseInt(b.value)) - (isNaN(a.value) ? 0 : parseInt(a.value));
       });
       const teTotal = teFiltered.reduce((total, player) => {
-        return total + (isNaN(player.rating) ? 0 : parseInt(player.rating));
+        return total + (isNaN(player.value) ? 0 : parseInt(player.value));
       }, 0);
     
       let teamTotal = qbTotal + rbTotal + wrTotal + teTotal;

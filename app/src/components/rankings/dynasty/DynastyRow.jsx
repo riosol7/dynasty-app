@@ -1,8 +1,8 @@
 import React from "react";
 
 export default function DynastyRow({roster, sort}) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
-    const dummyAvatar = "8fcf0e0e6a75e96a591d2a4a4a400f41";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
+    const dummyAvatar = process.env.REACT_APP_DUMMY_AVATAR;
     const getStyle = (field) => {
         return {
             fontSize: "12px",

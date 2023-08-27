@@ -7,11 +7,11 @@ const useFetchTransactions = () => {
     useEffect(() => {
         (async () => {
             try{
-                const call = await fetch(`http://localhost:5000/league/transactions`);
-                const parsedTransactions = await call.json();
-                setTransactions(parsedTransactions);
+                const call = await fetch(`${process.env.REACT_APP_DEV_URL}league/transactions`);
+                const parsedData = await call.json();
+                setTransactions(parsedData);
                 setLoadTransactions(false);
-                console.log("fetchTransactions:", parsedTransactions);
+                console.log("fetchTransactions:", parsedData);
             } catch (err) {
                 console.log(err);
             };

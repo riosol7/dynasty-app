@@ -33,17 +33,17 @@ export default function MatchupSlide({
     processedRosters,
     weeklyMatch,
 }) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
-    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
-    const dummyAvatar = "8fcf0e0e6a75e96a591d2a4a4a400f41";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL;
+    const dummyAvatar = process.env.REACT_APP_DUMMY_AVATAR;
 
     const is18GameSeason = Number(weeklyMatch) > 2020;
     const history = foundHistory(id, weeklyMatch);
-    const playoffLabel = history.s.playoff ? "Playoffs" : "Toilet Bowl";
+    const playoffLabel = history.playoffs.appearance ? "Playoffs" : "Toilet Bowl";
     const weekLabel = is18GameSeason ? "Wk. 1 - 14" : "Wk. 1 - 13";
     const playoffWeekLabel = is18GameSeason ? "Wk. 15 - 17" : "Wk. 14 - 16";
 
-    const foundAllPlayRecord = history?.s?.allPlayWk[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, l:prev.l + current.l}});
+    const foundAllPlayRecord = history?.allPlay.weeklyRecord[idx]?.reduce((prev, current) => {return {w:prev.w + current.w, l:prev.l + current.l}});
     // console.log(foundAllPlayRecord);
 
     const getTitle = () => {

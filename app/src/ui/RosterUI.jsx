@@ -35,7 +35,7 @@ export default function RosterUI({
     wrArrow,
     wrRankings
 }) {
-    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL;
     const playerTypes = [
     {
         type: "qb",
@@ -139,7 +139,7 @@ export default function RosterUI({
                     <p className="m-0" style={{color:"#b0b0b2", width:"60px"}}>age <span style={primeIndicator(player.age, thresholds)}>{player.age}</span></p>
                     <div className="d-flex align-items-center" style={{width:"80px"}}>
                         <p className="m-0" style={{color:"#b0b0b2"}}>value</p>
-                        <p className="m-0 mx-1">{player.rating}</p>
+                        <p className="m-0 mx-1">{player.value}</p>
                     </div>
                     {tab !== "Dynasty" ?
                         <div className="d-flex align-items-center">

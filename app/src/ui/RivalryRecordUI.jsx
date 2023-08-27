@@ -16,8 +16,8 @@ export default function RivalryRecordUI({
     selectAllPlay,
     vs,
 }) {   
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
-    const dummyAvatar = "8fcf0e0e6a75e96a591d2a4a4a400f41";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
+    const dummyAvatar = process.env.REACT_APP_DUMMY_AVATAR;;
 
     const recordRow = (team, vs) => (
         <div className="d-flex align-items-center">
@@ -105,20 +105,20 @@ export default function RivalryRecordUI({
             </div>
             <div>
                 {vs === "Head" ?
-                    foundHistory(id).h2h.map((t, k) => 
-                        <div key={k} className="py-3" style={k === foundHistory(id).h2h.length - 1 ? {} : {borderBottom:"1px solid #2a2c3e"}}>
+                    foundHistory(id).regularSeason.h2h.opponents.map((t, k) => 
+                        <div key={k} className="py-3" style={k === foundHistory(id).regularSeason.h2h.opponents.length - 1 ? {} : {borderBottom:"1px solid #2a2c3e"}}>
                             {recordRow(t, vs)}
                         </div>
                     )
                 : vs === "All" && selectAllPlay === "All Time" ?
-                    foundHistory(id).allTime.allPlay.sort((a,b) =>  b.w - a.w).map((roster, idx) => ({...roster, rank:idx + 1})).map((o,q) => 
-                        <div key={q} className="py-3" style={q === foundHistory(id).allTime.allPlay.length - 1 ? {} : {borderBottom:"1px solid #2a2c3e"}}>
+                    foundHistory(id).allTime.allPlay.opponents.sort((a,b) =>  b.w - a.w).map((roster, idx) => ({...roster, rank:idx + 1})).map((o,q) => 
+                        <div key={q} className="py-3" style={q === foundHistory(id).allTime.allPlay.opponents.length - 1 ? {} : {borderBottom:"1px solid #2a2c3e"}}>
                             {recordRow(o, vs)}
                         </div>
                     )                     
                 : vs === "All" ?
-                    foundHistory(id, selectAllPlay).s.allPlay.sort((a,b) =>  b.w - a.w).map((roster, idx) => ({...roster, rank:idx + 1})).map((o,q) => 
-                        <div key={q} className="py-3" style={q === foundHistory(id, selectAllPlay).s.allPlay.length - 1 ? {} : {borderBottom:"1px solid #2a2c3e"}}>
+                    foundHistory(id, selectAllPlay).allPlay.opponents.sort((a,b) =>  b.w - a.w).map((roster, idx) => ({...roster, rank:idx + 1})).map((o,q) => 
+                        <div key={q} className="py-3" style={q === foundHistory(id, selectAllPlay).allPlay.opponents.length - 1 ? {} : {borderBottom:"1px solid #2a2c3e"}}>
                             {recordRow(o, vs)}
                         </div>
                     )

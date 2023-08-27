@@ -7,13 +7,13 @@ const useFetchOwners = () => {
     useEffect(() => {
         (async () => {
             try{
-                const call = await fetch(`http://localhost:5000/owners`);
-                const parsedOwners = await call.json();
-                setOwners(parsedOwners);
+                const call = await fetch(`${process.env.REACT_APP_DEV_URL}owners`);
+                const parsedData = await call.json();
+                setOwners(parsedData);
                 setLoadOwners(false);
-                console.log("fetchOwners:",parsedOwners);
+                console.log("fetchOwners:",parsedData);
             } catch (err) {
-                console.log(err);
+                console.log("Error fetching owners:", err);
             };
         })();
     }, []);

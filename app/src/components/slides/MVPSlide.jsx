@@ -10,8 +10,8 @@ export default function MVPSlide ({
     matches,
     roster,
 }) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
-    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL || "https://sleepercdn.com/content/nfl/players/thumb/";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
+    const playerBaseURL = process.env.REACT_APP_SLEEPER_PLAYER_THUMBS_BASE_URL;
 
     const [mvp, setMVP] = useState(null);
     const [loadMVP, setLoadMVP] = useState(true)
@@ -55,7 +55,7 @@ export default function MVPSlide ({
                     <div className="d-flex justify-content-between">
                         <div className="mt-2">
                             <p className="m-0">{mvp.first_name}</p>
-                            <p className="m-0 bold" style={{fontSize:"1.3em"}}>{mvp.last_name}</p>
+                            <p className="m-0 bold truncate" style={{fontSize:"1.3em"}}>{mvp.last_name}</p>
                         </div>
                         <div className="p-2">
                             <img className="ownerLogo" alt="avatar" src={`${avatarBaseURL}${roster.kct.owner.avatar}`}/>
@@ -84,7 +84,7 @@ export default function MVPSlide ({
                         </div>
                         <div className="d-flex align-items-center" style={{}}>
                             <img src={value} alt="value" style={{width:"25px",}}/>
-                            <p className="m-0" style={{fontSize:"12px", paddingLeft:"6px"}}>{mvp.rating}</p> 
+                            <p className="m-0" style={{fontSize:"12px", paddingLeft:"6px"}}>{mvp.value}</p> 
                         </div>
                     </div>
                 </div>

@@ -7,18 +7,20 @@ export default function WeeklyStatsChart({
     foundRoster,
     weeklyMatch,
 }) {
+
+    const seasonMatchups = Number(weeklyMatch) > 2020 ? foundHistory(id, weeklyMatch).matchups.slice(0,14) : foundHistory(id, weeklyMatch).matchups.slice(0,13);
     const series = [
         {
             name:foundRoster.owner.display_name,
-            data:foundHistory(id, weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
+            data: seasonMatchups.map(m => m.filter(t => t.roster_id === Number(id)).map(s => s.points)[0])
         },
         {
             name:"Points Against",
-            data:foundHistory(id, weeklyMatch).s.matchups.map(m => m.filter(t => t.roster_id !== Number(id)).map(s => s.points)[0])
+            data: seasonMatchups.map(m => m.filter(t => t.roster_id !== Number(id)).map(s => s.points)[0])
         },
         {
             name:"League Average",
-            data:foundHistory(id, weeklyMatch).s.leagueAvgPts
+            data:foundHistory(id, weeklyMatch).regularSeason.leagueAvgPts
         },
     ];   
     const options = {

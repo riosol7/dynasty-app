@@ -7,7 +7,7 @@ import MatchupContainer from "../../containers/MatchupContainer";
 import PowerRankingSlider from "../sliders/PowerRankingSlider";
 import OwnerStatsContainer from "../../containers/OwnerStatsContainer";
 import RivalryRecordContainer from "../../containers/RivalryRecordContainer";
-import { winPCT } from "../../utils";
+import { getPowerRank } from "../../utils";
 
 export default function Power({
     findRecord,
@@ -21,7 +21,7 @@ export default function Power({
     tab,
     totalPtsPerGame,
 }) {
-    const thisSeasonSchedule = foundHistory(id, league.season)?.myMatchups;
+    const thisSeasonSchedule = foundHistory(id, league.season)?.matchups;
     const season = thisSeasonSchedule.length > 0 ? league.season : (Number(league.season) - 1).toString();
 
     const [selectStats,setSelectStats] = useState("Season");
@@ -50,26 +50,7 @@ export default function Power({
     const handleVS = (e) => {
         setVS(e.target.value)
     };
-    const getPowerRank = () => {
-        if (pwrRankSzn === league.season) {
-            return processedRosters?.totalRoster?.map(r => ({
-                ...r,
-                apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
-                apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
-                apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW, foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
-            })).sort((a,b) => b.apR - a.apR);
-        
-        } else if (league?.history?.filter(l => l.year === pwrRankSzn)[0] !== undefined) {
-            return league.history.filter(l => l.year === pwrRankSzn)[0].rosters.map(r => ({
-                ...r,
-                apW:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,
-                apL:foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL,
-                apR:winPCT(foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordW,foundHistory(r.roster_id, pwrRankSzn).s.allPlayRecordL)
-            })).sort((a,b) => b.apR - a.apR);
-        };
-    };
-
-    const powerRank = getPowerRank();
+    const powerRank = getPowerRank(pwrRankSzn, league, processedRosters, foundHistory);
 
     return (
         <div style={{fontSize:"14px"}}>

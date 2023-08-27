@@ -7,11 +7,11 @@ const useFetchPlayers = () => {
     useEffect(() => {
         (async () => {
             try{
-                const call = await fetch(`http://localhost:5000/players`);
-                const parsedPlayers = await call.json();
-                setPlayers(parsedPlayers);
+                const call = await fetch(`${process.env.REACT_APP_DEV_URL}players`);
+                const parsedData = await call.json();
+                setPlayers(parsedData);
                 setLoadPlayers(false);
-                console.log("fetchPlayers:", parsedPlayers);
+                console.log("fetchPlayers:", parsedData);
             }catch (err) {
                 console.log(err);
             };

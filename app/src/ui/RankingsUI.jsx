@@ -49,13 +49,7 @@ export default function RankingsUI({
                             </select>
                         </div>
                     </div>
-                :  
-                    <div className="d-flex align-items-center">
-                        <select className="p-2" style={{fontSize:".8em", borderRadius:"25px", border:"2px solid #3bdbba", background:"black", color:"white"}}>
-                        <option value={"KCT"}>kct</option>
-                        </select>
-                    </div>
-                } 
+                : <></>} 
             </div>
             <div className="">
                 {rankings === "Standings" ? 

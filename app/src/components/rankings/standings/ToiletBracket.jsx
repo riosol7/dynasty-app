@@ -35,27 +35,34 @@ function ToiletMatch({avatarBaseURL, foundHistory, g, handleRostersBySzn, league
         <p className="m-0">Toilet Bowl <Icon icon="noto:toilet" style={{fontSize:"1.25em", marginLeft:"4px"}}/></p>
 
     function score(id) {
-        if(round === 1) {
+        const rostersBySzn = handleRostersBySzn(selectSzn, league, processedRosters).reverse();
+        const byeWeek = Number(rostersBySzn[0].roster_id) === Number(id) || Number(rostersBySzn[1].roster_id) === Number(id);
+        const myMatchups = foundHistory(id, selectSzn)?.matchups;
+        if (round === 1) {
             if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === Number(id))[0]?.points}</p> 
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p> 
             } else {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
+                return <p className="m-0 bold">{myMatchups[13]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
             }
-        } else if(round === 2) {
-            if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
-            } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[13]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
+        } else if (round === 2) {
+            if(Number(selectSzn) > 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
+            } else if (Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{myMatchups[15]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
+            } else if(Number(selectSzn) <= 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[13]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
             } else {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
             }
-        } else if(round === 3) {
-            if(Number(selectSzn) > 2020) {
-                return <p className="m-0 bold">{foundHistory(id, selectSzn).s.playoffMatchups[16]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
-            } else if(handleRostersBySzn(selectSzn, league, processedRosters)[0].roster_id === id || handleRostersBySzn(selectSzn, league, processedRosters)[2].roster_id === id) {
-                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[14]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
+        } else if (round === 3) {
+            if(Number(selectSzn) > 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[15]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
+            } else if (Number(selectSzn) > 2020) {
+                return <p className="m-0 bold">{myMatchups[16]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
+            } else if(Number(selectSzn) <= 2020 && byeWeek) {
+                return <p className="m-0 bold">{myMatchups[14]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
             } else {
-                return <p className="m-0 bold">{foundHistory(g.w, selectSzn).s.playoffMatchups[15]?.filter(t => t.roster_id === Number(id))[0]?.points}</p>
+                return <p className="m-0 bold">{myMatchups[15]?.filter(t => Number(t.roster_id) === Number(id))[0]?.points}</p>
             }
         }
     }    
@@ -86,7 +93,7 @@ export default function ToiletBracket({
     processedRosters,
     selectSzn,
 }) {
-    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL || "https://sleepercdn.com/avatars/thumbs/";
+    const avatarBaseURL = process.env.REACT_APP_SLEEPER_AVATAR_THUMBS_BASE_URL;
     const matchups = (round) => {
         if (selectSzn === league.season) {
             return league?.brackets?.loser?.filter(g => g.r === round);
@@ -94,18 +101,22 @@ export default function ToiletBracket({
             return league.history.filter(l => l.year === selectSzn)[0].league.brackets.loser.bracket.filter(g => Number(g.r) === round);
         }
     };
+    const rostersBySzn = handleRostersBySzn(selectSzn, league, processedRosters).reverse();
+    const byeWeekTeam1 = rostersBySzn[0];
+    const byeWeekTeam2 = rostersBySzn[1];
     return (
         <div className="d-flex align-items-center">
             <div className="">
                 <Bottom6ByeWeek 
                     avatarBaseURL={avatarBaseURL} 
-                    roster={handleRostersBySzn(selectSzn, league, processedRosters).reverse()[0]}
+                    roster={byeWeekTeam1}
                 />
                 {matchups(1).slice().map((match, i) => (
                     <ToiletMatch
                         avatarBaseURL={avatarBaseURL} 
                         foundHistory={foundHistory} 
                         g={match} 
+                        handleRostersBySzn={handleRostersBySzn}
                         key={i}
                         league={league}
                         processedRosters={processedRosters}
@@ -115,7 +126,7 @@ export default function ToiletBracket({
                 ))}
                 <Bottom6ByeWeek
                     avatarBaseURL={avatarBaseURL} 
-                    roster={handleRostersBySzn(selectSzn, league, processedRosters).reverse()[1]}
+                    roster={byeWeekTeam2}
                 />
             </div>
             <div className="mx-4">
@@ -152,4 +163,4 @@ export default function ToiletBracket({
             </div>
         </div>
     )
-}
+};

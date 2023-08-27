@@ -16,7 +16,7 @@ export default function MVPContainer ({
                 foundTeam?.kct.wr.players[0],
                 foundTeam?.kct.te.players[0]
             ];
-            const topPlayer = topPlayers.reduce((prev, current) => (prev?.rating > current?.rating ? prev : current));
+            const topPlayer = topPlayers.reduce((prev, current) => (prev?.value > current?.value ? prev : current));
             return topPlayer;
         } catch (error) {
             console.error("Error:", error);

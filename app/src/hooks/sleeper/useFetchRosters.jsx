@@ -7,11 +7,11 @@ const useFetchRosters = () => {
     useEffect(() => {
         (async () => {
             try{
-                const call = await fetch("http://localhost:5000/players/rosters");
-                const parsedRosters = await call.json();
-                setRosters(parsedRosters);
+                const call = await fetch(`${process.env.REACT_APP_DEV_URL}players/rosters`);
+                const parsedData = await call.json();
+                setRosters(parsedData);
                 setLoadRosters(false);
-                console.log("fetchRosters:", parsedRosters);
+                console.log("fetchRosters:", parsedData);
             } catch (err) {
                 console.log(err);
             };
